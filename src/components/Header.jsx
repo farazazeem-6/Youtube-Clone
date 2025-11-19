@@ -11,8 +11,8 @@ const Header = () => {
       <div className="grid grid-flow-col py-2 items-center">
         <div className="flex items-center col-span-1">
           <i
-            onClick={dispatch(toggleSidebar())}
-            className="ri-menu-line text-lg cursor-pointer"
+            onClick={()=>dispatch(toggleSidebar())}
+            className="ri-menu-line text-lg cursor-pointer px-2 py-1 rounded-4xl hover:bg-gray-100"
           ></i>
           <img className="w-24" src={YOUTUBE_LOGO_PNG} alt="Youtube_Logo" />
         </div>

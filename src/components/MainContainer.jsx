@@ -1,13 +1,12 @@
 import ButtonList from "./ButtonList";
 import VideoContainer from "./VideoContainer";
-import Sidebar from "./Sidebar";
 import Wrapper from "./Wrapper";
 
 const MainContainer = () => {
   return (
     <Wrapper>
       <div>
-        <Sidebar />
+        <ButtonList />
         <VideoContainer />
       </div>
     </Wrapper>
