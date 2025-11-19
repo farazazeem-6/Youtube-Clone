@@ -18,6 +18,10 @@ import PlaylistIcon from "../../public/playlist.png";
 import PlayIcon from "../../public/play.png";
 import MusicIcon from "../../public/music.png";
 import NewsIcon from "../../public/news.png";
+import YoutubeIcon from "../../public/youtube.png";
+import YoutubeStudioIcon from "../../public/ytStudio.png";
+import YoutubeMusicIcon from "../../public/ytMusic.png";
+import YoutubeKidsIcon from "../../public/ytKids.png";
 
 export const YOUTUBE_LOGO_PNG = YoutubeLogo;
 export const HOME_ICON_PNG = HomeIcon;
@@ -39,3 +43,7 @@ export const PLAYLIST_ICON_PNG = PlaylistIcon;
 export const PLAY_ICON_PNG = PlayIcon;
 export const MUSIC_ICON_PNG = MusicIcon;
 export const NEWS_ICON_PNG = NewsIcon;
+export const YOUTUBE_ICON_PNG = YoutubeIcon;
+export const YOUTUBE_STUIDIO_ICON_PNG = YoutubeStudioIcon;
+export const YOUTUBE_MUSIC_ICON_PNG = YoutubeMusicIcon;
+export const YOUTUBE_KIDS_ICON_PNG = YoutubeKidsIcon;

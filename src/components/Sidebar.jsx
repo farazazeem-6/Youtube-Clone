@@ -13,12 +13,17 @@ import {
   SHORTS_ICON_PNG,
   SUBSCRIPTIONS_ICON_PNG_2,
   TROPHY_ICON_PNG,
+  YOUTUBE_ICON_PNG,
+  YOUTUBE_KIDS_ICON_PNG,
+  YOUTUBE_LOGO_PNG,
+  YOUTUBE_MUSIC_ICON_PNG,
+  YOUTUBE_STUIDIO_ICON_PNG,
 } from "../utils/constants";
 import SideBarButton from "./SideBarButton";
 
 const Sidebar = () => {
   return (
-    <div className="w-[16%]  h-[100vh] overflow-y-auto pr-2 hide-scrollbar">
+    <div className="w-[14%]  h-[100vh] overflow-y-auto pr-2 hide-scrollbar">
       <div className="pb-2">
         <SideBarButton name={"Home"} img={HOME_ICON_PNG} />
         <SideBarButton name={"Shorts"} img={SHORTS_ICON_PNG} />
@@ -42,11 +47,20 @@ const Sidebar = () => {
       <div className="flex gap-1 items-center py-3">
         <h1 className="text-[12px]">Explore</h1>
       </div>
-          <div className="pb-2">
+      <div className="pb-2">
         <SideBarButton name={"Music"} img={MUSIC_ICON_PNG} />
         <SideBarButton name={"Gaming"} img={GAME_ICON_PNG} />
         <SideBarButton name={"News"} img={NEWS_ICON_PNG} />
         <SideBarButton name={"Sports"} img={TROPHY_ICON_PNG} />
+      </div>
+      <div className="flex gap-1 items-center py-3">
+        <h1 className="text-[12px]">More from YouTube</h1>
+      </div>
+      <div className="pb-2">
+        <SideBarButton name={"YouTube Premium"} img={YOUTUBE_ICON_PNG} />
+        <SideBarButton name={"YouTube Studio"} img={YOUTUBE_STUIDIO_ICON_PNG} />
+        <SideBarButton name={"YouTube Music"} img={YOUTUBE_MUSIC_ICON_PNG} />
+        <SideBarButton name={"YouTube Kids"} img={YOUTUBE_KIDS_ICON_PNG} />
       </div>
     </div>
   );
