@@ -1,8 +1,7 @@
-import React from "react";
 import { YOUTUBE_LOGO_PNG } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { toggleSidebar } from "../store/sideBarToggleSlice";
-import Wrapper from "./Wrapper";
+import Wrapper from "../components/Wrapper";
 
 const Header = () => {
   const dispatch = useDispatch();
