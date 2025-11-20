@@ -48,3 +48,19 @@ export const YOUTUBE_STUIDIO_ICON_PNG = YoutubeStudioIcon;
 export const YOUTUBE_MUSIC_ICON_PNG = YoutubeMusicIcon;
 export const YOUTUBE_KIDS_ICON_PNG = YoutubeKidsIcon;
 
+export const YOUTUBE_POPULAR_VIDEOS_API =
+  "https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=50&regionCode=IN&key=";
+
+export const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
+
+
+
+export function formatViews(views) {
+  if (views < 1000) {
+    return views.toString(); // less than 1K, show full number
+  } else if (views < 1_000_000) {
+    return (views / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
+  } else {
+    return (views / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'M';
+  }
+}

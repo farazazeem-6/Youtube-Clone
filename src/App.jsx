@@ -4,8 +4,7 @@ import Header from "./views/Header";
 function App() {
   return (
     <div>
-      <Header />
-      <Body />
+     
     </div>
   );
 }
