@@ -4,10 +4,10 @@ import Wrapper from "../components/Wrapper";
 
 const MainContainer = () => {
   return (
-    <div className="flex-1 min-w-0 overflow-hidden">
+    <div className="flex-1 min-w-0 ">
       <ButtonList />
       <VideoContainer />
     </div>
   );
 };
-export default MainContainer
+export default MainContainer;

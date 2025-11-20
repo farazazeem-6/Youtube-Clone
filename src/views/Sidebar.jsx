@@ -24,12 +24,15 @@ import {
   YOUTUBE_STUIDIO_ICON_PNG,
 } from "../utils/constants";
 import SideBarButton from "../components/SideBarButton";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   return (
-    <div className="w-[180px] shrink-0 h-[calc(100vh-60px)] overflow-y-auto pr-2 hide-scrollbar">
+    <div className="w-[180px] shrink-0 h-[calc(100vh-60px)] overflow-y-auto pr-2 hide-scrollbar sticky top-[60px]">
       <div className="pb-2">
-        <SideBarButton name={"Home"} img={HOME_ICON_PNG} />
+        <Link to={"/"}>
+          <SideBarButton name={"Home"} img={HOME_ICON_PNG} />
+        </Link>
         <SideBarButton name={"Shorts"} img={SHORTS_ICON_PNG} />
         <SideBarButton name={"Subscriptions"} img={SUBSCRIPTIONS_ICON_PNG_2} />
       </div>
