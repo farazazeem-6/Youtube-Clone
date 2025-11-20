@@ -2,14 +2,18 @@ import {
   CLOCK_ICON_PNG,
   DEGREE_ICON_PNG,
   DOWNLAOD_ICON_PNG,
+  FEEDBACK_ICON_PNG,
   GAME_ICON_PNG,
   HISTORY_ICON_PNG,
   HOME_ICON_PNG,
+  INFO_ICON_PNG,
   LIKE_ICON_PNG,
   MUSIC_ICON_PNG,
   NEWS_ICON_PNG,
   PLAY_ICON_PNG,
   PLAYLIST_ICON_PNG,
+  REPORT_ICON_PNG,
+  SETTING_ICON_PNG,
   SHORTS_ICON_PNG,
   SUBSCRIPTIONS_ICON_PNG_2,
   TROPHY_ICON_PNG,
@@ -19,11 +23,11 @@ import {
   YOUTUBE_MUSIC_ICON_PNG,
   YOUTUBE_STUIDIO_ICON_PNG,
 } from "../utils/constants";
-import SideBarButton from "./SideBarButton";
+import SideBarButton from "../components/SideBarButton";
 
 const Sidebar = () => {
   return (
-    <div className="w-[14%]  h-[100vh] overflow-y-auto pr-2 hide-scrollbar">
+    <div className="w-[180px] shrink-0 h-[calc(100vh-60px)] overflow-y-auto pr-2 hide-scrollbar">
       <div className="pb-2">
         <SideBarButton name={"Home"} img={HOME_ICON_PNG} />
         <SideBarButton name={"Shorts"} img={SHORTS_ICON_PNG} />
@@ -32,7 +36,7 @@ const Sidebar = () => {
       <hr className="text-gray-50" />
       <div className="flex gap-1 items-center py-3">
         <h1 className="text-[12px]">You</h1>
-        <i class="ri-arrow-right-s-line"></i>
+        <i className="ri-arrow-right-s-line"></i>
       </div>
       <div className="pb-2">
         <SideBarButton name={"History"} img={HISTORY_ICON_PNG} />
@@ -53,6 +57,8 @@ const Sidebar = () => {
         <SideBarButton name={"News"} img={NEWS_ICON_PNG} />
         <SideBarButton name={"Sports"} img={TROPHY_ICON_PNG} />
       </div>
+      <hr className="text-gray-50" />
+
       <div className="flex gap-1 items-center py-3">
         <h1 className="text-[12px]">More from YouTube</h1>
       </div>
@@ -61,6 +67,13 @@ const Sidebar = () => {
         <SideBarButton name={"YouTube Studio"} img={YOUTUBE_STUIDIO_ICON_PNG} />
         <SideBarButton name={"YouTube Music"} img={YOUTUBE_MUSIC_ICON_PNG} />
         <SideBarButton name={"YouTube Kids"} img={YOUTUBE_KIDS_ICON_PNG} />
+      </div>
+      <hr className="text-gray-50" />
+      <div className="pb-2">
+        <SideBarButton name={"Setting"} img={SETTING_ICON_PNG} />
+        <SideBarButton name={"Report History"} img={REPORT_ICON_PNG} />
+        <SideBarButton name={"Help"} img={INFO_ICON_PNG} />
+        <SideBarButton name={"Send feedback"} img={FEEDBACK_ICON_PNG} />
       </div>
     </div>
   );

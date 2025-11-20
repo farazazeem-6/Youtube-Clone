@@ -1,14 +1,14 @@
 import Sidebar from "./Sidebar";
 import MainContainer from "./MainContainer";
-import Wrapper from "./Wrapper";
+import Wrapper from "../components/Wrapper";
 import { useSelector } from "react-redux";
 
 const Body = () => {
   const isSideBar = useSelector((state) => state.sidebar.isSidebarOpen);
   return (
     <Wrapper>
-      <div className="mt-2">
-        <div className="flex gap-8">
+      <div className="mt-1">
+        <div className="flex gap-1">
           {isSideBar && <Sidebar />}
           <MainContainer />
         </div>
