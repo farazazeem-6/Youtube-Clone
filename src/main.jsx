@@ -7,6 +7,7 @@ import Body from "./views/Body.jsx";
 import MainContainer from "./views/MainContainer.jsx";
 import Header from "./views/Header.jsx";
 import WatchPage from "./views/WatchPage.jsx";
+import SearchResultsPage from "./views/SearchResultsPage.jsx";
 
 const appRouter = createBrowserRouter([
   {
@@ -21,13 +22,16 @@ const appRouter = createBrowserRouter([
         path: "watch",
         element: <WatchPage />,
       },
+      {
+        path: "results",
+        element: <SearchResultsPage />,
+      },
     ],
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
   <Provider store={appStore}>
-    <Header />
-    <RouterProvider router={appRouter} />
+    <RouterProvider router={appRouter}/>
   </Provider>
 );
