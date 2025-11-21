@@ -2,9 +2,22 @@ import { YOUTUBE_LOGO_PNG } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { toggleSidebar } from "../store/slices/sideBarToggleSlice";
 import Wrapper from "../components/Wrapper";
+import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const dispatch = useDispatch();
+  const searchRef = useRef();
+  const navigate = useNavigate();
+  // const inputValue = searchRef.current.value;
+
+const handleSearchButton = () => {
+  const inputValue = searchRef.current?.value || ""; // safe access
+  if (inputValue.trim()) {
+    navigate(`/results?search_query=${encodeURIComponent(inputValue)}`);
+  }
+};
+
   return (
     <Wrapper>
       <div className="fixed top-0 left-0 right-0 z-50 bg-white px-6">
@@ -19,11 +32,12 @@ const Header = () => {
           <div className="col-span-8 flex justify-center">
             <div className="border border-gray-200 w-[450px] flex rounded-2xl">
               <input
+                ref={searchRef}
                 type="text"
                 placeholder="Search"
-                className="border border-white rounded-tl-2xl rounded-bl-2xl px-3 text-[14px]  w-[90%] focus:border-blue-800 focus:outline-none"
+                className="border border-white rounded-tl-2xl rounded-bl-2xl px-3 text-[14px]  w-[90%] focus:border-blue-600 focus:outline-none shadow-inner"
               />
-              <button className="border-l border-gray-200 px-4 bg-gray-50 rounded-tr-2xl rounded-br-2xl cursor-pointer hover:bg-gray-100">
+              <button onClick={handleSearchButton} className="border-l border-gray-200 px-4 bg-gray-50 rounded-tr-2xl rounded-br-2xl cursor-pointer hover:bg-gray-100">
                 <i className="ri-search-line w-[10%] text-lg"></i>
               </button>
             </div>

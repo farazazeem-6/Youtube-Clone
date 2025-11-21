@@ -11,10 +11,20 @@ const WatchPage = () => {
   const sideBarFlag = useSelector((state) => state.sidebar.isSidebarOpen);
 
   const popularMovies = useSelector((state) => state.movies.popularMovies);
+  const searchResults = useSelector((state) => state.search.searchResults);
+  // if (searchResults) console.log(searchResults);
 
   //Find the movie matching the ID
-  const currentVideo = popularMovies.find((movie) => movie.id === movieId);
-  // console.log(currentVideo);
+  let currentVideo = popularMovies.find((movie) => movie.id === movieId);
+
+  // If not found in popularMovies, check searchResults
+  if (!currentVideo) {
+    currentVideo = searchResults.find((movie) => {
+      // Search API returns id.videoId, Popular API returns just id
+      const videoIdFromSearch = movie.id?.videoId || movie.id;
+      return videoIdFromSearch === movieId;
+    });
+  }
 
   // Extract channel ID
   const channelId = currentVideo?.snippet?.channelId;
@@ -44,8 +54,8 @@ const WatchPage = () => {
     dispatch(closeSideBar());
   }, []);
   useEffect(() => {
-  window.scrollTo( 0,0 );
-}, [movieId]);
+    window.scrollTo(0, 0);
+  }, [movieId]);
   return (
     <div className="flex gap-6">
       <div className={`${sideBarFlag ? "pl-2" : "pl-30"}`}>
@@ -77,7 +87,7 @@ const WatchPage = () => {
           <div className="flex gap-2">
             <button className="bg-gray-200 px-2 rounded-xl text-[12px] flex items-center gap-2">
               <i className="ri-thumb-up-line text-lg"></i>{" "}
-              {formatViews(videoLikes)} |{" "}
+              {formatViews(videoLikes || 124453)} |{" "}
               <i className="ri-thumb-down-line text-lg"></i>
             </button>
             <button className="bg-gray-200 px-2 rounded-xl text-[12px] flex items-center gap-2">

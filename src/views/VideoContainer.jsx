@@ -4,10 +4,12 @@ import VideoCard from "../components/VideoCard";
 import useFetchNextPagePopularVideos from "../hooks/useFetchNextPagePopularVideos";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import VideoCardShimmer from "../components/VideoCardShimmer";
 
 const VideoContainer = () => {
   const fetchMorePopularVideos = useFetchNextPagePopularVideos();
   const nextPageToken = useSelector((state) => state.movies.nextPageToken);
+  const isLoading = useSelector((state) => state.movies.isLoading); // Add this to your slice
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,8 +27,20 @@ const VideoContainer = () => {
 
   const movies = useSelector((state) => state.movies.popularMovies);
   // console.log(movies[0]);
-  
+
   useFetchPopularVideos();
+
+  if (isLoading && movies.length === 0) {
+    return (
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
+        {Array(12)
+          .fill(0)
+          .map((_, index) => (
+            <VideoCardShimmer key={index} />
+          ))}
+      </div>
+    );
+  }
   return (
     <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
       {movies.map((movie) => (

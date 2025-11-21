@@ -52,9 +52,7 @@ const VideoCard = ({ info }) => {
           </h3>
 
           {/* Channel Name */}
-          <p className="text-xs text-gray-600 truncate mb-1">
-            {channelTitle}
-          </p>
+          <p className="text-xs text-gray-600 truncate mb-1">{channelTitle}</p>
 
           {/* Views and Upload Time */}
           <div className="flex items-center gap-1 text-xs text-gray-600">
