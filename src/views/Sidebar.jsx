@@ -4,6 +4,7 @@ import {
   DOWNLAOD_ICON_PNG,
   FEEDBACK_ICON_PNG,
   GAME_ICON_PNG,
+  handleHomeClick,
   HISTORY_ICON_PNG,
   HOME_ICON_PNG,
   INFO_ICON_PNG,
@@ -30,7 +31,7 @@ const Sidebar = () => {
   return (
     <div className="w-[180px] shrink-0 h-[calc(100vh-60px)] overflow-y-auto pr-2 hide-scrollbar sticky top-[60px]">
       <div className="pb-2">
-        <Link to={"/"}>
+        <Link onClick={handleHomeClick} to={"/"}>
           <SideBarButton name={"Home"} img={HOME_ICON_PNG} />
         </Link>
         <SideBarButton name={"Shorts"} img={SHORTS_ICON_PNG} />

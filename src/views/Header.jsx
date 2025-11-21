@@ -33,7 +33,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-      <div className="h-[56px]" /> {/* height = header height */}
+      <div className="h-14" /> {/* height = header height */}
     </Wrapper>
   );
 };
