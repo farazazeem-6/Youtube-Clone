@@ -12,7 +12,7 @@ export function useChannel(channelId) {
   useEffect(() => {
     if (!channelId) return;
 
-    // ❌ If we already have channel data, do NOT fetch again
+    //  If we already have channel data, do NOT fetch again
     if (storedChannel) return;
 
     async function fetchChannel() {
