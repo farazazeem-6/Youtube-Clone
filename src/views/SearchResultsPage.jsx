@@ -2,6 +2,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import useFetchSearchResults from "../hooks/useFetchSearchResults";
 import { useSelector } from "react-redux";
 import SearchResultCard from "../components/SearchResultCard";
+import ResultCardShimmer from "../components/ResultCardShimmer";
 
 const SearchResultsPage = () => {
   const [searchParams] = useSearchParams();
@@ -15,8 +16,12 @@ const SearchResultsPage = () => {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center">
-        <p className="text-xl">Loading...</p>
+      <div className="flex flex-col gap-3 pl-6">
+        {Array(3)
+          .fill(0)
+          .map((_, index) => (
+            <ResultCardShimmer key={index} />
+          ))}
       </div>
     );
   }
@@ -24,7 +29,9 @@ const SearchResultsPage = () => {
   if (!searchResults || searchResults.length === 0) {
     return (
       <div className="p-8">
-        <p className="text-xl">No results found for "{searchQuery}"</p>
+        <p className="text-4xl align-middle font-bold">
+          No results found for "{searchQuery}"
+        </p>
       </div>
     );
   }
