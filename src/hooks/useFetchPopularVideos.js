@@ -1,24 +1,41 @@
-import React, { useEffect } from "react";
-import { API_KEY, YOUTUBE_POPULAR_VIDEOS_API } from "../utils/constants";
+// useFetchPopularVideos.js - UPDATED
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { addPopularMovies, setLoading } from "../store/slices/moviesSlice";
+import { addPopularMovies, setLoading, resetPopularMovies, resetCategoryMovies } from "../store/slices/moviesSlice";
+import { API_KEY, YOUTUBE_POPULAR_VIDEOS_API } from "../utils/constants";
 
-const useFetchPopularVideos = () => {
+const useFetchPopularVideos = (category) => {
   const dispatch = useDispatch();
-  dispatch(setLoading(true));
-  const fetchPopularVideos = async () => {
-    try {
-      const data = await fetch(YOUTUBE_POPULAR_VIDEOS_API + API_KEY);
-      const json = await data.json();
-      dispatch(addPopularMovies(json));
-    } catch (error) {
-      console.error(error);
-      dispatch(setLoading(false)); // ✨ Set to false on error
-    }
-  };
+
   useEffect(() => {
+    if (category !== "All") return;
+
+    const fetchPopularVideos = async () => {
+      dispatch(resetPopularMovies()); // ✅ Clear popular
+      dispatch(resetCategoryMovies()); // ✅ Clear category too
+      dispatch(setLoading(true));
+
+      try {
+        const res = await fetch(YOUTUBE_POPULAR_VIDEOS_API + API_KEY);
+        const data = await res.json();
+
+        dispatch(
+          addPopularMovies({
+            items: data.items || [],
+            nextPageToken: data.nextPageToken || null,
+          })
+        );
+      } catch (err) {
+        console.error(err);
+        dispatch(addPopularMovies({ items: [], nextPageToken: null }));
+      }
+
+      dispatch(setLoading(false));
+    };
+
     fetchPopularVideos();
-  }, []);
+  }, [category, dispatch]);
+
   return null;
 };
 
