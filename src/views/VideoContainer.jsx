@@ -1,13 +1,10 @@
-// VideoContainer.jsx - FIXED VERSION
 import { useSelector } from "react-redux";
 import useFetchPopularVideos from "../hooks/useFetchPopularVideos";
 import useFetchNextPagePopularVideos from "../hooks/useFetchNextPagePopularVideos";
 import useFetchCategoryVideos from "../hooks/useFetchCategoryVideos";
 import useFetchNextPageCategoryVideos from "../hooks/useFetchNextPageCategoryVideos";
-
 import VideoCard from "../components/VideoCard";
 import VideoCardShimmer from "../components/VideoCardShimmer";
-
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
@@ -26,7 +23,7 @@ const VideoContainer = () => {
   const fetchMorePopularVideos = useFetchNextPagePopularVideos();
   const fetchMoreCategoryVideos = useFetchNextPageCategoryVideos();
 
-  // ✅ FIX: Only call the hook for the active category
+  //  Only call the hook for the active category
   useFetchPopularVideos(category);
   useFetchCategoryVideos(category);
 
@@ -53,7 +50,7 @@ const VideoContainer = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [category, popularNextPageToken, categoryNextPageToken, fetchMorePopularVideos, fetchMoreCategoryVideos]);
 
-  // ✅ Choose correct list to show
+  // Choose correct list to show
   const finalList = category === "All" ? movies : categoryMovies;
 
   // Shimmer on first load

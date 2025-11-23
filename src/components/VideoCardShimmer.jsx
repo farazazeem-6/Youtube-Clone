@@ -3,7 +3,7 @@ const VideoCardShimmer = () => {
     <div className="p-2 rounded-2xl my-2 animate-pulse">
       {/* Video Thumbnail Shimmer */}
       <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-gray-300">
-        <div className="w-full h-full bg-linear-to-r from-gray-300 via-gray-200 to-gray-300 bg-[length:200%_100%] animate-shimmer"></div>
+        <div className="w-full h-full bg-linear-to-r from-gray-300 via-gray-200 to-gray-300 bg-size-[200%_100%] animate-shimmer"></div>
       </div>
 
       {/* Video Info Shimmer */}
