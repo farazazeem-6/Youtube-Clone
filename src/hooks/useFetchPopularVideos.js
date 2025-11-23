@@ -11,8 +11,8 @@ const useFetchPopularVideos = (category) => {
     if (category !== "All") return;
 
     const fetchPopularVideos = async () => {
-      dispatch(resetPopularMovies()); // ✅ Clear popular
-      dispatch(resetCategoryMovies()); // ✅ Clear category too
+      dispatch(resetPopularMovies()); // Clear popular
+      dispatch(resetCategoryMovies()); // Clear category too
       dispatch(setLoading(true));
 
       try {
