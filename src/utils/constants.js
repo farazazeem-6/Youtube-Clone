@@ -48,17 +48,22 @@ export const YOUTUBE_STUIDIO_ICON_PNG = YoutubeStudioIcon;
 export const YOUTUBE_MUSIC_ICON_PNG = YoutubeMusicIcon;
 export const YOUTUBE_KIDS_ICON_PNG = YoutubeKidsIcon;
 
+export const proxy = "https://corsproxy.io/?";
+
 export const YOUTUBE_POPULAR_VIDEOS_API =
   "https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=50&regionCode=PK&key=";
 
 export const YOUTUBE_CHANNELS_API =
   "https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=UC_x5XG1OV2P6uZZ5FSM9Ttw&key=AIzaSyDFPRfyCMnByePeoyywRPZQRwBxsT8Rylk";
 
+export const YOUTUBE_SEARCH_SUGGESTION_API = (query) =>
+  `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=10&q=${query}&key=${API_KEY}`;
+
 export const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
 
 export function formatViews(views) {
   if (views < 1000) {
-    return views.toString(); // less than 1K, show full number
+    return views.toString(); 
   } else if (views < 1_000_000) {
     return (views / 1000).toFixed(1).replace(/\.0$/, "") + "K";
   } else {
