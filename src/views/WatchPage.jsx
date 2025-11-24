@@ -4,6 +4,8 @@ import { closeSideBar } from "../store/slices/sideBarToggleSlice";
 import { useSearchParams } from "react-router-dom";
 import { formatViews } from "../utils/constants";
 import SuggestionPage from "./SuggestionPage";
+import { useComments } from "../hooks/useFetchComments";
+import CommentsList from "./CommentsList";
 
 const WatchPage = () => {
   const [searchParams] = useSearchParams();
@@ -48,6 +50,9 @@ const WatchPage = () => {
   const channelPublishedDate = channelInfo?.snippet?.publishedAt;
   const channelTitle = channelInfo?.snippet?.title;
   const channelSubscriber = channelInfo?.statistics?.subscriberCount;
+
+  // calling comments hook
+  useComments(movieId);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -100,6 +105,9 @@ const WatchPage = () => {
               <i className="ri-more-line text-lg"></i>
             </button>
           </div>
+        </div>
+        <div className="mt-4">
+          <CommentsList  videoId={movieId}/>
         </div>
       </div>
       <div className="max-w-[290px]">

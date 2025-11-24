@@ -98,4 +98,4 @@ export function timeAgo(dateString) {
   return `${seconds} second${seconds > 1 ? "s" : ""} ago`;
 }
 
-// export const YOUTUBE_TOP_COMMENTS_API = `https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet%2Creplies&videoId=${VIDEO_ID}&key=${API_KEY}`;
+
