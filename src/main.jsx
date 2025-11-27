@@ -8,6 +8,7 @@ import MainContainer from "./views/MainContainer.jsx";
 import Header from "./views/Header.jsx";
 import WatchPage from "./views/WatchPage.jsx";
 import SearchResultsPage from "./views/SearchResultsPage.jsx";
+import SubscriptionsPage from "./views/SubscriptionsPage.jsx";
 
 const appRouter = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const appRouter = createBrowserRouter([
         path: "results",
         element: <SearchResultsPage />,
       },
+      {
+        path:'subscriptions',
+        element:<SubscriptionsPage/>
+      }
     ],
   },
 ]);

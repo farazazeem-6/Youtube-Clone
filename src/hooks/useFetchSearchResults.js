@@ -19,7 +19,7 @@ const useFetchSearchResults = (searchQuery) => {
         );
 
         const data = await response.json();
-        console.log(data.items);
+        // console.log(data.items);
         
 
         dispatch(setSearchResults(data.items || []));

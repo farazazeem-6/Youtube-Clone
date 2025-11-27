@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import SuggestionCard from "../components/SuggestionCard";
-import ButtonList from "../views/ButtonList";
 import { Link } from "react-router-dom";
 import SuggestionCardShimmer from "../components/SuggestionCardShimmer";
 
@@ -19,7 +18,6 @@ const SuggestionPage = () => {
 
   return (
     <div className="w-full">
-      <ButtonList />
       <div className="flex flex-col gap-1">
         {movies.map((movie, index) => (
           <Link to={"/watch?v=" + movie.id}>
