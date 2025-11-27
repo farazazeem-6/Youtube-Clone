@@ -8,6 +8,8 @@ import { useComments } from "../hooks/useFetchComments";
 import CommentsList from "./CommentsList";
 import { useChannel } from "../hooks/useFetchChannels";
 import SubscribeButton from "../components/SubscribeButton";
+import { addToHistory } from "../store/slices/historySlice";
+import LikeButton from "../components/LikeButton";
 
 const WatchPage = () => {
   const [searchParams] = useSearchParams();
@@ -65,6 +67,27 @@ const WatchPage = () => {
     window.scrollTo(0, 0);
   }, [movieId]);
 
+  // Add video to history when it's played
+  useEffect(() => {
+    if (currentVideo && movieId) {
+      dispatch(
+        addToHistory({
+          videoId: movieId,
+          videoData: {
+            id: movieId,
+            title: currentVideo.snippet?.title,
+            thumbnail: currentVideo.snippet?.thumbnails?.medium?.url || 
+                       currentVideo.snippet?.thumbnails?.default?.url,
+            channelTitle: currentVideo.snippet?.channelTitle,
+            channelId: currentVideo.snippet?.channelId,
+            publishedAt: currentVideo.snippet?.publishedAt,
+            description: currentVideo.snippet?.description,
+          },
+        })
+      );
+    }
+  }, [movieId, currentVideo, dispatch]);
+
   // Add debugging
   useEffect(() => {
     if (!channelId) {
@@ -102,27 +125,33 @@ const WatchPage = () => {
               <div className="w-10 h-10 rounded-full bg-gray-300"></div>
             )}
             <div>
-              <p className="text-[12px] font-bold">
-                {channelTitle || "Loading..."}
-              </p>
+              <p className="text-[12px] font-bold">{channelTitle || "Loading..."}</p>
               <p className="text-[11px]">
-                {channelSubscriber
-                  ? `${formatViews(channelSubscriber)} subscribers`
-                  : ""}
+                {channelSubscriber ? `${formatViews(channelSubscriber)} subscribers` : ""}
               </p>
             </div>
             <div>
               {/* Pass channelId and channelInfo as props */}
-              <SubscribeButton
-                channelId={channelId}
-                channelInfo={channelInfo}
-              />
+              <SubscribeButton channelId={channelId} channelInfo={channelInfo} />
             </div>
           </div>
           <div className="flex gap-2">
+            {/* Like Button */}
+            <LikeButton
+              videoId={movieId}
+              videoData={{
+                title: videoTitle,
+                thumbnail: currentVideo?.snippet?.thumbnails?.medium?.url || 
+                          currentVideo?.snippet?.thumbnails?.default?.url,
+                channelTitle: currentVideo?.snippet?.channelTitle,
+                channelId: channelId,
+                publishedAt: currentVideo?.snippet?.publishedAt,
+                description: currentVideo?.snippet?.description,
+              }}
+              likeCount={videoLikes}
+            />
+            {/* Dislike Button */}
             <button className="bg-gray-200 px-2 rounded-xl text-[12px] flex items-center gap-2">
-              <i className="ri-thumb-up-line text-lg"></i>{" "}
-              {formatViews(videoLikes || 124453)} |{" "}
               <i className="ri-thumb-down-line text-lg"></i>
             </button>
             <button className="bg-gray-200 px-2 rounded-xl text-[12px] flex items-center gap-2">

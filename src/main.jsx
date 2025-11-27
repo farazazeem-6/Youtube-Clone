@@ -9,6 +9,8 @@ import Header from "./views/Header.jsx";
 import WatchPage from "./views/WatchPage.jsx";
 import SearchResultsPage from "./views/SearchResultsPage.jsx";
 import SubscriptionsPage from "./views/SubscriptionsPage.jsx";
+import HistoryPage from "./views/HistoryPage.jsx";
+import LikedVideosPage from "./views/LikedVideosPage.jsx";
 
 const appRouter = createBrowserRouter([
   {
@@ -30,6 +32,14 @@ const appRouter = createBrowserRouter([
       {
         path:'subscriptions',
         element:<SubscriptionsPage/>
+      },
+      {
+        path:'history',
+        element:<HistoryPage/>
+      },
+      {
+        path:'liked',
+        element:<LikedVideosPage/>
       }
     ],
   },
