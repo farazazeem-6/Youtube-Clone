@@ -1,3 +1,4 @@
+import { Link, useLocation } from "react-router-dom";
 import {
   CLOCK_ICON_PNG,
   DEGREE_ICON_PNG,
@@ -25,20 +26,34 @@ import {
   YOUTUBE_STUIDIO_ICON_PNG,
 } from "../utils/constants";
 import SideBarButton from "../components/SideBarButton";
-import { Link } from "react-router-dom";
 
 const Sidebar = () => {
+  const location = useLocation();
+
+  // Helper function to check if route is active
+  const isActive = (path) => {
+    if (path === "/") {
+      return location.pathname === "/";
+    }
+    return location.pathname.startsWith(path);
+  };
+
   return (
     <div className="w-[180px] shrink-0 h-[calc(100vh-60px)] overflow-y-auto pr-2 hide-scrollbar sticky top-[60px]">
       <div className="pb-2">
         <Link onClick={handleHomeClick} to={"/"}>
-          <SideBarButton name={"Home"} img={HOME_ICON_PNG} />
+          <SideBarButton
+            name={"Home"}
+            img={HOME_ICON_PNG}
+            isActive={isActive("/")}
+          />
         </Link>
         <SideBarButton name={"Shorts"} img={SHORTS_ICON_PNG} />
         <Link to={"/subscriptions"}>
           <SideBarButton
             name={"Subscriptions"}
             img={SUBSCRIPTIONS_ICON_PNG_2}
+            isActive={isActive("/subscriptions")}
           />
         </Link>
       </div>
@@ -49,14 +64,28 @@ const Sidebar = () => {
       </div>
       <div className="pb-2">
         <Link to={"/history"}>
-          <SideBarButton name={"History"} img={HISTORY_ICON_PNG} />
+          <SideBarButton
+            name={"History"}
+            img={HISTORY_ICON_PNG}
+            isActive={isActive("/history")}
+          />
         </Link>
         <SideBarButton name={"Playlist"} img={PLAYLIST_ICON_PNG} />
         <SideBarButton name={"Your videos"} img={PLAY_ICON_PNG} />
         <SideBarButton name={"Your courses"} img={DEGREE_ICON_PNG} />
-        <SideBarButton name={"Watch later"} img={CLOCK_ICON_PNG} />
+        <Link to={"/watch-later"}>
+          <SideBarButton
+            name={"Watch later"}
+            img={CLOCK_ICON_PNG}
+            isActive={isActive("/watch-later")}
+          />
+        </Link>
         <Link to={"/liked"}>
-          <SideBarButton name={"Liked videos"} img={LIKE_ICON_PNG} />
+          <SideBarButton
+            name={"Liked videos"}
+            img={LIKE_ICON_PNG}
+            isActive={isActive("/liked")}
+          />
         </Link>
         <SideBarButton name={"Downloads"} img={DOWNLAOD_ICON_PNG} />
       </div>

@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { toggleSidebar } from "../store/slices/sideBarToggleSlice";
 import Wrapper from "../components/Wrapper";
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFetchSuggestions } from "../hooks/useFetchSuggestions";
 
 const Header = () => {
@@ -40,7 +40,9 @@ const Header = () => {
               onClick={() => dispatch(toggleSidebar())}
               className="ri-menu-line text-lg cursor-pointer px-2 py-1 rounded-4xl hover:bg-gray-100"
             ></i>
-            <img className="w-24" src={YOUTUBE_LOGO_PNG} alt="Youtube_Logo" />
+            <Link to={'/'}>
+              <img className="w-24" src={YOUTUBE_LOGO_PNG} alt="Youtube_Logo" />
+            </Link>
           </div>
 
           {/* Search input */}
@@ -55,7 +57,7 @@ const Header = () => {
                   onChange={(e) => setQuery(e.target.value)}
                   onFocus={() => setShowSuggestion(true)}
                   onBlur={() => setTimeout(() => setShowSuggestion(false), 200)}
-                  className="border border-white rounded-tl-2xl rounded-bl-2xl px-3 text-[14px] w-[90%] focus:border-blue-600 focus:outline-none shadow-inner"
+                  className="border border-white rounded-tl-2xl rounded-bl-2xl px-3 text-[14px] w-[90%] focus:border-blue-600 focus:outline-none"
                 />
                 <button
                   onClick={handleSearchButton}

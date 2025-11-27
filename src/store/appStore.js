@@ -4,11 +4,11 @@ import moviesReducer from "../store/slices/moviesSlice";
 import channelReducer from "../store/slices/channelSlice";
 import searchReducer from "./slices/searchSlice";
 import filterReducer from "./slices/filterSlice";
-import commentReducer from '../store/slices/commentsSlice'
-import subscriptionReducer from '../store/slices/subscriptionSlice'
-import historyReducer from '../store/slices/historySlice'
-import likedReducer from '../store/slices/likedSlice'
-
+import commentReducer from "../store/slices/commentsSlice";
+import subscriptionReducer from "../store/slices/subscriptionSlice";
+import historyReducer from "../store/slices/historySlice";
+import likedReducer from "../store/slices/likedSlice";
+import watchLaterReducer from '../store/slices/watchLaterSlice'
 
 const appStore = configureStore({
   reducer: {
@@ -17,10 +17,11 @@ const appStore = configureStore({
     filter: filterReducer,
     channel: channelReducer,
     search: searchReducer,
-    comments:commentReducer,
+    comments: commentReducer,
     subscription: subscriptionReducer,
-     history: historyReducer,
-     liked: likedReducer,
+    history: historyReducer,
+    liked: likedReducer,
+    watchLater: watchLaterReducer,
   },
 });
 export default appStore;
