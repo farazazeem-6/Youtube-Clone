@@ -10,6 +10,7 @@ import { useChannel } from "../hooks/useFetchChannels";
 import SubscribeButton from "../components/SubscribeButton";
 import { addToHistory } from "../store/slices/historySlice";
 import LikeButton from "../components/LikeButton";
+import WatchLaterButton from "../components/WatchLaterButton";
 
 const WatchPage = () => {
   const [searchParams] = useSearchParams();
@@ -76,8 +77,9 @@ const WatchPage = () => {
           videoData: {
             id: movieId,
             title: currentVideo.snippet?.title,
-            thumbnail: currentVideo.snippet?.thumbnails?.medium?.url || 
-                       currentVideo.snippet?.thumbnails?.default?.url,
+            thumbnail:
+              currentVideo.snippet?.thumbnails?.medium?.url ||
+              currentVideo.snippet?.thumbnails?.default?.url,
             channelTitle: currentVideo.snippet?.channelTitle,
             channelId: currentVideo.snippet?.channelId,
             publishedAt: currentVideo.snippet?.publishedAt,
@@ -91,11 +93,11 @@ const WatchPage = () => {
   // Add debugging
   useEffect(() => {
     if (!channelId) {
-      console.log("⚠️ No channelId found for video:", movieId);
+      console.log("No channelId found for video:", movieId);
       console.log("currentVideo:", currentVideo);
     }
     if (channelInfo) {
-      console.log("✅ Channel info loaded:", channelInfo);
+      console.log("Channel info loaded:", channelInfo);
     }
   }, [channelId, movieId, currentVideo, channelInfo]);
 
@@ -125,14 +127,21 @@ const WatchPage = () => {
               <div className="w-10 h-10 rounded-full bg-gray-300"></div>
             )}
             <div>
-              <p className="text-[12px] font-bold">{channelTitle || "Loading..."}</p>
+              <p className="text-[12px] font-bold">
+                {channelTitle || "Loading..."}
+              </p>
               <p className="text-[11px]">
-                {channelSubscriber ? `${formatViews(channelSubscriber)} subscribers` : ""}
+                {channelSubscriber
+                  ? `${formatViews(channelSubscriber)} subscribers`
+                  : ""}
               </p>
             </div>
             <div>
               {/* Pass channelId and channelInfo as props */}
-              <SubscribeButton channelId={channelId} channelInfo={channelInfo} />
+              <SubscribeButton
+                channelId={channelId}
+                channelInfo={channelInfo}
+              />
             </div>
           </div>
           <div className="flex gap-2">
@@ -141,8 +150,9 @@ const WatchPage = () => {
               videoId={movieId}
               videoData={{
                 title: videoTitle,
-                thumbnail: currentVideo?.snippet?.thumbnails?.medium?.url || 
-                          currentVideo?.snippet?.thumbnails?.default?.url,
+                thumbnail:
+                  currentVideo?.snippet?.thumbnails?.medium?.url ||
+                  currentVideo?.snippet?.thumbnails?.default?.url,
                 channelTitle: currentVideo?.snippet?.channelTitle,
                 channelId: channelId,
                 publishedAt: currentVideo?.snippet?.publishedAt,
@@ -151,16 +161,25 @@ const WatchPage = () => {
               likeCount={videoLikes}
             />
             {/* Dislike Button */}
-            <button className="bg-gray-200 px-2 rounded-xl text-[12px] flex items-center gap-2">
+            <button className="bg-gray-200 px-2 rounded-3xl text-[12px] flex items-center gap-2">
               <i className="ri-thumb-down-line text-lg"></i>
             </button>
-            <button className="bg-gray-200 px-2 rounded-xl text-[12px] flex items-center gap-2">
-              <i className="ri-share-forward-line text-lg"></i> Share
-            </button>
-            <button className="bg-gray-200 px-2 rounded-xl text-[12px] flex items-center gap-2">
-              <i className="ri-download-line text-lg"></i> Download
-            </button>
-            <button className="bg-gray-200 px-2 rounded-xl text-[12px] flex items-center gap-2">
+            {/* Watch Later Button */}
+            <WatchLaterButton
+              videoId={movieId}
+              videoData={{
+                title: videoTitle,
+                thumbnail:
+                  currentVideo?.snippet?.thumbnails?.medium?.url ||
+                  currentVideo?.snippet?.thumbnails?.default?.url,
+                channelTitle: currentVideo?.snippet?.channelTitle,
+                channelId: channelId,
+                publishedAt: currentVideo?.snippet?.publishedAt,
+                description: currentVideo?.snippet?.description,
+              }}
+            />
+
+            <button className="bg-gray-200 px-4 rounded-3xl text-[12px] flex items-center gap-2">
               <i className="ri-more-line text-lg"></i>
             </button>
           </div>

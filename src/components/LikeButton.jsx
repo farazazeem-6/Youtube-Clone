@@ -48,7 +48,7 @@ const LikeButton = ({ videoId, videoData, likeCount }) => {
   return (
     <button
       onClick={handleLike}
-      className={`bg-gray-200 px-2 rounded-xl text-[12px] flex items-center gap-2 transition-all ${
+      className={`bg-gray-200 px-2 rounded-3xl text-[12px] flex items-center gap-2 transition-all ${
         isLiked ? "bg-blue-100" : "hover:bg-gray-300"
       }`}
     >
