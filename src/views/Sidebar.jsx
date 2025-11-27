@@ -35,7 +35,12 @@ const Sidebar = () => {
           <SideBarButton name={"Home"} img={HOME_ICON_PNG} />
         </Link>
         <SideBarButton name={"Shorts"} img={SHORTS_ICON_PNG} />
-        <SideBarButton name={"Subscriptions"} img={SUBSCRIPTIONS_ICON_PNG_2} />
+        <Link to={"/subscriptions"}>
+          <SideBarButton
+            name={"Subscriptions"}
+            img={SUBSCRIPTIONS_ICON_PNG_2}
+          />
+        </Link>
       </div>
       <hr className="text-gray-50" />
       <div className="flex gap-1 items-center py-3">

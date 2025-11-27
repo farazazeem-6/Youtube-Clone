@@ -5,6 +5,7 @@ import channelReducer from "../store/slices/channelSlice";
 import searchReducer from "./slices/searchSlice";
 import filterReducer from "./slices/filterSlice";
 import commentReducer from '../store/slices/commentsSlice'
+import subscriptionReducer from '../store/slices/subscriptionSlice'
 
 
 const appStore = configureStore({
@@ -14,7 +15,8 @@ const appStore = configureStore({
     filter: filterReducer,
     channel: channelReducer,
     search: searchReducer,
-    comments:commentReducer
+    comments:commentReducer,
+    subscription: subscriptionReducer,
   },
 });
 export default appStore;

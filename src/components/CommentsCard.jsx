@@ -1,6 +1,6 @@
 const CommentsCard = ({ item }) => {
   return (
-    <div className="flex gap-4 items-center my-2 bg-gray-50 p-2 rounded-2xl">
+    <div className="flex gap-4 items-center my-2 bg-gray-50 p-2 rounded-2xl w-[800px]">
       <img
         className="w-8 h-8 rounded-full"
         src={

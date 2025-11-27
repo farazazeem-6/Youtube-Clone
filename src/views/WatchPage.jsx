@@ -6,6 +6,8 @@ import { formatViews } from "../utils/constants";
 import SuggestionPage from "./SuggestionPage";
 import { useComments } from "../hooks/useFetchComments";
 import CommentsList from "./CommentsList";
+import { useChannel } from "../hooks/useFetchChannels";
+import SubscribeButton from "../components/SubscribeButton";
 
 const WatchPage = () => {
   const [searchParams] = useSearchParams();
@@ -14,15 +16,22 @@ const WatchPage = () => {
 
   const popularMovies = useSelector((state) => state.movies.popularMovies);
   const searchResults = useSelector((state) => state.search.searchResults);
-  // if (searchResults) console.log(searchResults);
+  const categoryMovies = useSelector((state) => state.movies.categoryMovies);
 
-  //Find the movie matching the ID
+  // Find the movie matching the ID
   let currentVideo = popularMovies.find((movie) => movie.id === movieId);
 
-  // If not found in popularMovies, check searchResults
+  // If not found in popularMovies, check categoryMovies
+  if (!currentVideo) {
+    currentVideo = categoryMovies.find((movie) => {
+      const videoIdFromCategory = movie.id?.videoId || movie.id;
+      return videoIdFromCategory === movieId;
+    });
+  }
+
+  // If still not found, check searchResults
   if (!currentVideo) {
     currentVideo = searchResults.find((movie) => {
-      // Search API returns id.videoId, Popular API returns just id
       const videoIdFromSearch = movie.id?.videoId || movie.id;
       return videoIdFromSearch === movieId;
     });
@@ -30,41 +39,47 @@ const WatchPage = () => {
 
   // Extract channel ID
   const channelId = currentVideo?.snippet?.channelId;
+
   const videoTitle = currentVideo?.snippet?.title;
   const videoLikes = currentVideo?.statistics?.likeCount;
 
-  // if (channelId) {
-  //   console.log(channelId);
-  //   console.log(videoTitle);
-
-  // } else {
-  //   console.log("no channel id found");
-  // }
-  // here i find that particular channel data and the particular video data also from store  because now i have channel id
+  // Fetch channel data
+  useChannel(channelId);
   const channelInfo = useSelector((state) => state.channel.channels[channelId]);
 
-  // if(channelData)console.log(channelData);
-
-  // extract the data we want from that channel api data
+  // Extract channel data
   const channelAvatar = channelInfo?.snippet?.thumbnails?.medium?.url;
   const channelPublishedDate = channelInfo?.snippet?.publishedAt;
   const channelTitle = channelInfo?.snippet?.title;
   const channelSubscriber = channelInfo?.statistics?.subscriberCount;
 
-  // calling comments hook
+  // Calling comments hook
   useComments(movieId);
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(closeSideBar());
   }, []);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [movieId]);
+
+  // Add debugging
+  useEffect(() => {
+    if (!channelId) {
+      console.log("⚠️ No channelId found for video:", movieId);
+      console.log("currentVideo:", currentVideo);
+    }
+    if (channelInfo) {
+      console.log("✅ Channel info loaded:", channelInfo);
+    }
+  }, [channelId, movieId, currentVideo, channelInfo]);
+
   return (
     <div className="flex gap-6">
       <div className={`${sideBarFlag ? "pl-2" : "pl-30"}`}>
-        <div className=" rounded-2xl overflow-hidden w-[800px] h-[450px]">
+        <div className="rounded-2xl overflow-hidden w-[800px] h-[450px]">
           <iframe
             width="800"
             height="450"
@@ -81,12 +96,27 @@ const WatchPage = () => {
 
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img className="w-10 rounded-full" src={channelAvatar} alt="" />
+            {channelAvatar ? (
+              <img className="w-10 rounded-full" src={channelAvatar} alt="" />
+            ) : (
+              <div className="w-10 h-10 rounded-full bg-gray-300"></div>
+            )}
             <div>
-              <p className="text-[12px] font-bold">{channelTitle}</p>
-              <p className="text-[11px]">
-                {formatViews(channelSubscriber)} subscribers
+              <p className="text-[12px] font-bold">
+                {channelTitle || "Loading..."}
               </p>
+              <p className="text-[11px]">
+                {channelSubscriber
+                  ? `${formatViews(channelSubscriber)} subscribers`
+                  : ""}
+              </p>
+            </div>
+            <div>
+              {/* Pass channelId and channelInfo as props */}
+              <SubscribeButton
+                channelId={channelId}
+                channelInfo={channelInfo}
+              />
             </div>
           </div>
           <div className="flex gap-2">
@@ -107,7 +137,7 @@ const WatchPage = () => {
           </div>
         </div>
         <div className="mt-4">
-          <CommentsList  videoId={movieId}/>
+          <CommentsList videoId={movieId} />
         </div>
       </div>
       <div className="max-w-[290px]">
