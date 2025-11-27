@@ -48,12 +48,16 @@ const Sidebar = () => {
         <i className="ri-arrow-right-s-line"></i>
       </div>
       <div className="pb-2">
-        <SideBarButton name={"History"} img={HISTORY_ICON_PNG} />
+        <Link to={"/history"}>
+          <SideBarButton name={"History"} img={HISTORY_ICON_PNG} />
+        </Link>
         <SideBarButton name={"Playlist"} img={PLAYLIST_ICON_PNG} />
         <SideBarButton name={"Your videos"} img={PLAY_ICON_PNG} />
         <SideBarButton name={"Your courses"} img={DEGREE_ICON_PNG} />
         <SideBarButton name={"Watch later"} img={CLOCK_ICON_PNG} />
-        <SideBarButton name={"Liked videos"} img={LIKE_ICON_PNG} />
+        <Link to={"/liked"}>
+          <SideBarButton name={"Liked videos"} img={LIKE_ICON_PNG} />
+        </Link>
         <SideBarButton name={"Downloads"} img={DOWNLAOD_ICON_PNG} />
       </div>
       <hr className="text-gray-50" />

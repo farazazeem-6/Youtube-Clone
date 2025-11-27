@@ -6,6 +6,8 @@ import searchReducer from "./slices/searchSlice";
 import filterReducer from "./slices/filterSlice";
 import commentReducer from '../store/slices/commentsSlice'
 import subscriptionReducer from '../store/slices/subscriptionSlice'
+import historyReducer from '../store/slices/historySlice'
+import likedReducer from '../store/slices/likedSlice'
 
 
 const appStore = configureStore({
@@ -17,6 +19,8 @@ const appStore = configureStore({
     search: searchReducer,
     comments:commentReducer,
     subscription: subscriptionReducer,
+     history: historyReducer,
+     liked: likedReducer,
   },
 });
 export default appStore;
