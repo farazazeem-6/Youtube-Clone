@@ -105,7 +105,7 @@ const HistoryPage = () => {
             {/* Remove Button */}
             <button
               onClick={(e) => handleRemoveVideo(video.id, e)}
-              className="shrink-0 text-gray-400 hover:text-gray-300 transition-colors p-2"
+              className="shrink-0 text-gray-400 cursor-pointer hover:text-gray-300 transition-colors p-2"
               title="Remove from history"
             >
               <i className="ri-close-line text-xl"></i>

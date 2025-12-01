@@ -126,10 +126,10 @@ const WatchLaterPage = () => {
             {/* Remove Button */}
             <button
               onClick={(e) => handleRemoveVideo(video.id, e)}
-              className="shrink-0 text-gray-400  hover:transition-colors p-2 flex items-center gap-1"
+              className="shrink-0 text-gray-400 cursor-pointer  hover:transition-colors p-2 flex items-center gap-1"
               title="Remove from Watch Later"
             >
-              <i className="ri-close-circle-fill text-2xl"></i>
+              <i className="ri-close-line text-xl"></i>
             </button>
           </Link>
         ))}
