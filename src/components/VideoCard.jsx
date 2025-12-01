@@ -20,7 +20,7 @@ const viewCount = info.statistics?.viewCount || 0;
   const channelPublishedDate = channelInfo?.snippet?.publishedAt;
 
   return (
-    <div className="p-2 transition-all ease-in-out duration-500 cursor-pointer hover:bg-gray-200 rounded-2xl my-2">
+    <div className="p-2 transition-all ease-in-out duration-500 cursor-pointer hover:bg-gray-200 rounded-2xl my-2 animate-fadeIn">
       {/* Video Thumbnail */}
       <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-gray-300">
         <img

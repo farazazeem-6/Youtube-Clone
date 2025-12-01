@@ -8,7 +8,7 @@ import commentReducer from "../store/slices/commentsSlice";
 import subscriptionReducer from "../store/slices/subscriptionSlice";
 import historyReducer from "../store/slices/historySlice";
 import likedReducer from "../store/slices/likedSlice";
-import watchLaterReducer from '../store/slices/watchLaterSlice'
+import watchLaterReducer from "../store/slices/watchLaterSlice";
 
 const appStore = configureStore({
   reducer: {
