@@ -22,11 +22,7 @@ const WatchLaterPage = () => {
   };
 
   const handleClearAll = () => {
-    if (
-      window.confirm("Are you sure you want to clear all Watch Later videos?")
-    ) {
-      dispatch(clearAllWatchLater());
-    }
+    dispatch(clearAllWatchLater());
   };
 
   const formatTimeAgo = (date) => {

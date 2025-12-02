@@ -5,7 +5,7 @@ import useFetchCategoryVideos from "../hooks/useFetchCategoryVideos";
 import useFetchNextPageCategoryVideos from "../hooks/useFetchNextPageCategoryVideos";
 import VideoCard from "../components/VideoCard";
 import VideoCardShimmer from "../components/VideoCardShimmer";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 
 const VideoContainer = () => {
@@ -23,7 +23,6 @@ const VideoContainer = () => {
   const fetchMorePopularVideos = useFetchNextPagePopularVideos();
   const fetchMoreCategoryVideos = useFetchNextPageCategoryVideos();
 
-  //  Only call the hook for the active category
   useFetchPopularVideos(category);
   useFetchCategoryVideos(category);
 
@@ -48,10 +47,26 @@ const VideoContainer = () => {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [category, popularNextPageToken, categoryNextPageToken, fetchMorePopularVideos, fetchMoreCategoryVideos]);
+  }, [
+    category,
+    popularNextPageToken,
+    categoryNextPageToken,
+    fetchMorePopularVideos,
+    fetchMoreCategoryVideos,
+  ]);
 
-  // Choose correct list to show
-  const finalList = category === "All" ? movies : categoryMovies;
+  // Choose correct list and filter to only complete rows of 3
+  const finalList = useMemo(() => {
+    const list = category === "All" ? movies : categoryMovies;
+    const remainder = list.length % 3;
+
+    // If there's a remainder, remove those last items to make complete rows
+    if (remainder !== 0) {
+      return list.slice(0, list.length - remainder);
+    }
+
+    return list;
+  }, [category, movies, categoryMovies]);
 
   // Shimmer on first load
   if (isLoading && finalList.length === 0) {
@@ -69,7 +84,10 @@ const VideoContainer = () => {
   return (
     <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
       {finalList.map((movie) => (
-        <Link key={movie.id?.videoId || movie.id} to={"/watch?v=" + (movie.id?.videoId || movie.id)}>
+        <Link
+          key={movie.id?.videoId || movie.id}
+          to={"/watch?v=" + (movie.id?.videoId || movie.id)}
+        >
           <VideoCard info={movie} />
         </Link>
       ))}

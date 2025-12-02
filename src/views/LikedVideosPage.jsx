@@ -19,9 +19,8 @@ const LikedVideosPage = () => {
   };
 
   const handleClearAll = () => {
-    if (window.confirm("Are you sure you want to remove all liked videos?")) {
       dispatch(clearAllLikedVideos());
-    }
+    
   };
 
   const formatTimeAgo = (date) => {
