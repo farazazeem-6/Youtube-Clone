@@ -5,7 +5,6 @@ import appStore from "./store/appStore.js";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Body from "./views/Body.jsx";
 import MainContainer from "./views/MainContainer.jsx";
-import Header from "./views/Header.jsx";
 import WatchPage from "./views/WatchPage.jsx";
 import SearchResultsPage from "./views/SearchResultsPage.jsx";
 import SubscriptionsPage from "./views/SubscriptionsPage.jsx";

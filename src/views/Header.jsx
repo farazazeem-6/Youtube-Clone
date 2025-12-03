@@ -2,7 +2,7 @@ import { YOUTUBE_LOGO_PNG } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { toggleSidebar } from "../store/slices/sideBarToggleSlice";
 import Wrapper from "../components/Wrapper";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFetchSuggestions } from "../hooks/useFetchSuggestions";
 
@@ -33,22 +33,26 @@ const Header = () => {
 
   return (
     <Wrapper>
-      <div className="fixed top-0 left-0 right-0 z-50 bg-white px-6">
+      <div className="fixed top-0 left-0 right-0 z-50 bg-white px-2 md:px-6">
         <div className="grid grid-flow-col py-2 items-center">
-          <div className="flex items-center col-span-1">
+          <div className="flex items-center col-span-2 md:col-span-1">
             <i
               onClick={() => dispatch(toggleSidebar())}
               className="ri-menu-line text-lg cursor-pointer px-2 py-1 rounded-4xl hover:bg-gray-100"
             ></i>
-            <Link to={'/'}>
-              <img className="w-24" src={YOUTUBE_LOGO_PNG} alt="Youtube_Logo" />
+            <Link to={"/"}>
+              <img
+                className="w-20 md:w-24"
+                src={YOUTUBE_LOGO_PNG}
+                alt="Youtube_Logo"
+              />
             </Link>
           </div>
 
           {/* Search input */}
-          <div className="col-span-8 flex justify-center">
+          <div className="col-span-10 md:col-span-8 flex justify-start sm:justify-center">
             <div className="flex flex-col">
-              <div className="border border-gray-200 w-[450px] flex rounded-2xl">
+              <div className="border border-gray-200 w-[200px] sm:w-[400px] md:w-[450px] lg:w-   [550px] flex rounded-2xl">
                 <input
                   ref={searchRef}
                   type="text"
@@ -57,7 +61,8 @@ const Header = () => {
                   onChange={(e) => setQuery(e.target.value)}
                   onFocus={() => setShowSuggestion(true)}
                   onBlur={() => setTimeout(() => setShowSuggestion(false), 200)}
-                  className="border border-white rounded-tl-2xl rounded-bl-2xl px-3 text-[14px] w-[90%] focus:border-blue-600 focus:outline-none"
+                  className="border border-white rounded-tl-2xl rounded-bl-2xl px-3 text-[14px] 
+                  w-[200px] sm:w-[400px] md:w-[450px] lg:w-[550px] focus:border-blue-600 focus:outline-none"
                 />
                 <button
                   onClick={handleSearchButton}
@@ -89,7 +94,7 @@ const Header = () => {
             </div>
           </div>
 
-          <div className="col-span-3 flex justify-end">
+          <div className="hidden sm:col-span-3 sm:flex sm:justify-end   ">
             <i className="ri-account-circle-line text-2xl cursor-pointer"></i>
           </div>
         </div>

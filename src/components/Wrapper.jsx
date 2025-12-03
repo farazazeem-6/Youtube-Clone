@@ -1,7 +1,5 @@
-import React from "react";
-
 const wrapperStyle = {
-  padding: "0px 24px",
+  padding: "0px 24px 0px 0px",
 };
 
 const Wrapper = ({ children }) => {

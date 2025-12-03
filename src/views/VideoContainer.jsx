@@ -82,10 +82,11 @@ const VideoContainer = () => {
   }
 
   return (
-    <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
-      {finalList.map((movie) => (
+    <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))]  md:grid-cols-[repeat(auto-fit,minmax(270px,1fr))]">
+      {finalList.map((movie, index) => (
         <Link
-          key={movie.id?.videoId || movie.id}
+          // key={movie.id?.videoId || movie.id}
+          key={index}
           to={"/watch?v=" + (movie.id?.videoId || movie.id)}
         >
           <VideoCard info={movie} />
