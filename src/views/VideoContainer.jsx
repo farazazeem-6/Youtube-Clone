@@ -58,7 +58,7 @@ const VideoContainer = () => {
   // Choose correct list and filter to only complete rows of 3
   const finalList = useMemo(() => {
     const list = category === "All" ? movies : categoryMovies;
-    const remainder = list.length % 3;
+    const remainder = list.length % 4;
 
     // If there's a remainder, remove those last items to make complete rows
     if (remainder !== 0) {
@@ -71,7 +71,7 @@ const VideoContainer = () => {
   // Shimmer on first load
   if (isLoading && finalList.length === 0) {
     return (
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))]  md:grid-cols-[repeat(auto-fit,minmax(270px,1fr))]">
         {Array(12)
           .fill(0)
           .map((_, i) => (
