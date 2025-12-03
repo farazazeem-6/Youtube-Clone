@@ -5,11 +5,9 @@ import { formatViews } from "../utils/constants";
 
 const LikeButton = ({ videoId, videoData, likeCount }) => {
   const dispatch = useDispatch();
-  
+
   // Check if user has liked this video
-  const isLiked = useSelector(
-    (state) => !!state.liked.likedVideos[videoId]
-  );
+  const isLiked = useSelector((state) => !!state.liked.likedVideos[videoId]);
 
   const handleLike = () => {
     if (!videoId) {
@@ -48,7 +46,7 @@ const LikeButton = ({ videoId, videoData, likeCount }) => {
   return (
     <button
       onClick={handleLike}
-      className={`bg-gray-200 px-2 rounded-3xl text-[12px] flex items-center gap-2 transition-all ${
+      className={`bg-gray-200 px-4 py-1 cursor-pointer rounded-full text-[12px] flex items-center gap-2 transition-all ${
         isLiked ? "bg-blue-100" : "hover:bg-gray-300"
       }`}
     >
