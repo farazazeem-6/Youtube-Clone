@@ -1,4 +1,3 @@
----
 
 # 🎬 **YouTube Clone – Full Video Streaming App (React + Redux + YouTube API)**
 
