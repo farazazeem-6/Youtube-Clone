@@ -103,7 +103,7 @@ const WatchPage = () => {
 
   return (
     <div className="flex gap-6">
-      <div className={`${sideBarFlag ? "pl-2" : "pl-30"}`}>
+      <div className={`${sideBarFlag ? "pl-2" : "pl-30"} flex-1`}>
         <div className="rounded-2xl overflow-hidden w-[800px] h-[450px]">
           <iframe
             width="800"
@@ -137,7 +137,6 @@ const WatchPage = () => {
               </p>
             </div>
             <div>
-              {/* Pass channelId and channelInfo as props */}
               <SubscribeButton
                 channelId={channelId}
                 channelInfo={channelInfo}
@@ -145,7 +144,6 @@ const WatchPage = () => {
             </div>
           </div>
           <div className="flex gap-2">
-            {/* Like Button */}
             <LikeButton
               videoId={movieId}
               videoData={{
@@ -160,11 +158,9 @@ const WatchPage = () => {
               }}
               likeCount={videoLikes}
             />
-            {/* Dislike Button */}
-            <button className="bg-gray-200 px-2 rounded-3xl text-[12px] flex items-center gap-2">
+            <button className="bg-gray-200 px-4 rounded-3xl text-[12px] flex items-center gap-2">
               <i className="ri-thumb-down-line text-lg"></i>
             </button>
-            {/* Watch Later Button */}
             <WatchLaterButton
               videoId={movieId}
               videoData={{
@@ -178,18 +174,23 @@ const WatchPage = () => {
                 description: currentVideo?.snippet?.description,
               }}
             />
-
-            <button className="bg-gray-200 px-4 rounded-3xl text-[12px] flex items-center gap-2">
+            <button className="bg-gray-200 px-4 rounded-full text-[12px] flex items-center gap-2">
               <i className="ri-more-line text-lg"></i>
             </button>
           </div>
         </div>
+
+        {/* Comments section */}
         <div className="mt-4">
           <CommentsList videoId={movieId} />
         </div>
       </div>
-      <div className="max-w-[290px]">
-        <SuggestionPage />
+
+      {/* STICKY SUGGESTIONS SIDEBAR */}
+      <div className="w-[290px] shrink-0">
+        <div className="sticky top-4 max-h-[calc(100vh-2rem)] overflow-y-auto hide-scrollbar">
+          <SuggestionPage />
+        </div>
       </div>
     </div>
   );
