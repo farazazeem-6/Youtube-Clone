@@ -7,7 +7,7 @@ import {
 
 const SubscribeButton = ({ channelId, channelInfo }) => {
   const dispatch = useDispatch();
-  
+
   // Check if user is subscribed to this channel
   const isSubscribed = useSelector(
     (state) => !!state.subscription.subscribedChannels[channelId]
@@ -36,7 +36,9 @@ const SubscribeButton = ({ channelId, channelInfo }) => {
           channelData: {
             id: channelId,
             title: channelInfo.snippet.title,
-            thumbnail: channelInfo.snippet.thumbnails?.medium?.url || channelInfo.snippet.thumbnails?.default?.url,
+            thumbnail:
+              channelInfo.snippet.thumbnails?.medium?.url ||
+              channelInfo.snippet.thumbnails?.default?.url,
             subscriberCount: channelInfo.statistics?.subscriberCount || "0",
             description: channelInfo.snippet.description || "",
           },
@@ -63,7 +65,6 @@ const SubscribeButton = ({ channelId, channelInfo }) => {
       {isDisabled ? (
         <>
           <i className="ri-loader-4-line animate-spin mr-1"></i>
-          Loading...
         </>
       ) : isSubscribed ? (
         <>

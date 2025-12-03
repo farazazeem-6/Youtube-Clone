@@ -93,17 +93,17 @@ const WatchPage = () => {
   // Add debugging
   useEffect(() => {
     if (!channelId) {
-      console.log("No channelId found for video:", movieId);
-      console.log("currentVideo:", currentVideo);
+      // console.log("No channelId found for video:", movieId);
+      // console.log("currentVideo:", currentVideo);
     }
     if (channelInfo) {
-      console.log("Channel info loaded:", channelInfo);
+      // console.log("Channel info loaded:", channelInfo);
     }
   }, [channelId, movieId, currentVideo, channelInfo]);
 
   return (
     <div className="flex gap-6">
-      <div className={`${sideBarFlag ? "pl-2" : "pl-30"} flex-1`}>
+      <div className={`${sideBarFlag ? "pl-3" : "pl-50"} flex-1`}>
         <div className="rounded-2xl overflow-hidden w-[800px] h-[450px]">
           <iframe
             width="800"
@@ -188,7 +188,7 @@ const WatchPage = () => {
 
       {/* STICKY SUGGESTIONS SIDEBAR */}
       <div className="w-[290px] shrink-0">
-        <div className="sticky top-4 max-h-[calc(100vh-2rem)] overflow-y-auto hide-scrollbar">
+        <div className="sticky top-14 max-h-[calc(100vh-2rem)] overflow-y-auto hide-scrollbar">
           <SuggestionPage />
         </div>
       </div>

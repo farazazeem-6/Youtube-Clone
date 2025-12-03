@@ -20,8 +20,8 @@ const SuggestionPage = () => {
     <div className="w-full">
       <div className="flex flex-col gap-1">
         {movies.map((movie, index) => (
-          <Link to={"/watch?v=" + movie.id}>
-            <SuggestionCard key={index} info={movie} />
+          <Link to={"/watch?v=" + movie.id} key={movie.id}>
+            <SuggestionCard info={movie} />
           </Link>
         ))}
       </div>

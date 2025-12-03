@@ -39,7 +39,7 @@ const SearchResultsPage = () => {
     <div className="flex flex-col gap-3 pl-6">
       {searchResults &&
         searchResults.map((item) => (
-          <Link to={"/watch?v=" + item.id.videoId}>
+          <Link to={"/watch?v=" + item.id.videoId} key={item.id||item.id?.videoId}>
             <SearchResultCard info={item} />
           </Link>
         ))}
