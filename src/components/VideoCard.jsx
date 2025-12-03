@@ -9,7 +9,7 @@ const VideoCard = ({ info }) => {
   // Destructure channel data cleanly
   const { snippet, statistics } = info;
   const { channelTitle, title, thumbnails, channelId, publishedAt } = snippet;
-const viewCount = info.statistics?.viewCount || 0;
+  const viewCount = info.statistics?.viewCount || 0;
 
   // Fetch channel data
   useChannel(channelId);
@@ -35,12 +35,14 @@ const viewCount = info.statistics?.viewCount || 0;
       <div className="flex gap-3 mt-3">
         {/* Channel Avatar */}
         <div className="shrink-0">
-          {channelAvatar && (
+          {channelAvatar ? (
             <img
               className="w-9 h-9 rounded-full object-cover"
               src={channelAvatar}
               alt={`${channelTitle} avatar`}
             />
+          ) : (
+            <div className="w-9 h-9 rounded-full bg-gray-300 animate-pulse" />
           )}
         </div>
 
