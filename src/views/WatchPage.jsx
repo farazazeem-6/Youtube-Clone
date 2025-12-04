@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeSideBar } from "../store/slices/sideBarToggleSlice";
 import { useSearchParams } from "react-router-dom";
@@ -12,8 +12,12 @@ import { addToHistory } from "../store/slices/historySlice";
 import LikeButton from "../components/LikeButton";
 import WatchLaterButton from "../components/WatchLaterButton";
 import useFetchSingleVideoData from "../hooks/useFetchSingleVideoData";
+import ReportModal from "../components/ReportModal";
+import { reportVideo } from "../store/slices/reportSlice";
 
 const WatchPage = () => {
+  const dispatch = useDispatch();
+  const [openReportModal, setOpenReportModal] = useState(false);
   const [searchParams] = useSearchParams();
   const movieId = searchParams.get("v");
   const sideBarFlag = useSelector((state) => state.sidebar.isSidebarOpen);
@@ -43,7 +47,6 @@ const WatchPage = () => {
   }
   if (!currentVideo) {
     const { data, loading, error } = useFetchSingleVideoData(movieId);
-    // data? console.log(data):console.log('no data found');
     currentVideo = data;
   }
 
@@ -66,10 +69,28 @@ const WatchPage = () => {
   // Calling comments hook
   useComments(movieId);
 
-  const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(closeSideBar());
-  // }, []);
+  // Handle Report Submission
+  const handleReportSubmit = (reportData) => {
+    dispatch(
+      reportVideo({
+        videoId: movieId,
+        videoData: {
+          title: videoTitle,
+          thumbnail:
+            currentVideo?.snippet?.thumbnails?.medium?.url ||
+            currentVideo?.snippet?.thumbnails?.default?.url,
+          channelTitle: currentVideo?.snippet?.channelTitle,
+          channelId: channelId,
+          publishedAt: currentVideo?.snippet?.publishedAt,
+        },
+        reason: reportData.reason,
+        description: reportData.description,
+        reportedAt: new Date().toISOString(),
+      })
+    );
+    // Optional: Show success message
+    console.log("Video reported successfully!");
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -109,108 +130,119 @@ const WatchPage = () => {
   }, [channelId, movieId, currentVideo, channelInfo]);
 
   return (
-    <div className="flex gap-6">
-      <div className={`${sideBarFlag ? "pl-3" : "pl-50"} flex-1`}>
-        <div className="rounded-2xl overflow-hidden w-[800px] h-[450px]">
-          <iframe
-            width="800"
-            height="450"
-            className="w-full h-full rounded-2xl"
-            src={`https://www.youtube.com/embed/${movieId}?si=GXl76taUpWIp4fFh`}
-            title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-          ></iframe>
-        </div>
-        <p className="text-sm text-black font-bold py-2 px-2">{videoTitle}</p>
+    <>
+      <div className="flex gap-6">
+        <div className={`${sideBarFlag ? "pl-3" : "pl-50"} flex-1`}>
+          <div className="rounded-2xl overflow-hidden w-[800px] h-[450px]">
+            <iframe
+              width="800"
+              height="450"
+              className="w-full h-full rounded-2xl"
+              src={`https://www.youtube.com/embed/${movieId}?si=GXl76taUpWIp4fFh`}
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            ></iframe>
+          </div>
+          <p className="text-sm text-black font-bold py-2 px-2">{videoTitle}</p>
 
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            {channelAvatar ? (
-              <img
-                className="rounded-full w-10 h-10"
-                src={channelAvatar}
-                onError={(e) =>
-                  (e.target.src =
-                    "https://images.unsplash.com/photo-1594322436404-5a0526db4d13?q=80&w=829&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
-                }
-                alt=""
-              />
-            ) : (
-              <div className="w-10 h-10 rounded-full bg-gray-300"></div>
-            )}
-            <div>
-              <p className="text-[12px] font-bold">
-                {channelTitle || (
-                  <div className="w-18 h-5 rounded-md bg-gray-300"></div>
-                )}
-              </p>
-              <p className="text-[11px]">
-                {channelSubscriber
-                  ? `${formatViews(channelSubscriber)} subscribers`
-                  : ""}
-              </p>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              {channelAvatar ? (
+                <img
+                  className="rounded-full w-10 h-10"
+                  src={channelAvatar}
+                  onError={(e) =>
+                    (e.target.src =
+                      "https://images.unsplash.com/photo-1594322436404-5a0526db4d13?q=80&w=829&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
+                  }
+                  alt=""
+                />
+              ) : (
+                <div className="w-10 h-10 rounded-full bg-gray-300"></div>
+              )}
+              <div>
+                <p className="text-[12px] font-bold">
+                  {channelTitle || (
+                    <div className="w-18 h-5 rounded-md bg-gray-300"></div>
+                  )}
+                </p>
+                <p className="text-[11px]">
+                  {channelSubscriber
+                    ? `${formatViews(channelSubscriber)} subscribers`
+                    : ""}
+                </p>
+              </div>
+              <div>
+                <SubscribeButton
+                  channelId={channelId}
+                  channelInfo={channelInfo}
+                />
+              </div>
             </div>
-            <div>
-              
-              <SubscribeButton
-                channelId={channelId}
-                channelInfo={channelInfo}
+            <div className="flex gap-2">
+              <LikeButton
+                videoId={movieId}
+                videoData={{
+                  title: videoTitle,
+                  thumbnail:
+                    currentVideo?.snippet?.thumbnails?.medium?.url ||
+                    currentVideo?.snippet?.thumbnails?.default?.url,
+                  channelTitle: currentVideo?.snippet?.channelTitle,
+                  channelId: channelId,
+                  publishedAt: currentVideo?.snippet?.publishedAt,
+                  description: currentVideo?.snippet?.description,
+                }}
+                likeCount={videoLikes}
               />
+              <button className="bg-gray-200 px-4 rounded-3xl text-[12px] flex items-center gap-2">
+                <i className="ri-thumb-down-line text-lg"></i>
+              </button>
+              <WatchLaterButton
+                videoId={movieId}
+                videoData={{
+                  title: videoTitle,
+                  thumbnail:
+                    currentVideo?.snippet?.thumbnails?.medium?.url ||
+                    currentVideo?.snippet?.thumbnails?.default?.url,
+                  channelTitle: currentVideo?.snippet?.channelTitle,
+                  channelId: channelId,
+                  publishedAt: currentVideo?.snippet?.publishedAt,
+                  description: currentVideo?.snippet?.description,
+                }}
+              />
+              <button
+                onClick={() => setOpenReportModal(true)}
+                className="bg-gray-200 px-4 rounded-full text-[12px] flex items-center gap-2 cursor-pointer hover:bg-gray-300 transition-colors"
+              >
+                Report <i className="ri-alarm-warning-line"></i>
+              </button>
             </div>
           </div>
-          <div className="flex gap-2">
-            <LikeButton
-              videoId={movieId}
-              videoData={{
-                title: videoTitle,
-                thumbnail:
-                  currentVideo?.snippet?.thumbnails?.medium?.url ||
-                  currentVideo?.snippet?.thumbnails?.default?.url,
-                channelTitle: currentVideo?.snippet?.channelTitle,
-                channelId: channelId,
-                publishedAt: currentVideo?.snippet?.publishedAt,
-                description: currentVideo?.snippet?.description,
-              }}
-              likeCount={videoLikes}
-            />
-            <button className="bg-gray-200 px-4 rounded-3xl text-[12px] flex items-center gap-2">
-              <i className="ri-thumb-down-line text-lg"></i>
-            </button>
-            <WatchLaterButton
-              videoId={movieId}
-              videoData={{
-                title: videoTitle,
-                thumbnail:
-                  currentVideo?.snippet?.thumbnails?.medium?.url ||
-                  currentVideo?.snippet?.thumbnails?.default?.url,
-                channelTitle: currentVideo?.snippet?.channelTitle,
-                channelId: channelId,
-                publishedAt: currentVideo?.snippet?.publishedAt,
-                description: currentVideo?.snippet?.description,
-              }}
-            />
-            <button className="bg-gray-200 px-4 rounded-full text-[12px] flex items-center gap-2">
-              <i className="ri-more-line text-lg"></i>
-            </button>
+
+          {/* Comments section */}
+          <div className="mt-4">
+            <CommentsList videoId={movieId} />
           </div>
         </div>
 
-        {/* Comments section */}
-        <div className="mt-4">
-          <CommentsList videoId={movieId} />
+        {/* STICKY SUGGESTIONS SIDEBAR */}
+        <div className="w-[290px] shrink-0">
+          <div className="sticky top-14 max-h-[calc(100vh-2rem)] overflow-y-auto hide-scrollbar">
+            <SuggestionPage />
+          </div>
         </div>
       </div>
 
-      {/* STICKY SUGGESTIONS SIDEBAR */}
-      <div className="w-[290px] shrink-0">
-        <div className="sticky top-14 max-h-[calc(100vh-2rem)] overflow-y-auto hide-scrollbar">
-          <SuggestionPage />
-        </div>
-      </div>
-    </div>
+      {/* Report Modal */}
+      <ReportModal
+        open={openReportModal}
+        handleClose={() => setOpenReportModal(false)}
+        onSubmit={handleReportSubmit}
+      />
+    </>
   );
 };
 

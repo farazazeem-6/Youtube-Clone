@@ -128,7 +128,10 @@ const Sidebar = () => {
         <hr className="text-gray-50" />
         <div className="pb-2">
           <SideBarButton name={"Setting"} img={SETTING_ICON_PNG} />
-          <SideBarButton name={"Report History"} img={REPORT_ICON_PNG} />
+          <Link to={"/report"}>
+            <SideBarButton name={"Report History"} img={REPORT_ICON_PNG} />
+          </Link>
+
           <SideBarButton name={"Help"} img={INFO_ICON_PNG} />
           <SideBarButton name={"Send feedback"} img={FEEDBACK_ICON_PNG} />
         </div>
