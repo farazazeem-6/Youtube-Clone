@@ -11,6 +11,7 @@ import SubscribeButton from "../components/SubscribeButton";
 import { addToHistory } from "../store/slices/historySlice";
 import LikeButton from "../components/LikeButton";
 import WatchLaterButton from "../components/WatchLaterButton";
+import useFetchSingleVideoData from "../hooks/useFetchSingleVideoData";
 
 const WatchPage = () => {
   const [searchParams] = useSearchParams();
@@ -39,6 +40,11 @@ const WatchPage = () => {
       return videoIdFromSearch === movieId;
     });
   }
+  if (!currentVideo) {
+    const { data, loading, error } = useFetchSingleVideoData(movieId);
+    // data? console.log(data):console.log('no data found');
+    currentVideo = data;
+  }
 
   // Extract channel ID
   const channelId = currentVideo?.snippet?.channelId;
@@ -60,9 +66,9 @@ const WatchPage = () => {
   useComments(movieId);
 
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(closeSideBar());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(closeSideBar());
+  // }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -93,11 +99,11 @@ const WatchPage = () => {
   // Add debugging
   useEffect(() => {
     if (!channelId) {
-      // console.log("No channelId found for video:", movieId);
-      // console.log("currentVideo:", currentVideo);
+      console.log("No channelId found for video:", movieId);
+      console.log("currentVideo:", currentVideo);
     }
     if (channelInfo) {
-      // console.log("Channel info loaded:", channelInfo);
+      console.log("Channel info loaded:", channelInfo);
     }
   }, [channelId, movieId, currentVideo, channelInfo]);
 
@@ -122,13 +128,23 @@ const WatchPage = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             {channelAvatar ? (
-              <img className="w-10 rounded-full" src={channelAvatar} alt="" />
+              <img
+                className="rounded-full w-10 h-10"
+                src={channelAvatar}
+                onError={(e) =>
+                  (e.target.src =
+                    "https://images.unsplash.com/photo-1594322436404-5a0526db4d13?q=80&w=829&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
+                }
+                alt=""
+              />
             ) : (
               <div className="w-10 h-10 rounded-full bg-gray-300"></div>
             )}
             <div>
               <p className="text-[12px] font-bold">
-                {channelTitle || "Loading..."}
+                {channelTitle || (
+                  <div className="w-18 h-5 rounded-md bg-gray-300"></div>
+                )}
               </p>
               <p className="text-[11px]">
                 {channelSubscriber

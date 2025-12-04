@@ -22,6 +22,7 @@ import YoutubeIcon from "../../public/youtube.png";
 import YoutubeStudioIcon from "../../public/ytStudio.png";
 import YoutubeMusicIcon from "../../public/ytMusic.png";
 import YoutubeKidsIcon from "../../public/ytKids.png";
+import GoogleImage from '../../public/Google-icon.png'
 
 export const YOUTUBE_LOGO_PNG = YoutubeLogo;
 export const HOME_ICON_PNG = HomeIcon;
@@ -47,6 +48,7 @@ export const YOUTUBE_ICON_PNG = YoutubeIcon;
 export const YOUTUBE_STUIDIO_ICON_PNG = YoutubeStudioIcon;
 export const YOUTUBE_MUSIC_ICON_PNG = YoutubeMusicIcon;
 export const YOUTUBE_KIDS_ICON_PNG = YoutubeKidsIcon;
+export const GOOGLE_IMAGE=GoogleImage
 
 export const proxy = "https://corsproxy.io/?";
 
@@ -58,6 +60,8 @@ export const YOUTUBE_CHANNELS_API =
 
 export const YOUTUBE_SEARCH_SUGGESTION_API = (query) =>
   `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=10&q=${query}&key=${API_KEY}`;
+
+export const SINGLE_VIDEO_DETAIL_API=(videoId)=>`https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${videoId}&key=${API_KEY}`
 
 export const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
 
