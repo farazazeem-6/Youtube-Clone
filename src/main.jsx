@@ -11,6 +11,7 @@ import SubscriptionsPage from "./views/SubscriptionsPage.jsx";
 import HistoryPage from "./views/HistoryPage.jsx";
 import LikedVideosPage from "./views/LikedVideosPage.jsx";
 import WatchLaterPage from "./views/WatchLaterPage.jsx";
+import ReportPage from "./views/ReportPage.jsx";
 
 const appRouter = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const appRouter = createBrowserRouter([
       {
         path:'watch-later',
         element:<WatchLaterPage/>
+      },
+      {
+        path:'report',
+        element:<ReportPage/>
       }
     ],
   },
