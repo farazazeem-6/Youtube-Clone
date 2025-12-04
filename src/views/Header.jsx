@@ -1,15 +1,21 @@
 import { YOUTUBE_LOGO_PNG } from "../utils/constants";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar } from "../store/slices/sideBarToggleSlice";
 import Wrapper from "../components/Wrapper";
 import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFetchSuggestions } from "../hooks/useFetchSuggestions";
 import AuthenticationModal from "../components/AuthenticationModal";
+import ProfileDropdown from "../components/ProfileDropDown";
+import { signOut } from "firebase/auth";
+import { auth } from "../utils/firebase";
+import ConfirmationModal from "../components/ConfirmationModal";
 
 const Header = () => {
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
+  const isUser = useSelector((state) => state.user);
+  const firstName = isUser?.firstName || "";
 
   const searchRef = useRef();
   const navigate = useNavigate();
@@ -32,6 +38,16 @@ const Header = () => {
     setQuery(title);
     navigate(`/results?search_query=${encodeURIComponent(title)}`);
     setShowSuggestion(false);
+  };
+
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        console.log("Logout successful");
+      })
+      .catch((error) => {
+        console.error("Logout error:", error);
+      });
   };
 
   return (
@@ -100,14 +116,23 @@ const Header = () => {
               </div>
             </div>
 
-            <div className="hidden sm:col-span-3 sm:flex sm:justify-end   ">
-              <button
-                onClick={() => setOpenModal(true)}
-                className=" px-3 py-1 cursor-pointer  border border-red-500 rounded-md text-[12px] text-white bg-red-600 font-bold hover:bg-red-700"
-              >
-                Sign In
-              </button>
-            </div>
+            {isUser ? (
+              <div className="sm:col-span-3 sm:flex sm:justify-end ">
+                <ProfileDropdown
+                  firstName={firstName}
+                  onLogout={handleLogout}
+                />
+              </div>
+            ) : (
+              <div className="sm:col-span-3 sm:flex sm:justify-end ">
+                <button
+                  onClick={() => setOpenModal(true)}
+                  className=" px-3 py-1 cursor-pointer  border border-red-500 rounded-md text-[12px] text-white bg-red-600 font-bold hover:bg-red-700"
+                >
+                  Sign In
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
