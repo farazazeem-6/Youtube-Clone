@@ -2,16 +2,25 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { GOOGLE_IMAGE } from "../utils/constants";
 import { useRef, useState } from "react";
-import { sendPasswordResetEmail } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { signInWithGoogle } from "../utils/socialAuth";
+import { auth } from "../utils/firebase";
+import { validateSignIn, validateSignUp } from "../utils/validations";
+import { addUser, removeUser } from "../store/slices/userSlice";
 
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 600,
+  width: 500,
   height: 500,
   bgcolor: "background.paper",
   boxShadow: 24,
@@ -23,6 +32,7 @@ function AuthenticationModal({ open, handleClose }) {
   const [isError, setIsError] = useState(null);
   const [isApiLoading, setIsApiLoading] = useState(false);
   const [isResponseError, setIsResponseError] = useState(null);
+  const isUser = useSelector((state) => state.user);
 
   // use ref hooks
   const email = useRef(null);
@@ -66,6 +76,7 @@ function AuthenticationModal({ open, handleClose }) {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
+          handleClose();
           // console.log(user);
         })
         .catch((error) => {
@@ -94,6 +105,7 @@ function AuthenticationModal({ open, handleClose }) {
               dispatch(
                 addUser({ uid: uid, firstName: displayName, email: email })
               );
+              handleClose();
             })
             .catch((error) => {
               setIsResponseError(error.message);
@@ -123,21 +135,13 @@ function AuthenticationModal({ open, handleClose }) {
       case "google":
         result = await signInWithGoogle();
         break;
-      case "facebook":
-        result = await signInWithFacebook();
-        break;
-      case "github":
-        result = await signInWithGithub();
-        break;
-      case "twitter":
-        result = await signInWithTwitter();
-        break;
       default:
         return;
     }
 
     if (result.success) {
       // console.log(`${provider} login successful:`, result.user);
+      handleClose();
     } else {
       setIsResponseError(result.error);
     }
@@ -163,6 +167,7 @@ function AuthenticationModal({ open, handleClose }) {
         });
     }
   }
+
   return (
     <Modal
       open={open}
@@ -171,7 +176,7 @@ function AuthenticationModal({ open, handleClose }) {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <div className="w-full flex flex-col  justify-center px-20">
+        <div className="w-full flex flex-col  justify-center px-10">
           <div className="flex items-center flex-col justify-center ">
             <form
               onSubmit={(e) => e.preventDefault()}
@@ -193,7 +198,7 @@ function AuthenticationModal({ open, handleClose }) {
               )}
               {isError?.field === "name" && (
                 <p className="text-red-500 text-[12px] flex items-center">
-                  <i className="ri-close-circle-line px-1 text-lg sm:text-xl"></i>
+                  <i className="ri-close-circle-line px-1 text-lg"></i>
                   {isError.message}.
                 </p>
               )}
@@ -203,11 +208,11 @@ function AuthenticationModal({ open, handleClose }) {
                 type="text"
                 placeholder="Enter email"
                 onChange={() => handleInputChange("email")}
-                className="border border-[rgb(110,98,98)] mt-2 px-3 rounded  text-black placeholder-gray-400 w-full text-sm py-2"
+                className="border border-[rgb(110,98,98)] mt-2 px-3 rounded text-black placeholder-gray-400 w-full text-sm py-2"
               />
               {isError?.field === "email" && (
                 <p className="text-red-500 text-[12px] flex items-center">
-                  <i className="ri-close-circle-line px-1 text-lg sm:text-xl"></i>
+                  <i className="ri-close-circle-line px-1 text-lg"></i>
                   {isError.message}
                 </p>
               )}
@@ -217,11 +222,11 @@ function AuthenticationModal({ open, handleClose }) {
                 type="password"
                 placeholder="Password"
                 onChange={() => handleInputChange("password")}
-                className="border border-[rgb(110,98,98)] mt-2 px-3  rounded  text-black placeholder-gray-400 w-full text-sm py-2"
+                className="border border-[rgb(110,98,98)] mt-2 px-3 rounded text-black placeholder-gray-400 w-full text-sm py-2"
               />
               {isError?.field === "password" && (
                 <p className="text-red-500 text-[12px] flex ">
-                  <i className="ri-close-circle-line px-1 text-lg sm:text-xl"></i>
+                  <i className="ri-close-circle-line px-1 text-lg"></i>
                   {isError.message}
                 </p>
               )}
@@ -229,7 +234,7 @@ function AuthenticationModal({ open, handleClose }) {
               {isSignIn && (
                 <p
                   onClick={resetPassword}
-                  className="cursor-pointer underline text-white font-bold text-right text-[13px] hover:text-[#c7b4b4]"
+                  className="cursor-pointer underline text-black font-bold text-right text-[13px]"
                 >
                   Forgot password?
                 </p>
@@ -255,7 +260,7 @@ function AuthenticationModal({ open, handleClose }) {
                 </p>
               )}
             </form>
-            <p className="text-[#bbb] text-center mt-3 sm:mt-4 text-sm">OR</p>
+            <p className="text-black text-center mt-3 text-[12px]">OR</p>
             <div className="grid w-full">
               <div
                 onClick={() => handleSocialLogin("google")}
@@ -283,5 +288,4 @@ function AuthenticationModal({ open, handleClose }) {
     </Modal>
   );
 }
-
 export default AuthenticationModal;
