@@ -9,6 +9,7 @@ import AuthenticationModal from "../components/AuthenticationModal";
 import ProfileDropdown from "../components/ProfileDropDown";
 import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
+import ConfirmationModal from "../components/ConfirmationModal";
 
 const Header = () => {
   const dispatch = useDispatch();

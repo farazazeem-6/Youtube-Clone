@@ -17,6 +17,7 @@ const WatchPage = () => {
   const [searchParams] = useSearchParams();
   const movieId = searchParams.get("v");
   const sideBarFlag = useSelector((state) => state.sidebar.isSidebarOpen);
+  const isUser = useSelector((state) => state.user);
 
   const popularMovies = useSelector((state) => state.movies.popularMovies);
   const searchResults = useSelector((state) => state.search.searchResults);
@@ -76,7 +77,7 @@ const WatchPage = () => {
 
   // Add video to history when it's played
   useEffect(() => {
-    if (currentVideo && movieId) {
+    if (currentVideo && movieId && isUser) {
       dispatch(
         addToHistory({
           videoId: movieId,
@@ -153,6 +154,7 @@ const WatchPage = () => {
               </p>
             </div>
             <div>
+              
               <SubscribeButton
                 channelId={channelId}
                 channelInfo={channelInfo}

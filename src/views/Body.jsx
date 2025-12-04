@@ -1,15 +1,15 @@
-import Sidebar from "./Sidebar";
-import MainContainer from "./MainContainer";
-import Wrapper from "../components/Wrapper";
-import { useDispatch, useSelector } from "react-redux";
-import { Outlet, useLocation } from "react-router-dom";
-import Header from "./Header";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { addUser, removeUser } from "../store/slices/userSlice";
 import { auth } from "../utils/firebase";
+import { useDispatch, useSelector } from "react-redux";
+import { Outlet, useLocation } from "react-router-dom";
+import Wrapper from "../components/Wrapper";
+import Header from "./Header";
+import Sidebar from "../views/Sidebar";
 
 const Body = () => {
+  const [authLoading, setAuthLoading] = useState(true); // Add loading state
   const isSideBar = useSelector((state) => state.sidebar.isSidebarOpen);
   const location = useLocation();
   const isWatchRoute = location.pathname === "/watch";
@@ -25,9 +25,21 @@ const Body = () => {
         dispatch(removeUser());
         console.log("login failed");
       }
+      setAuthLoading(false); // Set loading to false after auth check
     });
     return unsub;
   }, [dispatch]);
+
+  // Show loading spinner while checking auth
+  if (authLoading) {
+    return (
+      <Wrapper>
+        <div className="flex items-center justify-center h-screen">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
+        </div>
+      </Wrapper>
+    );
+  }
 
   return (
     <Wrapper>
