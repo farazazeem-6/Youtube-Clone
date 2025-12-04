@@ -68,7 +68,7 @@ const VideoContainer = () => {
     return list;
   }, [category, movies, categoryMovies]);
 
-  // Shimmer on first load
+  // Shimmer on load
   if (isLoading && finalList.length === 0) {
     return (
       <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))]  md:grid-cols-[repeat(auto-fit,minmax(270px,1fr))]">
