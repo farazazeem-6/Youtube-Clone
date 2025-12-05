@@ -9,7 +9,6 @@ const commentsSlice = createSlice({
   reducers: {
     addComments: (state, action) => {
       const { videoId, data } = action.payload;
-      // Store comments with videoId as key
       state.storeComments[videoId] = data;
     },
     setLoading: (state, action) => {

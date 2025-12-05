@@ -7,9 +7,11 @@ import { Outlet, useLocation } from "react-router-dom";
 import Wrapper from "../components/Wrapper";
 import Header from "./Header";
 import Sidebar from "../views/Sidebar";
+import ToastNotification from "../components/ToasterNotification";
 
 const Body = () => {
-  const [authLoading, setAuthLoading] = useState(true); // Add loading state
+  const [authLoading, setAuthLoading] = useState(true);
+  const [toast, setToast] = useState(null); // Toast state
   const isSideBar = useSelector((state) => state.sidebar.isSidebarOpen);
   const location = useLocation();
   const isWatchRoute = location.pathname === "/watch";
@@ -21,14 +23,27 @@ const Body = () => {
         const { uid, displayName, email } = user;
         dispatch(addUser({ uid: uid, firstName: displayName, email: email }));
         console.log("login success");
+
+        // Show login toast (only if not initial load)
+        if (!authLoading) {
+          setToast({
+            text: "Successfully logged in!",
+            bgColor: "bg-green-500",
+          });
+        }
       } else {
         dispatch(removeUser());
         console.log("login failed");
+
+        // Show logout toast
+        if (!authLoading) {
+          setToast({ text: "Logged out successfully", bgColor: "bg-red-500" });
+        }
       }
-      setAuthLoading(false); // Set loading to false after auth check
+      setAuthLoading(false);
     });
     return unsub;
-  }, [dispatch]);
+  }, [dispatch, authLoading]);
 
   // Show loading spinner while checking auth
   if (authLoading) {
@@ -50,6 +65,15 @@ const Body = () => {
           <Outlet />
         </div>
       </div>
+
+      {/* Toast notification */}
+      {toast && (
+        <ToastNotification
+          text={toast.text}
+          bgColor={toast.bgColor}
+          onClose={() => setToast(null)}
+        />
+      )}
     </Wrapper>
   );
 };

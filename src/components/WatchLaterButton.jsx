@@ -5,6 +5,7 @@ import {
   removeFromWatchLater,
 } from "../store/slices/watchLaterSlice";
 import AuthenticationModal from "./AuthenticationModal";
+import { SAVE_IMAGE, SAVE_IMAGE2 } from "../utils/constants";
 
 const WatchLaterButton = ({ videoId, videoData }) => {
   const dispatch = useDispatch();
@@ -63,21 +64,19 @@ const WatchLaterButton = ({ videoId, videoData }) => {
       <div className="relative">
         <button
           onClick={handleWatchLater}
-          className={`bg-gray-200 px-3 py-1 cursor-pointer rounded-full text-[12px] flex items-center gap-2  transition-all hover:bg-gray-300 ${
+          className={`bg-gray-200 px-3 py-2 cursor-pointer rounded-full text-[12px] flex items-center gap-2  transition-all hover:bg-gray-300 ${
             isInWatchLater ? "bg-purple-100" : ""
           }`}
           title={
             isInWatchLater ? "Remove from Watch Later" : "Add to Watch Later"
           }
         >
-          <i
-            className={`text-lg transition-all ${
-              isInWatchLater
-                ? "ri-time-fill text-blue-600"
-                : "ri-time-line text-gray-700"
-            }`}
-          ></i>
-          <span className={isInWatchLater ? "text-blue-600 font-semibold" : ""}>
+          {isInWatchLater ? (
+            <img className="w-5" src={SAVE_IMAGE2} alt="" />
+          ) : (
+            <img className="w-5" src={SAVE_IMAGE} alt="" />
+          )}
+          <span className={isInWatchLater ?  "font-bold" : ""}>
             {isInWatchLater ? "Saved" : "Save"}
           </span>
         </button>
