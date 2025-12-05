@@ -61,11 +61,11 @@ const LikeButton = ({ videoId, videoData, likeCount }) => {
         <i
           className={`text-lg transition-all ${
             isLiked
-              ? "ri-thumb-up-fill text-blue-600"
+              ? "ri-thumb-up-fill text-black-600"
               : "ri-thumb-up-line text-gray-700"
           }`}
         ></i>
-        <span className={isLiked ? "text-blue-600 font-semibold" : ""}>
+        <span className={isLiked ? "text-black-600 font-bold" : ""}>
           {likeCount ? formatViews(likeCount) : "Like"}
         </span>
       </button>

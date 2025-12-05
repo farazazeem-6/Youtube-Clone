@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// Load watch later videos from localStorage on init
 const loadWatchLater = () => {
   try {
     const saved = localStorage.getItem("watchLater");
@@ -20,7 +19,7 @@ const watchLaterSlice = createSlice({
     addToWatchLater: (state, action) => {
       const { videoId, videoData } = action.payload;
       
-      // Add video to watch later list with current timestamp
+      // Add video to watch later list with current time
       state.watchLaterVideos[videoId] = {
         ...videoData,
         addedAt: new Date().toISOString(),

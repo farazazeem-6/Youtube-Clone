@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// Load liked videos from localStorage on init
 const loadLikedVideos = () => {
   try {
     const saved = localStorage.getItem("likedVideos");

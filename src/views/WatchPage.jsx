@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { closeSideBar } from "../store/slices/sideBarToggleSlice";
 import { useSearchParams } from "react-router-dom";
-import { formatViews } from "../utils/constants";
+import {
+  CALLBACK_IMAGE,
+  FLAG_IMAGE,
+  formatViews,
+  REPORT_ICON_PNG,
+} from "../utils/constants";
 import SuggestionPage from "./SuggestionPage";
 import { useComments } from "../hooks/useFetchComments";
 import CommentsList from "./CommentsList";
@@ -26,6 +30,10 @@ const WatchPage = () => {
   const popularMovies = useSelector((state) => state.movies.popularMovies);
   const searchResults = useSelector((state) => state.search.searchResults);
   const categoryMovies = useSelector((state) => state.movies.categoryMovies);
+  const isReported = useSelector(
+    (state) => !!state.report.reportedVideos[movieId]
+  );
+  console.log(isReported);
 
   // Find the movie matching the ID
   let currentVideo = popularMovies.find((movie) => movie.id === movieId);
@@ -88,7 +96,7 @@ const WatchPage = () => {
         reportedAt: new Date().toISOString(),
       })
     );
-    // Optional: Show success message
+
     console.log("Video reported successfully!");
   };
 
@@ -154,10 +162,7 @@ const WatchPage = () => {
                 <img
                   className="rounded-full w-10 h-10"
                   src={channelAvatar}
-                  onError={(e) =>
-                    (e.target.src =
-                      "https://images.unsplash.com/photo-1594322436404-5a0526db4d13?q=80&w=829&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
-                  }
+                  onError={(e) => (e.target.src = CALLBACK_IMAGE)}
                   alt=""
                 />
               ) : (
@@ -213,11 +218,29 @@ const WatchPage = () => {
                   description: currentVideo?.snippet?.description,
                 }}
               />
+
               <button
+                disabled={isReported}
                 onClick={() => setOpenReportModal(true)}
-                className="bg-gray-200 px-4 rounded-full text-[12px] flex items-center gap-2 cursor-pointer hover:bg-gray-300 transition-colors"
+                className={`bg-gray-200 px-4 py-0 rounded-full font-semibold text-[10px] flex items-center gap-2 
+              hover:bg-gray-300 transition-colors
+              ${
+                isReported
+                  ? "bg-gray-400 cursor-not-allowed opacity-50"
+                  : "cursor-pointer"
+              }`}
               >
-                Report <i className="ri-alarm-warning-line"></i>
+                {isReported ? (
+                  <>
+                    <img className="w-4" src={FLAG_IMAGE} alt="Flag" />
+                    Reported
+                  </>
+                ) : (
+                  <>
+                    <img className="w-4" src={REPORT_ICON_PNG} alt="Report" />
+                    Report
+                  </>
+                )}
               </button>
             </div>
           </div>

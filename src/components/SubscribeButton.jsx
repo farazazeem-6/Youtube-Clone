@@ -91,7 +91,7 @@ const SubscribeButton = ({ channelId, channelInfo }) => {
       >
         {isDisabled ? (
           <>
-            <i className="ri-loader-4-line animate-spin mr-1"></i>
+            <i className="animate-spin mr-1"></i>
           </>
         ) : isSubscribed ? (
           <>

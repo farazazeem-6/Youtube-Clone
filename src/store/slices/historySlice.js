@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// Load history from localStorage on init
 const loadHistory = () => {
   try {
     const saved = localStorage.getItem("videoHistory");
@@ -26,7 +25,6 @@ const historySlice = createSlice({
         watchedAt: new Date().toISOString(),
       };
 
-      // Save to localStorage
       try {
         localStorage.setItem(
           "videoHistory",
@@ -42,7 +40,6 @@ const historySlice = createSlice({
       
       delete state.watchedVideos[videoId];
 
-      // Update localStorage
       try {
         localStorage.setItem(
           "videoHistory",
