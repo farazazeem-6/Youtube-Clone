@@ -12,6 +12,7 @@ import HistoryPage from "./views/HistoryPage.jsx";
 import LikedVideosPage from "./views/LikedVideosPage.jsx";
 import WatchLaterPage from "./views/WatchLaterPage.jsx";
 import ReportPage from "./views/ReportPage.jsx";
+import DownloadsPage from "./views/DownloadsPage";
 
 const appRouter = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ const appRouter = createBrowserRouter([
       {
         path:'report',
         element:<ReportPage/>
+      },
+      {
+        path:'download',
+        element:<DownloadsPage/>
       }
     ],
   },

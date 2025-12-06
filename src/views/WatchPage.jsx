@@ -18,6 +18,7 @@ import WatchLaterButton from "../components/WatchLaterButton";
 import useFetchSingleVideoData from "../hooks/useFetchSingleVideoData";
 import ReportModal from "../components/ReportModal";
 import { reportVideo } from "../store/slices/reportSlice";
+import DownloadButton from "../components/DownloadButton";
 
 const WatchPage = () => {
   const dispatch = useDispatch();
@@ -218,7 +219,17 @@ const WatchPage = () => {
                   description: currentVideo?.snippet?.description,
                 }}
               />
-
+             
+              <DownloadButton
+                videoId={movieId}
+                videoData={{
+                  title: videoTitle,
+                  thumbnail: currentVideo?.snippet?.thumbnails?.medium?.url,
+                  channelTitle: currentVideo?.snippet?.channelTitle,
+                  channelId: channelId,
+                  publishedAt: currentVideo?.snippet?.publishedAt,
+                }}
+              />
               <button
                 disabled={isReported}
                 onClick={() => setOpenReportModal(true)}
