@@ -11,6 +11,7 @@ import likedReducer from "../store/slices/likedSlice";
 import watchLaterReducer from "../store/slices/watchLaterSlice";
 import userReducer from "../store/slices/userSlice";
 import reportReducer from '../store/slices/reportSlice'
+import downloadReducer from '../store/slices/downloadsSlice'
 
 const appStore = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ const appStore = configureStore({
     watchLater: watchLaterReducer,
     user: userReducer,
     report: reportReducer,
+    downloads:downloadReducer
   },
 });
 export default appStore;

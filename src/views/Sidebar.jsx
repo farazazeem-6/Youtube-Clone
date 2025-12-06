@@ -99,7 +99,9 @@ const Sidebar = () => {
               isActive={isActive("/liked")}
             />
           </Link>
-          <SideBarButton name={"Downloads"} img={DOWNLAOD_ICON_PNG} />
+          <Link to={'/download'}>
+            <SideBarButton name={"Downloads"} img={DOWNLAOD_ICON_PNG} />
+          </Link>
         </div>
         <hr className="text-gray-50" />
         <div className="flex gap-1 items-center py-3">
