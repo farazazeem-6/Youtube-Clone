@@ -1,18 +1,21 @@
 // pages/DownloadsPage.jsx
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  removeDownload,
-  clearAllDownloads,
-} from "../store/slices/downloadsSlice";
-import { formatDistanceToNow } from "date-fns";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { removeDownload, clearAllDownloads } from '../store/slices/downloadsSlice';
+import { formatDistanceToNow } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
 
 const DownloadsPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const downloadedVideos = useSelector(
-    (state) => state.downloads.downloadedVideos
+  
+  // Get downloads object and convert to array
+  const downloadedVideosObj = useSelector(state => state.downloads.downloadedVideos);
+  const downloadedVideos = Object.values(downloadedVideosObj);
+  
+  // Sort by most recent first
+  const sortedVideos = [...downloadedVideos].sort((a, b) => 
+    new Date(b.downloadedAt) - new Date(a.downloadedAt)
   );
 
   const handleRemove = (videoId) => {
@@ -20,7 +23,7 @@ const DownloadsPage = () => {
   };
 
   const handleClearAll = () => {
-    if (window.confirm("Clear all download history?")) {
+    if (window.confirm('Clear all download history?')) {
       dispatch(clearAllDownloads());
     }
   };
@@ -29,13 +32,11 @@ const DownloadsPage = () => {
     navigate(`/watch?v=${videoId}`);
   };
 
-  if (downloadedVideos.length === 0) {
+  if (sortedVideos.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-[60vh] text-center px-4">
         <i className="ri-download-cloud-line text-6xl text-gray-300 mb-4"></i>
-        <h2 className="text-2xl font-bold text-gray-700 mb-2">
-          No Downloads Yet
-        </h2>
+        <h2 className="text-2xl font-bold text-gray-700 mb-2">No Downloads Yet</h2>
         <p className="text-gray-500 mb-4">
           Videos you download will appear here
         </p>
@@ -49,8 +50,7 @@ const DownloadsPage = () => {
         <div>
           <h1 className="text-2xl font-bold">Downloads</h1>
           <p className="text-sm text-gray-600">
-            {downloadedVideos.length} video
-            {downloadedVideos.length !== 1 ? "s" : ""} downloaded
+            {sortedVideos.length} video{sortedVideos.length !== 1 ? 's' : ''} downloaded
           </p>
         </div>
         <button
@@ -62,14 +62,14 @@ const DownloadsPage = () => {
       </div>
 
       <div className="space-y-4">
-        {downloadedVideos.map((video) => (
+        {sortedVideos.map((video) => (
           <div
             key={video.videoId}
             className="flex gap-4 bg-white rounded-lg p-3 hover:bg-gray-50 transition-colors"
           >
             {/* Thumbnail */}
-            <div
-              className="relative cursor-pointer"
+            <div 
+              className="relative cursor-pointer flex-shrink-0"
               onClick={() => handleVideoClick(video.videoId)}
             >
               <img
@@ -83,33 +83,30 @@ const DownloadsPage = () => {
             </div>
 
             {/* Video Info */}
-            <div className="flex-1">
-              <h3
+            <div className="flex-1 min-w-0">
+              <h3 
                 className="font-semibold text-sm line-clamp-2 cursor-pointer hover:text-blue-600"
                 onClick={() => handleVideoClick(video.videoId)}
               >
                 {video.title}
               </h3>
               <p className="text-xs text-gray-600 mt-1">{video.channelTitle}</p>
-
+              
               <div className="flex items-center gap-3 mt-2 text-xs text-gray-500">
                 <span className="flex items-center gap-1">
                   <i className="ri-download-line"></i>
-                  Downloaded{" "}
-                  {formatDistanceToNow(new Date(video.downloadedAt), {
-                    addSuffix: true,
-                  })}
+                  Downloaded {formatDistanceToNow(new Date(video.downloadedAt), { addSuffix: true })}
                 </span>
                 {video.filename && (
-                  <span className="text-xs bg-gray-100 px-2 py-1 rounded">
-                    {video.filename.split("_")[0]}.mp4
+                  <span className="text-xs bg-gray-100 px-2 py-1 rounded truncate max-w-[200px]">
+                    {video.filename}
                   </span>
                 )}
               </div>
             </div>
 
             {/* Actions */}
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 flex-shrink-0">
               <button
                 onClick={() => handleVideoClick(video.videoId)}
                 className="px-3 py-1 bg-blue-600 text-white text-xs rounded-full hover:bg-blue-700 transition-colors"
