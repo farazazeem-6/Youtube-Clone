@@ -5,11 +5,11 @@ import { Outlet } from "react-router-dom";
 const Layout = () => {
   return (
     <div className="flex flex-col h-screen">
-      <Header /> {/* Always visible */}
+      <Header /> 
       <div className="flex flex-1">
-        <Sidebar /> {/* Always visible */}
+        <Sidebar /> 
         <div className="flex-1">
-          <Outlet /> {/* Only this part changes with route */}
+          <Outlet /
         </div>
       </div>
     </div>

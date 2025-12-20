@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { formatViews, timeAgo } from "../utils/constants";
+import { timeAgo } from "../utils/constants";
 import { useChannel } from "../hooks/useFetchChannels";
 
 const ResultCard = ({ info }) => {
