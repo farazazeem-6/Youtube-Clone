@@ -7,7 +7,6 @@ const DownloadButton = ({ videoId, videoData }) => {
   const { downloading, progress, error, downloadVideo } = useVideoDownload(videoData);
   
   // DEBUG: Log the entire downloads state
-  const downloadsState = useSelector(state => state.downloads);
   // console.log('📦 Full Downloads State:', downloadsState);
   // console.log('📦 Downloaded Videos Object:', downloadsState?.downloadedVideos);
   // console.log('🎬 Current Video ID:', videoId);

@@ -25,7 +25,7 @@ const WatchLaterPage = () => {
   );
 
   const handleRemoveVideo = (videoId, e) => {
-    e.preventDefault(); // Prevent navigation when clicking remove
+    e.preventDefault();
     dispatch(removeFromWatchLater(videoId));
   };
 

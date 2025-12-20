@@ -7,12 +7,12 @@ const NavButton = ({ name }) => {
   const isActive = activeCategory === name;
 
   const handleClick = () => {
-    dispatch(setCategory(name)); //update category in Redux
+    dispatch(setCategory(name));
   };
 
   return (
     <button
-      onClick={handleClick} //attach click handler
+      onClick={handleClick}
       className={`py-1 px-3 text-[11px] rounded-md cursor-pointer whitespace-nowrap shrink-0 ${
         isActive ? "bg-black text-white" : "bg-gray-50 hover:bg-gray-200"
       }`}
