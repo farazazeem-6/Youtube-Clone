@@ -99,7 +99,7 @@ const ButtonList = () => {
       {/* Scrollable Container */}
       <div ref={scrollContainerRef} className="overflow-x-auto hide-scrollbar">
         <div className="flex gap-2 px-2">
-          {ButtonTypes.map((name, index) => (
+          {ButtonTypes.map((name) => (
             <NavButton key={name} name={name} />
           ))}
         </div>
