@@ -27,7 +27,7 @@ const Body = () => {
         // Show login toast (only if not initial load)
         if (!authLoading) {
           setToast({
-            text: "Successfully logged in!",
+            text: "Successfully logged In!",
             bgColor: "bg-green-500",
           });
         }
@@ -37,7 +37,7 @@ const Body = () => {
 
         // Show logout toast
         if (!authLoading) {
-          setToast({ text: "Logged out successfully", bgColor: "bg-red-500" });
+          setToast({ text: "Logged Out successfully", bgColor: "bg-red-500" });
         }
       }
       setAuthLoading(false);
