@@ -52,12 +52,12 @@ export const useVideoDownload = (videoData) => {
               if (data.success) {
                 setProgress(100);
 
-                const baseUrl = API_BASE.replace("/api", "");
-                const downloadUrl = `${baseUrl}${data.downloadUrl}`;
+                const baseURL = API_BASE.replace("/api", "");
+                const downloadURL = `${baseURL}${data.downloadUrl}`;
 
                 // Create temporary link and trigger download
                 const link = document.createElement("a");
-                link.href = downloadUrl;
+                link.href = downloadURL;
                 link.download = data.filename || "video.mp4";
                 document.body.appendChild(link);
                 link.click();
