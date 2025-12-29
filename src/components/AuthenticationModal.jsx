@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { signInWithGoogle } from "../utils/socialAuth";
 import { auth } from "../utils/firebase";
 import { validateSignIn, validateSignUp } from "../utils/validations";
-import { addUser, removeUser } from "../store/slices/userSlice";
+import { addUser } from "../store/slices/userSlice";
 
 const style = {
   position: "absolute",
