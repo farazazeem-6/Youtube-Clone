@@ -5,7 +5,7 @@ const loadDownloadsFromStorage = () => {
   try {
     const downloads = localStorage.getItem('downloadedVideos');
     return downloads ? JSON.parse(downloads) : {};
-  } catch (error) {
+  } catch  {
     return {};
   }
 };
