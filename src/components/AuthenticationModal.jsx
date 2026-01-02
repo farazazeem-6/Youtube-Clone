@@ -32,14 +32,14 @@ function AuthenticationModal({ open, handleClose }) {
   const [isError, setIsError] = useState(null);
   const [isApiLoading, setIsApiLoading] = useState(false);
   const [isResponseError, setIsResponseError] = useState(null);
-  const isUser = useSelector((state) => state.user);
+  // const isUser = useSelector((state) => state.user);
 
   // use ref hooks
   const email = useRef(null);
   const password = useRef(null);
   const name = useRef(null);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
 
   // toggle beween signup and sign in form function
