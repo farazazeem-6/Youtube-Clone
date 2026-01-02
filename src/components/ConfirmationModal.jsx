@@ -39,7 +39,7 @@ function ConfirmationModal({
             <button
               onClick={handleClose}
               disabled={isLoading}
-              className="px-4 py-2 text-sm cursor-pointer font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-4 py-2 text-sm cursor-pointer font-medium text-gray-600 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {cancelText}
             </button>
@@ -48,7 +48,7 @@ function ConfirmationModal({
               disabled={isLoading}
               className="px-4 py-2 text-sm cursor-pointer font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoading ? "Processing...." : confirmText}
+              {isLoading ? "Processing..." : confirmText}
             </button>
           </div>
         </div>
