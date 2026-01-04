@@ -2,7 +2,7 @@ import { formatViews, timeAgo } from "../utils/constants";
 
 const SuggestionCard = ({ info }) => {
   const { snippet, statistics } = info;
-  const { channelTitle, title, thumbnails, channelId, publishedAt } = snippet;
+  const { channelTitle, title, thumbnails, publishedAt } = snippet;
   const { viewCount } = statistics;
 
   return (
@@ -15,7 +15,7 @@ const SuggestionCard = ({ info }) => {
           alt={title}
         />
       </div>
-      
+
       {/* Text content - will take remaining space and handle overflow */}
       <div className="flex-1 min-w-0 flex flex-col">
         <p className="text-[12px] leading-[18px] font-medium line-clamp-2 mb-1">
