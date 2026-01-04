@@ -3,7 +3,7 @@ import { timeAgo } from "../utils/constants";
 import { useChannel } from "../hooks/useFetchChannels";
 
 const ResultCard = ({ info }) => {
-  const { snippet, statistics } = info;
+  const { snippet } = info;
   // info ? console.log(info) : console.log("no info");
   const { channelTitle, title, thumbnails, channelId, publishedAt } = snippet;
   // const { viewCount } = statistics;
@@ -16,7 +16,11 @@ const ResultCard = ({ info }) => {
   const description = channelInfo?.snippet?.description;
   return (
     <div className="flex gap-3 p-2 cursor-pointer w-[900px]">
-      <img className="rounded-2xl w-[300px]" src={thumbnails.medium.url} alt="" />
+      <img
+        className="rounded-2xl w-[300px]"
+        src={thumbnails.medium.url}
+        alt=""
+      />
       <div className="mt-3">
         <p className="text-[14px]">{title}</p>
         <div>
