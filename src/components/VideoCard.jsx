@@ -7,7 +7,7 @@ const VideoCard = ({ info }) => {
   if (!info) return null;
 
   // Destructure channel data cleanly
-  const { snippet, statistics } = info;
+  const { snippet } = info;
   const { channelTitle, title, thumbnails, channelId, publishedAt } = snippet;
   const viewCount = info.statistics?.viewCount || 0;
 
