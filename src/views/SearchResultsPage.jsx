@@ -10,7 +10,6 @@ const SearchResultsPage = () => {
   useFetchSearchResults(searchQuery);
 
   const searchResults = useSelector((state) => state.search.searchResults);
-  // searchResults ? console.log(searchResults) : console.log("Hyyy");
 
   const isLoading = useSelector((state) => state.search.isLoading);
 

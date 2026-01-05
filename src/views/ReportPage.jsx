@@ -109,7 +109,7 @@ const ReportedVideosPage = () => {
                 <h3 className="font-semibold text-base mb-2 line-clamp-2 group-hover:text-red-600 transition-colors">
                   {video.title}
                 </h3>
-                <p className="text-sm text-gray-600 mb-1">
+                <p className="text-sm text-gray-600 mb-2">
                   {video.channelTitle}
                 </p>
 
@@ -139,7 +139,7 @@ const ReportedVideosPage = () => {
               <button
                 onClick={(e) => handleRemoveReport(video.id, e)}
                 className="shrink-0 text-gray-400 cursor-pointer hover:text-red-500 transition-colors p-2 flex items-center gap-1"
-                title="Remove report"
+                title="Remove the report"
               >
                 <i className="ri-close-line text-xl"></i>
               </button>
