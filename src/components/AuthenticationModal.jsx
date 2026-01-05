@@ -80,7 +80,7 @@ function AuthenticationModal({ open, handleClose }) {
           // console.log(user);
         })
         .catch((error) => {
-          const errorCode = error.code;
+          // const errorCode = error.code;
           const errorMessage = error.message;
           setIsResponseError(errorMessage);
           // console.log("errorCode:", errorCode, "errorMessage:", errorMessage);
