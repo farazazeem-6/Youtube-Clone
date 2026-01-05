@@ -4,12 +4,10 @@ import { useChannel } from "../hooks/useFetchChannels";
 
 const ResultCard = ({ info }) => {
   const { snippet } = info;
-  // info ? console.log(info) : console.log("no info");
   const { channelTitle, title, thumbnails, channelId, publishedAt } = snippet;
   // const { viewCount } = statistics;
   useChannel(channelId);
   const channelInfo = useSelector((state) => state.channel.channels[channelId]);
-  // if (channelInfo) console.log(channelInfo);
 
   // Extract channel avatar safely
   const channelAvatar = channelInfo?.snippet?.thumbnails?.medium?.url;

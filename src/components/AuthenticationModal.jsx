@@ -96,7 +96,7 @@ function AuthenticationModal({ open, handleClose }) {
       )
         .then((userCredential) => {
           // Signed up
-          const user = userCredential.user;
+          // const user = userCredential.user;
           updateProfile(auth.currentUser, {
             displayName: name.current.value,
           })
@@ -114,7 +114,7 @@ function AuthenticationModal({ open, handleClose }) {
           // console.log(user);
         })
         .catch((error) => {
-          const errorCode = error.code;
+          // const errorCode = error.code;
           const errorMessage = error.message;
           setIsResponseError(errorMessage);
           // console.log("errorCode:", errorCode, "errorMessage:", errorMessage);

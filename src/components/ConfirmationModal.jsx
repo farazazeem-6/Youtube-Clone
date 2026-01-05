@@ -9,8 +9,8 @@ const style = {
   width: 400,
   maxWidth: "90%",
   bgcolor: "background.paper",
-  boxShadow: 24,
-  borderRadius: 2,
+  boxShadow: 20,
+  borderRadius: 3,
   p: 4,
 };
 
