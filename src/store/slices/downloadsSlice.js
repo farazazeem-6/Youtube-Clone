@@ -1,4 +1,3 @@
-// store/slices/downloadsSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const loadDownloadsFromStorage = () => {

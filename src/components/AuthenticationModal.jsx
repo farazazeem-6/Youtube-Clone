@@ -8,8 +8,7 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { signInWithGoogle } from "../utils/socialAuth";
 import { auth } from "../utils/firebase";
 import { validateSignIn, validateSignUp } from "../utils/validations";
