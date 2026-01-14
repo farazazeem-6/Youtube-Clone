@@ -1,4 +1,3 @@
-// useFetchCategoryVideos.js - UPDATED
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setCategoryMovies, setLoading, resetCategoryMovies, resetPopularMovies } from "../store/slices/moviesSlice";

@@ -1,4 +1,3 @@
-// useFetchPopularVideos.js - UPDATED
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { addPopularMovies, setLoading, resetPopularMovies, resetCategoryMovies } from "../store/slices/moviesSlice";
@@ -11,8 +10,8 @@ const useFetchPopularVideos = (category) => {
     if (category !== "All") return;
 
     const fetchPopularVideos = async () => {
-      dispatch(resetPopularMovies()); // Clear popular
-      dispatch(resetCategoryMovies()); // Clear category too
+      dispatch(resetPopularMovies()); 
+      dispatch(resetCategoryMovies());
       dispatch(setLoading(true));
 
       try {
