@@ -1,4 +1,3 @@
-// useFetchNextPagePopularVideos.js
 import { useDispatch } from "react-redux";
 import { addPopularMovies, setLoading } from "../store/slices/moviesSlice";
 import { API_KEY } from "../utils/constants";
