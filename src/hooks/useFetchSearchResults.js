@@ -1,4 +1,3 @@
-// src/hooks/useFetchSearchResults.js
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setSearchResults, setLoading } from "../store/slices/searchSlice";
@@ -18,10 +17,7 @@ const useFetchSearchResults = (searchQuery) => {
           `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=${searchQuery}&key=${API_KEY}`
         );
 
-        const data = await response.json();
-        // console.log(data.items);
-        
-
+        const data = await response.json();        
         dispatch(setSearchResults(data.items || []));
       } catch (error) {
         console.error("Search API Error:", error);

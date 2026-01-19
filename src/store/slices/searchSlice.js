@@ -1,4 +1,3 @@
-// src/store/slices/searchSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 const searchSlice = createSlice({
