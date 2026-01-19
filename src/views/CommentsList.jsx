@@ -3,10 +3,6 @@ import { useComments } from "../hooks/useFetchComments";
 
 const CommentsList = ({ videoId }) => {
   const { comments, isLoading } = useComments(videoId);
-
-//   console.log(comments);
-//   console.log(isLoading);
-
   if (isLoading) {
     return (
       <div>
