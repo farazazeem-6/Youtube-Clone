@@ -58,7 +58,7 @@ const Body = () => {
 
   return (
     <Wrapper>
-      <div className="">
+      <div>
         <Header />
         <div className="flex gap-2">
           {isSideBar && <Sidebar isWatchRoute={isWatchRoute} />}

@@ -21,7 +21,7 @@ const ReportedVideosPage = () => {
   );
 
   const handleRemoveReport = (videoId, e) => {
-    e.preventDefault(); // Prevent navigation when clicking remove
+    e.preventDefault(); 
     dispatch(removeReport(videoId));
   };
 
