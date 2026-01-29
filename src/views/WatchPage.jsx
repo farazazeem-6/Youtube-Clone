@@ -55,7 +55,7 @@ const WatchPage = () => {
     });
   }
   if (!currentVideo) {
-    const { data, loading, error } = useFetchSingleVideoData(movieId);
+    const { data } = useFetchSingleVideoData(movieId);
     currentVideo = data;
   }
 
@@ -71,7 +71,7 @@ const WatchPage = () => {
 
   // Extract channel data
   const channelAvatar = channelInfo?.snippet?.thumbnails?.medium?.url;
-  const channelPublishedDate = channelInfo?.snippet?.publishedAt;
+  // const channelPublishedDate = channelInfo?.snippet?.publishedAt;
   const channelTitle = channelInfo?.snippet?.title;
   const channelSubscriber = channelInfo?.statistics?.subscriberCount;
 

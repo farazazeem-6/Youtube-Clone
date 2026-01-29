@@ -47,7 +47,7 @@ const SubscriptionsPage = () => {
                 <p className="text-sm text-gray-600 mb-2">
                   {formatViews(channel.subscriberCount)} subscribers
                 </p>
-                <p className="text-xs text-gray-500 mb-3 line-clamp-2">
+                <p className="text-xs text-gray-600 mb-3 line-clamp-2">
                   {channel.description}
                 </p>
                 <SubscribeButton
