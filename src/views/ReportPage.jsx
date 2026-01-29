@@ -45,7 +45,7 @@ const ReportedVideosPage = () => {
     return (
       <div className="flex flex-col items-center justify-center h-[60vh] text-center w-full">
         <i className="ri-alarm-warning-line text-6xl text-gray-300 mb-4"></i>
-        <h2 className="text-2xl font-bold text-gray-700 mb-2">
+        <h2 className="text-2xl font-bold text-gray-600 mb-2">
           No reported videos
         </h2>
         <p className="text-gray-500">Videos you report will appear here!</p>
