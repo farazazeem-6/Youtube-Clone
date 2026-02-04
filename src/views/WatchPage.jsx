@@ -203,7 +203,7 @@ const WatchPage = () => {
                 }}
                 likeCount={videoLikes}
               />
-              <button className="bg-gray-200 px-4 rounded-3xl text-[12px] flex items-center gap-2">
+              <button className="bg-gray-300 px-4 rounded-3xl text-[12px] flex items-center gap-2">
                 <i className="ri-thumb-down-line text-lg"></i>
               </button>
               <WatchLaterButton
@@ -237,7 +237,7 @@ const WatchPage = () => {
               hover:bg-gray-300 transition-colors
               ${
                 isReported
-                  ? "bg-gray-400 cursor-not-allowed opacity-50"
+                  ? "bg-gray-500 cursor-not-allowed opacity-50"
                   : "cursor-pointer"
               }`}
               >
@@ -257,7 +257,7 @@ const WatchPage = () => {
           </div>
 
           {/* Comments section */}
-          <div className="mt-4">
+          <div className="mt-3">
             <CommentsList videoId={movieId} />
           </div>
         </div>
