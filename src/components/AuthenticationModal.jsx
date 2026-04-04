@@ -139,7 +139,6 @@ function AuthenticationModal({ open, handleClose }) {
     }
 
     if (result.success) {
-      // console.log(`${provider} login successful:`, result.user);
       handleClose();
     } else {
       setIsResponseError(result.error);
