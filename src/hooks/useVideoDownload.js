@@ -1,26 +1,143 @@
-// hooks/useVideoDownload.js
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addDownload } from "../store/slices/downloadsSlice";
 
-const API_BASE = "http://localhost:5000/api";
+// ============================================================================
+// CONSTANTS
+// ============================================================================
 
+const HOOK_NAME = "[useVideoDownload]";
+const API_BASE = "http://localhost:5000/api";
+const DOWNLOAD_ENDPOINT = "/download";
+const COMPLETION_DELAY = 2000; // milliseconds to reset after download
+const STREAM_EVENT_TYPES = {
+  PROGRESS: "progress",
+  COMPLETE: "complete",
+  ERROR: "error",
+};
+
+// ============================================================================
+// HELPER FUNCTIONS
+// ============================================================================
+
+/**
+ * Validates download parameters
+ * @param {string} videoId - Video ID to download
+ * @param {Object} videoData - Video metadata
+ * @returns {Object} { isValid: boolean, error: string|null }
+ */
+const validateDownloadParams = (videoId, videoData) => {
+  if (!videoId) {
+    return { isValid: false, error: "Missing videoId" };
+  }
+  if (!videoData) {
+    return { isValid: false, error: "Missing videoData" };
+  }
+  return { isValid: true, error: null };
+};
+
+/**
+ * Parses streaming response chunks
+ * @param {string} chunk - Raw text chunk from stream
+ * @returns {Object|null} Parsed JSON or null if invalid
+ */
+const parseStreamChunk = (chunk) => {
+  try {
+    return JSON.parse(chunk);
+  } catch (err) {
+    console.warn(`${HOOK_NAME} Failed to parse stream chunk:`, chunk);
+    return null;
+  }
+};
+
+/**
+ * Triggers browser download for file
+ * @param {string} downloadUrl - URL of file to download
+ * @param {string} filename - Name for downloaded file
+ */
+const triggerBrowserDownload = (downloadUrl, filename) => {
+  const link = document.createElement("a");
+  link.href = downloadUrl;
+  link.download = filename || "video.mp4";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
+/**
+ * Saves download info to Redux store
+ * @param {string} videoId - Video ID
+ * @param {Object} videoData - Video metadata
+ * @param {string} filename - Downloaded filename
+ * @param {Function} dispatch - Redux dispatch
+ */
+const saveDownloadToStore = (videoId, videoData, filename, dispatch) => {
+  dispatch(
+    addDownload({
+      videoId,
+      videoData: {
+        ...videoData,
+        filename,
+      },
+      downloadedAt: new Date().toISOString(),
+    })
+  );
+};
+
+/**
+ * Handles download errors with context logging
+ * @param {Error} error - Error object
+ * @param {string} videoId - Video being downloaded
+ * @param {Function} setError - Error state setter
+ */
+const handleDownloadError = (error, videoId, setError) => {
+  const errorMessage = error.message || "Download failed";
+  console.error(`${HOOK_NAME} Download failed for video ${videoId}:`, error);
+  setError(errorMessage);
+};
+
+// ============================================================================
+// HOOK
+// ============================================================================
+
+/**
+ * useVideoDownload Hook
+ * Manages video download with progress tracking
+ * Handles streaming response parsing and file downloads
+ *
+ * @param {Object} videoData - Video metadata object
+ * @returns {Object} { downloading: boolean, progress: number, error: string|null, downloadVideo: Function, reset: Function }
+ */
 export const useVideoDownload = (videoData) => {
   const [downloading, setDownloading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
 
+  /**
+   * Initiates video download with streaming progress
+   * @param {string} videoId - YouTube video ID to download
+   * @returns {Promise<void>}
+   */
   const downloadVideo = async (videoId) => {
-    // console.log("🎬 downloadVideo called with videoId:", videoId);
-    // console.log("📦 videoData received:", videoData);
+    // Validate parameters
+    const { isValid, error: validationError } = validateDownloadParams(
+      videoId,
+      videoData
+    );
+
+    if (!isValid) {
+      console.error(`${HOOK_NAME}`, validationError);
+      setError(validationError);
+      return;
+    }
 
     setDownloading(true);
     setProgress(0);
     setError(null);
 
     try {
-      const response = await fetch(`${API_BASE}/download`, {
+      const response = await fetch(`${API_BASE}${DOWNLOAD_ENDPOINT}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -29,9 +146,10 @@ export const useVideoDownload = (videoData) => {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`HTTP ${response.status}: Download request failed`);
       }
 
+      // Parse streaming response
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
 
@@ -43,64 +161,58 @@ export const useVideoDownload = (videoData) => {
         const lines = chunk.split("\n").filter((line) => line.trim());
 
         for (const line of lines) {
-          try {
-            const data = JSON.parse(line);
+          const data = parseStreamChunk(line);
+          if (!data) continue;
 
-            if (data.type === "progress") {
+          switch (data.type) {
+            case STREAM_EVENT_TYPES.PROGRESS:
               setProgress(Math.round(data.progress));
-            } else if (data.type === "complete") {
+              break;
+
+            case STREAM_EVENT_TYPES.COMPLETE:
               if (data.success) {
                 setProgress(100);
 
+                // Construct download URL
                 const baseURL = API_BASE.replace("/api", "");
                 const downloadURL = `${baseURL}${data.downloadUrl}`;
 
-                // Create temporary link and trigger download
-                const link = document.createElement("a");
-                link.href = downloadURL;
-                link.download = data.filename || "video.mp4";
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+                // Trigger browser download
+                triggerBrowserDownload(downloadURL, data.filename);
 
-                // SAVE TO REDUX STORE - THIS WAS MISSING!
-                // console.log("💾 Saving to Redux with videoId:", videoId);
-                // console.log("💾 VideoData being saved:", videoData);
-                dispatch(
-                  addDownload({
-                    videoId: videoId,
-                    videoData: {
-                      ...videoData,
-                      filename: data.filename,
-                    },
-                    downloadedAt: new Date().toISOString(),
-                  })
+                // Save to Redux store
+                saveDownloadToStore(
+                  videoId,
+                  videoData,
+                  data.filename,
+                  dispatch
                 );
 
-                // Reset after 2 seconds
+                // Reset state after delay
                 setTimeout(() => {
                   setDownloading(false);
                   setProgress(0);
-                }, 2000);
+                }, COMPLETION_DELAY);
               } else {
-                throw new Error(data.error || "Download failed");
+                throw new Error(data.message || "Download failed on server");
               }
-            } else if (data.type === "error") {
-              throw new Error(data.error || "An error occurred");
-            }
-          } catch (parseError) {
-            console.error("Parse error:", parseError);
+              break;
+
+            case STREAM_EVENT_TYPES.ERROR:
+              throw new Error(data.message || "Server error during download");
           }
         }
       }
     } catch (err) {
-      console.error("Download error:", err);
-      setError(err.message);
+      handleDownloadError(err, videoId, setError);
       setDownloading(false);
       setProgress(0);
     }
   };
 
+  /**
+   * Resets download state to initial values
+   */
   const reset = () => {
     setDownloading(false);
     setProgress(0);

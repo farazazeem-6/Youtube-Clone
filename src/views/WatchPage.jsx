@@ -272,8 +272,8 @@ const WatchPage = () => {
 
       {/* Report Modal */}
       <ReportModal
-        open={openReportModal}
-        handleClose={() => setOpenReportModal(false)}
+        isOpen={openReportModal}
+        onClose={() => setOpenReportModal(false)}
         onSubmit={handleReportSubmit}
       />
     </>
