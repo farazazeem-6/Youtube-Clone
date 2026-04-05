@@ -140,13 +140,13 @@ const WatchLaterPage = () => {
       </div>
 
       <ConfirmationModal
-        open={openConfirmModal}
-        handleClose={() => setOpenConfirmModal(false)}
-        handleConfirm={handleClearAllHistory}
+        isOpen={openConfirmModal}
+        onClose={() => setOpenConfirmModal(false)}
+        onConfirm={handleClearAllHistory}
         title="Clear All Watch Later Videos?"
         message="Are you sure you want to clear all Watch Later Videos History?"
-        cancelText="Cancel"
-        confirmText="Clear All"
+        cancelLabel="Cancel"
+        confirmLabel="Clear All"
       />
     </>
   );

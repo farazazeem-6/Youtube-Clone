@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 
-const style = {
+// ============================================================================
+// STYLES & CONSTANTS
+// ============================================================================
+
+const MODAL_STYLE = {
   position: "absolute",
   top: "50%",
   left: "50%",
@@ -14,6 +18,8 @@ const style = {
   borderRadius: 2,
   p: 0,
 };
+
+const MAX_DESCRIPTION_LENGTH = 1000;
 
 // Report reasons with predefined descriptions
 const REPORT_REASONS = [
@@ -78,63 +84,127 @@ const REPORT_REASONS = [
   },
 ];
 
-function ReportModal({ open, handleClose, onSubmit }) {
+// ============================================================================
+// HELPER FUNCTIONS
+// ============================================================================
+
+/**
+ * Finds report reason by ID and returns its default description
+ * @param {string} reasonId - ID of the report reason
+ * @returns {string} Default description for the reason
+ */
+const getReasonDescription = (reasonId) => {
+  const reason = REPORT_REASONS.find((r) => r.id === reasonId);
+  return reason?.description || "";
+};
+
+/**
+ * Validates report submission data
+ * @param {string} description - Report description text
+ * @returns {Object} { isValid: boolean, error: string|null }
+ */
+const validateReportSubmission = (description) => {
+  if (!description.trim()) {
+    return { isValid: false, error: "Description is required" };
+  }
+
+  if (description.length > MAX_DESCRIPTION_LENGTH) {
+    return { isValid: false, error: `Max ${MAX_DESCRIPTION_LENGTH} characters allowed` };
+  }
+
+  return { isValid: true, error: null };
+};
+
+// ============================================================================
+// COMPONENT
+// ============================================================================
+
+/**
+ * ReportModal Component
+ * Allows users to report inappropriate videos with categorized reasons
+ * Features character limit, auto-filled descriptions, and form validation
+ * 
+ * @component
+ * @param {Object} props - Component props
+ * @param {boolean} props.isOpen - Whether modal is visible
+ * @param {Function} props.onClose - Callback when modal closes
+ * @param {Function} props.onSubmit - Callback with report data ({ reason, description })
+ * @returns {React.ReactElement} Report modal dialog
+ */
+function ReportModal({ isOpen, onClose, onSubmit }) {
   const [selectedReason, setSelectedReason] = useState("");
   const [description, setDescription] = useState("");
 
+  /**
+   * Handles reason selection with auto-filled description
+   */
   const handleReasonChange = (e) => {
     const reasonId = e.target.value;
     setSelectedReason(reasonId);
-
-    // Find the selected reason and auto-fill description
-    const reason = REPORT_REASONS.find((r) => r.id === reasonId);
-    if (reason) {
-      setDescription(reason.description);
-    }
+    
+    // Auto-fill description from predefined reason
+    const reasonDescription = getReasonDescription(reasonId);
+    setDescription(reasonDescription);
   };
 
+  /**
+   * Handles description text input with character limit
+   */
   const handleDescriptionChange = (e) => {
     const value = e.target.value;
-    if (value.length <= 1000) {
+    if (value.length <= MAX_DESCRIPTION_LENGTH) {
       setDescription(value);
     }
   };
 
-  const handleSubmit = () => {
-    if (description.trim()) {
-      onSubmit({ reason: selectedReason, description: description.trim() });
-      handleCloseModal();
+  /**
+   * Submits report and closes modal
+   */
+  const handleSubmitReport = () => {
+    const { isValid, error } = validateReportSubmission(description);
+    
+    if (!isValid) {
+      console.error("[ReportModal]", error);
+      return;
     }
+
+    onSubmit({ reason: selectedReason, description: description.trim() });
+    resetAndClose();
   };
 
-  const handleCloseModal = () => {
+  /**
+   * Resets form state and closes modal
+   */
+  const resetAndClose = () => {
     setSelectedReason("");
     setDescription("");
-    handleClose();
+    onClose();
   };
 
   return (
-    <Modal open={open} onClose={handleCloseModal}>
-      <Box sx={style}>
+    <Modal open={isOpen} onClose={resetAndClose} aria-labelledby="report-modal-title">
+      <Box sx={MODAL_STYLE}>
         {/* Header */}
         <div className="border-b border-gray-200 px-6 py-4">
-          <h2 className="text-xl font-semibold text-gray-900">
+          <h2 id="report-modal-title" className="text-xl font-semibold text-gray-900">
             Report this Video
           </h2>
         </div>
 
         {/* Content */}
         <div className="px-6 py-5 space-y-5">
-          {/* Select Problem */}
+          {/* Select Problem Dropdown */}
           <div>
-            <label className="block text-sm font-semibold text-gray-900 mb-2">
+            <label htmlFor="reason-select" className="block text-sm font-semibold text-gray-900 mb-2">
               Select a problem
             </label>
             <div className="relative">
               <select
+                id="reason-select"
                 value={selectedReason}
                 onChange={handleReasonChange}
                 className="w-full px-4 py-3 pr-10 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg appearance-none cursor-pointer hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                aria-label="Select report reason"
               >
                 <option value="">Select the issue you want to report</option>
                 {REPORT_REASONS.map((reason) => (
@@ -149,42 +219,48 @@ function ReportModal({ open, handleClose, onSubmit }) {
             </div>
           </div>
 
-          {/* Description */}
+          {/* Description Textarea */}
           <div>
-            <label className="block text-sm font-semibold text-gray-900 mb-2">
+            <label htmlFor="description-textarea" className="block text-sm font-semibold text-gray-900 mb-2">
               Description
             </label>
             <textarea
+              id="description-textarea"
               value={description}
               onChange={handleDescriptionChange}
               placeholder="Select a problem to view its details, then you can update or add more details if needed."
               className="w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
               rows="6"
+              maxLength={MAX_DESCRIPTION_LENGTH}
+              aria-label="Report description"
             />
             <div className="flex justify-end mt-1">
-              <span className="text-xs text-gray-500">
-                {description.length}/1000
+              <span className="text-xs text-gray-500" aria-live="polite">
+                {description.length}/{MAX_DESCRIPTION_LENGTH}
               </span>
             </div>
           </div>
         </div>
 
-        {/* Footer */}
+        {/* Footer with Actions */}
         <div className="border-t border-gray-200 px-6 py-4 flex justify-end gap-3">
           <button
-            onClick={handleCloseModal}
+            onClick={resetAndClose}
             className="px-5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition cursor-pointer"
+            type="button"
           >
             Cancel
           </button>
           <button
-            onClick={handleSubmit}
+            onClick={handleSubmitReport}
             disabled={!description.trim()}
             className={`px-5 py-2 text-sm font-medium text-white rounded-lg transition cursor-pointer ${
               description.trim()
                 ? "bg-red-600 hover:bg-red-700"
                 : "bg-gray-300 cursor-not-allowed"
             }`}
+            type="button"
+            aria-label="Submit report"
           >
             Report
           </button>

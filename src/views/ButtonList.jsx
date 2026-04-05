@@ -3,7 +3,11 @@ import NavButton from "../components/NavButton";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 
-const ButtonTypes = [
+// ============================================================================
+// CONSTANTS
+// ============================================================================
+
+const CATEGORIES = [
   "All",
   "Music",
   "Comdedy Clubs",
@@ -26,93 +30,141 @@ const ButtonTypes = [
   "Watched",
   "New to you",
 ];
+
+const SCROLL_AMOUNT = 200; // pixels to scroll per click
+const SCROLL_THRESHOLD = 1; // pixel threshold to prevent floating point issues
+
+// ============================================================================
+// HELPER FUNCTIONS
+// ============================================================================
+
+/**
+ * Checks if scroll container can scroll left
+ * @param {HTMLElement} container - Scroll container element
+ * @returns {boolean} True if not at start position
+ */
+const canScrollLeft = (container) => {
+  if (!container) return false;
+  return container.scrollLeft > 0;
+};
+
+/**
+ * Checks if scroll container can scroll right
+ * @param {HTMLElement} container - Scroll container element
+ * @returns {boolean} True if not at end position
+ */
+const canScrollRight = (container) => {
+  if (!container) return false;
+  const { scrollLeft, scrollWidth, clientWidth } = container;
+  return scrollLeft < scrollWidth - clientWidth - SCROLL_THRESHOLD;
+};
+
+// ============================================================================
+// COMPONENT
+// ============================================================================
+
+/**
+ * ButtonList Component
+ * Horizontal scrollable category filter list with scroll controls
+ * Shows left/right arrows only when scroll is possible
+ * 
+ * @component
+ * @returns {React.ReactElement} Category filter list with scroll navigation
+ */
 const ButtonList = () => {
   const scrollContainerRef = useRef(null);
-  const [showLeftArrow, setShowLeftArrow] = useState(false);
-  const [showRightArrow, setShowRightArrow] = useState(false);
+  const [canScrollLeftFlag, setCanScrollLeftFlag] = useState(false);
+  const [canScrollRightFlag, setCanScrollRightFlag] = useState(false);
 
-  // Check scroll position and update arrow visibility
-  const checkScrollPosition = () => {
-    if (scrollContainerRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } =
-        scrollContainerRef.current;
+  /**
+   * Updates arrow visibility based on current scroll position
+   */
+  const updateScrollArrows = () => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
 
-      // Show left arrow if not at the start
-      setShowLeftArrow(scrollLeft > 0);
-
-      // Show right arrow if not at the end
-      setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 1);
-    }
+    setCanScrollLeftFlag(canScrollLeft(container));
+    setCanScrollRightFlag(canScrollRight(container));
   };
 
-  // Scroll left
-  const scrollLeft = () => {
+  /**
+   * Scrolls container left by SCROLL_AMOUNT
+   */
+  const handleScrollLeft = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({
-        left: -200,
+        left: -SCROLL_AMOUNT,
         behavior: "smooth",
       });
     }
   };
 
-  // Scroll right
-  const scrollRight = () => {
+  /**
+   * Scrolls container right by SCROLL_AMOUNT
+   */
+  const handleScrollRight = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({
-        left: 200,
+        left: SCROLL_AMOUNT,
         behavior: "smooth",
       });
     }
   };
 
-  // Check scroll position on mount and scroll
+  /**
+   * Setup scroll position listeners on mount/unmount
+   */
   useEffect(() => {
-    checkScrollPosition();
+    updateScrollArrows();
     const scrollContainer = scrollContainerRef.current;
 
     if (scrollContainer) {
-      scrollContainer.addEventListener("scroll", checkScrollPosition);
-      // Also check on resize
-      window.addEventListener("resize", checkScrollPosition);
+      scrollContainer.addEventListener("scroll", updateScrollArrows);
+      window.addEventListener("resize", updateScrollArrows);
 
       return () => {
-        scrollContainer.removeEventListener("scroll", checkScrollPosition);
-        window.removeEventListener("resize", checkScrollPosition);
+        scrollContainer.removeEventListener("scroll", updateScrollArrows);
+        window.removeEventListener("resize", updateScrollArrows);
       };
     }
   }, []);
+
   return (
     <div className="sticky top-[52px] bg-white z-10 pb-3 pt-3">
-      {/* Left Arrow Button */}
-      {showLeftArrow && (
+      {/* Left Scroll Arrow - Hidden when at start */}
+      {canScrollLeftFlag && (
         <button
-          onClick={scrollLeft}
-          className="absolute -left-2 bottom-1 h-full w-6  z-10 flex items-center justify-start cursor-pointer"
-          aria-label="Scroll left"
+          onClick={handleScrollLeft}
+          className="absolute -left-2 bottom-1 h-full w-6 z-10 flex items-center justify-start cursor-pointer"
+          aria-label="Scroll categories left"
+          type="button"
+          title="Scroll left"
         >
-          <div className="bg-white rounded-full p-1 hover:bg-gray-200">
+          <div className="bg-white rounded-full p-1 hover:bg-gray-200 transition-colors">
             <ChevronLeftIcon fontSize="small" />
           </div>
         </button>
       )}
 
-      {/* Scrollable Container */}
+      {/* Category List - Horizontally Scrollable */}
       <div ref={scrollContainerRef} className="overflow-x-auto hide-scrollbar">
         <div className="flex gap-2 px-2">
-          {ButtonTypes.map((name) => (
-            <NavButton key={name} name={name} />
+          {CATEGORIES.map((categoryName) => (
+            <NavButton key={categoryName} name={categoryName} />
           ))}
         </div>
       </div>
 
-      {/* Right Arrow Button */}
-      {showRightArrow && (
+      {/* Right Scroll Arrow - Hidden when at end */}
+      {canScrollRightFlag && (
         <button
-          onClick={scrollRight}
-          className="absolute -right-2 bottom-1 h-full w-6  z-10 flex items-center justify-end cursor-pointer"
-          aria-label="Scroll right"
+          onClick={handleScrollRight}
+          className="absolute -right-2 bottom-1 h-full w-6 z-10 flex items-center justify-end cursor-pointer"
+          aria-label="Scroll categories right"
+          type="button"
+          title="Scroll right"
         >
-          <div className="bg-white rounded-full p-1 hover:bg-gray-200">
+          <div className="bg-white rounded-full p-1 hover:bg-gray-200 transition-colors">
             <ChevronRightIcon fontSize="small" />
           </div>
         </button>

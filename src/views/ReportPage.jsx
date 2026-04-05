@@ -149,13 +149,13 @@ const ReportedVideosPage = () => {
       </div>
 
       <ConfirmationModal
-        open={openConfirmModal}
-        handleClose={() => setOpenConfirmModal(false)}
-        handleConfirm={handleClearAllReports}
+        isOpen={openConfirmModal}
+        onClose={() => setOpenConfirmModal(false)}
+        onConfirm={handleClearAllReports}
         title="Clear All Reported Videos?"
         message="Are you sure you want to clear all reported videos from your list?"
-        cancelText="Cancel"
-        confirmText="Clear All"
+        cancelLabel="Cancel"
+        confirmLabel="Clear All"
       />
     </>
   );

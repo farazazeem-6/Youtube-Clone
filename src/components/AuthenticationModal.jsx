@@ -26,7 +26,7 @@ const style = {
   borderRadius: 3,
   p: 4,
 };
-function AuthenticationModal({ open, handleClose }) {
+function AuthenticationModal({ isOpen, onClose }) {
   const [isSignIn, setIsSignIn] = useState(false);
   const [isError, setIsError] = useState(null);
   const [isApiLoading, setIsApiLoading] = useState(false);
@@ -75,7 +75,7 @@ function AuthenticationModal({ open, handleClose }) {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          handleClose();
+          onClose();
           // console.log(user);
         })
         .catch((error) => {
@@ -104,7 +104,7 @@ function AuthenticationModal({ open, handleClose }) {
               dispatch(
                 addUser({ uid: uid, firstName: displayName, email: email })
               );
-              handleClose();
+              onClose();
             })
             .catch((error) => {
               setIsResponseError(error.message);
@@ -139,7 +139,7 @@ function AuthenticationModal({ open, handleClose }) {
     }
 
     if (result.success) {
-      handleClose();
+      onClose();
     } else {
       setIsResponseError(result.error);
     }
@@ -168,8 +168,8 @@ function AuthenticationModal({ open, handleClose }) {
 
   return (
     <Modal
-      open={open}
-      onClose={handleClose}
+      open={isOpen}
+      onClose={onClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >

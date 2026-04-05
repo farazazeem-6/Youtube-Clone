@@ -139,8 +139,8 @@ const Header = () => {
         <div className="h-14" />
       </Wrapper>
       <AuthenticationModal
-        open={openModal}
-        handleClose={() => setOpenModal(false)}
+        isOpen={openModal}
+        onClose={() => setOpenModal(false)}
       />
     </>
   );
