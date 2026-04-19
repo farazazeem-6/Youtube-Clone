@@ -31,7 +31,6 @@ function AuthenticationModal({ isOpen, onClose }) {
   const [isError, setIsError] = useState(null);
   const [isApiLoading, setIsApiLoading] = useState(false);
   const [isResponseError, setIsResponseError] = useState(null);
-  // const isUser = useSelector((state) => state.user);
 
   // use ref hooks
   const email = useRef(null);
@@ -110,13 +109,11 @@ function AuthenticationModal({ isOpen, onClose }) {
               setIsResponseError(error.message);
             });
 
-          // console.log(user);
         })
         .catch((error) => {
           // const errorCode = error.code;
           const errorMessage = error.message;
           setIsResponseError(errorMessage);
-          // console.log("errorCode:", errorCode, "errorMessage:", errorMessage);
         })
         .finally(() => {
           setIsApiLoading(false);
