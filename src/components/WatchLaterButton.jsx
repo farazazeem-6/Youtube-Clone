@@ -7,9 +7,7 @@ import {
 import AuthenticationModal from "./AuthenticationModal";
 import { SAVE_IMAGE, SAVE_IMAGE2 } from "../utils/constants";
 
-// ============================================================================
 // CONSTANTS
-// ============================================================================
 
 const TOOLTIP_HIDE_DELAY = 2000;
 
@@ -19,16 +17,6 @@ const getButtonClassName = (isInWatchLater) => {
   return baseClasses;
 };
 
-// ============================================================================
-// HELPER FUNCTIONS
-// ============================================================================
-
-/**
- * Creates payload for adding video to watch later list
- * @param {string} videoId - ID of video to add
- * @param {Object} videoData - Video metadata
- * @returns {Object|null} Formatted payload or null if data invalid
- */
 const createWatchLaterPayload = (videoId, videoData) => {
   if (!videoData) {
     console.error("[WatchLaterButton] Missing video data");

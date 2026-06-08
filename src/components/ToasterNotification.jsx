@@ -1,14 +1,3 @@
-/**
- * ToasterNotification Component
- *
- * Auto-dismissing toast notification that appears in the top-right corner.
- * Slides down with animation and closes after 2 seconds.
- *
- * @param {string} message - Notification message to display
- * @param {string} backgroundColor - Tailwind background color class (e.g., "bg-green-500")
- * @param {function} onClose - Callback when notification auto-closes
- */
-
 import { useEffect } from "react";
 
 // Animation keyframes
