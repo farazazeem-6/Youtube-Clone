@@ -1,12 +1,3 @@
-/**
- * NavButton Component - Category Filter Button
- *
- * Renders a filterable category button that updates the video filter state
- * when clicked in the ButtonList. Shows different styling for active/inactive states.
- *
- * @param {string} name - Category name (e.g., "All", "Gaming", "Music")
- */
-
 import { useDispatch, useSelector } from "react-redux";
 import { setCategory } from "../store/slices/filterSlice";
 

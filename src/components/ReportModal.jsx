@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 
-// ============================================================================
 // STYLES & CONSTANTS
-// ============================================================================
 
 const MODAL_STYLE = {
   position: "absolute",
@@ -84,9 +82,7 @@ const REPORT_REASONS = [
   },
 ];
 
-// ============================================================================
 // HELPER FUNCTIONS
-// ============================================================================
 
 /**
  * Finds report reason by ID and returns its default description
@@ -115,9 +111,7 @@ const validateReportSubmission = (description) => {
   return { isValid: true, error: null };
 };
 
-// ============================================================================
 // COMPONENT
-// ============================================================================
 
 /**
  * ReportModal Component

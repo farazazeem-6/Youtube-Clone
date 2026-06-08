@@ -1,14 +1,3 @@
-/**
- * LikeButton Component
- *
- * Allows authenticated users to like/unlike videos.
- * Shows like count and opens auth modal if user not logged in.
- *
- * @param {string} videoId - YouTube video ID
- * @param {object} videoData - Video metadata to save with like
- * @param {string} likeCount - Current video like count
- */
-
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { likeVideo, unlikeVideo } from "../store/slices/likedSlice";

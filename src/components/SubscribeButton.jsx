@@ -8,9 +8,7 @@ import {
 import AuthenticationModal from "../components/AuthenticationModal";
 import ConfirmationModal from "../components/ConfirmationModal";
 
-// ============================================================================
 // STYLES & CONSTANTS
-// ============================================================================
 
 const getButtonClassName = (isSubscribed, isDisabled) => {
   const baseClasses = "px-4 py-2 rounded-full text-[10px] cursor-pointer font-semibold transition-all duration-200";
@@ -20,9 +18,7 @@ const getButtonClassName = (isSubscribed, isDisabled) => {
   return `${baseClasses} bg-black text-white hover:bg-gray-800`;
 };
 
-// ============================================================================
 // HELPER FUNCTIONS
-// ============================================================================
 
 /**
  * Extracts channel subscription payload from channel info

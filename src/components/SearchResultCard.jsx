@@ -5,7 +5,6 @@ import { useChannel } from "../hooks/useFetchChannels";
 const ResultCard = ({ info }) => {
   const { snippet } = info;
   const { channelTitle, title, thumbnails, channelId, publishedAt } = snippet;
-  // const { viewCount } = statistics;
   useChannel(channelId);
   const channelInfo = useSelector((state) => state.channel.channels[channelId]);
 
