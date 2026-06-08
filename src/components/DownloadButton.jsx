@@ -2,9 +2,7 @@ import React from 'react';
 import { useVideoDownload } from '../hooks/useVideoDownload';
 import { useSelector } from 'react-redux';
 
-// ============================================================================
 // CONSTANTS & STYLES
-// ============================================================================
 
 const BUTTON_DISABLED_CLASS = 'cursor-not-allowed';
 const BUTTON_ACTIVE_CLASS = 'cursor-pointer';
@@ -17,9 +15,7 @@ const getButtonClassName = (isDownloaded, isDownloading) => {
   return `${baseClasses} bg-gray-200 hover:bg-gray-300 ${BUTTON_ACTIVE_CLASS}`;
 };
 
-// ============================================================================
 // HELPER FUNCTIONS
-// ============================================================================
 
 /**
  * Renders appropriate button content based on download state
@@ -50,9 +46,7 @@ const renderButtonContent = (isDownloaded, isDownloading, progress) => {
   );
 };
 
-// ============================================================================
 // COMPONENT
-// ============================================================================
 
 /**
  * DownloadButton Component
