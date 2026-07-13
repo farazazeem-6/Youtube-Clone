@@ -1,29 +1,16 @@
+# 🎬 YouTube Clone
 
-# 🎬 **YouTube Clone – Full Video Streaming App (React + Redux + YouTube API)**
-
-*A complete, production-level YouTube clone with full functionality, built using React, Redux Toolkit, and YouTube Data API v3.*
+A responsive YouTube-style video streaming app built with **React**, **Redux Toolkit**, **React Router**, **Tailwind CSS**, and **Firebase Authentication**.
 
 ---
 
 <div align="center">
 
-## 🚀 **Live Demo Coming Soon**
-
-### 📌 *A Fully Responsive, Fast & Feature-Rich YouTube Clone*
-
-</div>
-
----
-
-# 🏷️ Badges
-
-<div align="center">
-
-![React](https://img.shields.io/badge/React-18.2.0-61DAFB?style=for-the-badge\&logo=react)
-![Redux Toolkit](https://img.shields.io/badge/Redux%20Toolkit-Latest-764ABC?style=for-the-badge\&logo=redux)
-![YouTube API](https://img.shields.io/badge/YouTube%20Data%20API-v3-FF0000?style=for-the-badge\&logo=youtube)
+![React](https://img.shields.io/badge/React-19.2.0-61DAFB?style=for-the-badge&logo=react)
+![Redux Toolkit](https://img.shields.io/badge/Redux%20Toolkit-2.10.1-764ABC?style=for-the-badge&logo=redux)
+![Vite](https://img.shields.io/badge/Vite-7.2.2-646CFF?style=for-the-badge&logo=vite)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4.1.17-06B6D4?style=for-the-badge&logo=tailwindcss)
 ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)
-![Status](https://img.shields.io/badge/Project%20Status-In%20Development-blue?style=for-the-badge)
 
 </div>
 
@@ -31,279 +18,207 @@
 
 # 📚 Table of Contents
 
-1. [🎥 Project Overview](#-project-overview)
-2. [✨ Features](#-features)
-3. [🧩 Tech Stack](#-tech-stack)
-4. [🔌 YouTube Data API Endpoints](#-youtube-data-api-endpoints)
-5. [📁 Folder Structure](#-folder-structure)
-6. [⚙️ Installation & Setup](#️-installation--setup)
-7. [📸 Screenshots](#-screenshots)
-8. [🛠 Future Enhancements](#-future-enhancements)
-9. [🤝 Contributing](#-contributing)
-10. [📜 License](#-license)
+1. [Overview](#-overview)
+2. [Features](#-features)
+3. [Tech Stack](#-tech-stack)
+4. [Configuration](#-configuration)
+5. [Folder Structure](#-folder-structure)
+6. [Installation](#-installation)
+7. [Future Enhancements](#-future-enhancements)
+8. [Contributing](#-contributing)
+9. [License](#-license)
 
 ---
 
-# 🎥 Project Overview
+# 📌 Overview
 
-This is a fully functional **YouTube Clone** with all major YouTube functionalities including:
+This project replicates the core experience of YouTube with a modern React architecture. It includes:
 
-* Home feed
-* Trending videos
-* Watch video page
-* Channel page
-* Subscriptions
-* Liked videos
-* Watch history
-* Watch later
-* Search with suggestions
-* Responsive layouts for mobile, tablet & desktop
-
-Built using modern React concepts like reusable components, custom hooks, lazy loading, dynamic routing, global state with Redux Toolkit, and persistent storage using localStorage.
+* Home page with trending videos and channel discovery
+* Search suggestions and results
+* Watch page with embedded video playback
+* Liked videos, watch later, history, and subscription flows
+* Global state management with Redux Toolkit
+* Responsive UI optimized for mobile, tablet, and desktop
 
 ---
 
 # ✨ Features
 
-## 🏠 1. **Home Page**
-
-* Trending & popular videos
-* Category-wise filters
-* Infinite scroll
-* Responsive video grid
-* Smooth UI with skeleton loaders
-
----
-
-## 🔍 2. **Advanced Search**
-
-* Live suggestions while typing
-* Full search results page
-* Search triggers video player page
-* Stores search history (optional)
-
----
-
-## ▶️ 3. **Video Player Page**
-
-* YouTube iframe player
-* Shows:
-
-  * Title
-  * Views
-  * Likes
-  * Published date
-  * Channel info
-* Related videos auto-shown
-* Like / Unlike
-* Save to Watch Later
-* Automatically added to History
-
----
-
-## 📺 4. **Channel Page**
-
-* Subscribe / Unsubscribe
-* Banner, logo, subscriber count
-* Channel description
-* Latest uploaded videos
-* Full channel video list
-
----
-
-## ❤️ 5. **Liked Videos**
-
-* Add or remove likes
-* Persisted in Redux + localStorage
-* Dedicated Liked Videos page
-
----
-
-## 🕒 6. **Watch History**
-
-* Every watched video saved
-* Timestamp included
-* Remove one item / clear all
-* Fully persistent
-
----
-
-## 📌 7. **Watch Later**
-
-* Save videos
-* Remove anytime
-* Full dedicated page
-
----
-
-## 📚 8. **Sidebar Navigation**
-
-Just like YouTube:
-
-* Home
-* Shorts
-* Subscriptions
-* Liked Videos
-* Watch Later
-* History
-* Trending
-* Categories
-
----
-
-## 📱 9. **Fully Responsive**
-
-Built with mobile-first design principles.
+* Trending / popular video feed
+* Search with live suggestions
+* Embedded YouTube video player
+* Related video recommendations
+* Like / unlike videos
+* Save videos to watch later
+* Watch history tracking
+* Subscription-style channel state
+* Firebase authentication support
+* Skeleton loading states for improved UX
 
 ---
 
 # 🧩 Tech Stack
 
-| Area             | Technology                         |
-| ---------------- | ---------------------------------- |
-| Framework        | **React.js**                       |
-| State Management | **Redux Toolkit**                  |
-| Routing          | **React Router DOM**               |
-| Styling          | CSS / Tailwind / MUI (your choice) |
-| API              | **YouTube Data API v3**            |
-| Storage          | **localStorage + Redux Persist**   |
-| HTTP Requests    | Axios / fetch                      |
+| Category       | Tools / Libraries                     |
+| -------------- | ------------------------------------- |
+| Framework      | React 19                              |
+| State          | Redux Toolkit                         |
+| Routing        | React Router DOM 7                    |
+| Styling        | Tailwind CSS + Styled Components      |
+| UI Components  | Material UI                           |
+| Build Tool     | Vite                                  |
+| API            | YouTube Data API v3                   |
+| Firebase       | Firebase Auth + Analytics             |
 
 ---
 
-# 🔌 YouTube Data API Endpoints
+# 🔧 Configuration
 
-## ✔ Get Trending Videos:
+The project reads the YouTube API key from a Vite environment variable.
 
-```
-https://www.googleapis.com/youtube/v3/videos
-  ?part=snippet,statistics
-  &chart=mostPopular
-  &regionCode=US
-  &maxResults=20
-  &key=API_KEY
+Create a `.env` file in the project root with the following content:
+
+```bash
+VITE_YOUTUBE_API_KEY=YOUR_YOUTUBE_API_KEY
 ```
 
-## ✔ Search Videos:
-
-```
-https://www.googleapis.com/youtube/v3/search
-  ?part=snippet
-  &q=SEARCH_QUERY
-  &type=video
-  &maxResults=20
-  &key=API_KEY
-```
-
-## ✔ Video Details:
-
-```
-https://www.googleapis.com/youtube/v3/videos
-  ?part=snippet,contentDetails,statistics
-  &id=VIDEO_ID
-  &key=API_KEY
-```
-
-## ✔ Channel Info:
-
-```
-https://www.googleapis.com/youtube/v3/channels
-  ?part=snippet,statistics
-  &id=CHANNEL_ID
-  &key=API_KEY
-```
-
-## ✔ Channel Uploads Playlist:
-
-```
-https://www.googleapis.com/youtube/v3/playlistItems
-  ?part=snippet
-  &playlistId=UPLOADS_PLAYLIST_ID
-  &maxResults=50
-  &key=API_KEY
-```
+> Firebase configuration is already included in `src/utils/firebase.js`.
 
 ---
 
-# 📁 Folder Structure
+# 🗂 Folder Structure
 
-```
+```text
 src/
-│── api/
-│── assets/
-│── components/
-│── pages/
-│   ├── Home/
-│   ├── Watch/
-│   ├── Channel/
-│   ├── Liked/
-│   ├── History/
-│   ├── WatchLater/
-│── redux/
-│   ├── slices/
-│   ├── store.js
-│── hooks/
-│── utils/
-│── constants/
-│── styles/
-│── App.js
-│── index.js
+├── Layout/
+│   └── Layout.jsx
+├── assets/
+├── components/
+│   ├── AuthenticationModal.jsx
+│   ├── CommentsCard.jsx
+│   ├── ConfirmationModal.jsx
+│   ├── DownloadButton.jsx
+│   ├── LikeButton.jsx
+│   ├── NavButton.jsx
+│   ├── ProfileDropDown.jsx
+│   ├── ReportModal.jsx
+│   ├── ResultCardShimmer.jsx
+│   ├── SearchResultCard.jsx
+│   ├── SideBarButton.jsx
+│   ├── SubscribeButton.jsx
+│   ├── SuggestionCard.jsx
+│   ├── SuggestionCardShimmer.jsx
+│   ├── ToasterNotification.jsx
+│   ├── VideoCard.jsx
+│   ├── VideoCardShimmer.jsx
+│   ├── WatchLaterButton.jsx
+│   └── Wrapper.jsx
+├── hooks/
+│   ├── useFetchCategoryVideos.js
+│   ├── useFetchChannels.js
+│   ├── useFetchComments.js
+│   ├── useFetchNextPageCategoryVideos.js
+│   ├── useFetchNextPagePopularVideos.js
+│   ├── useFetchPopularVideos.js
+│   ├── useFetchSearchResults.js
+│   ├── useFetchSingleVideoData.js
+│   ├── useFetchSuggestions.js
+│   ├── useIsDownloaded.js
+│   └── useVideoDownload.js
+├── store/
+│   ├── appStore.js
+│   └── slices/
+│       ├── channelSlice.js
+│       ├── commentsSlice.js
+│       ├── downloadsSlice.js
+│       ├── filterSlice.js
+│       ├── historySlice.js
+│       ├── likedSlice.js
+│       ├── moviesSlice.js
+│       ├── reportSlice.js
+│       ├── searchSlice.js
+│       ├── sideBarToggleSlice.js
+│       ├── subscriptionSlice.js
+│       ├── userSlice.js
+│       └── watchLaterSlice.js
+├── utils/
+│   ├── constants.js
+│   ├── firebase.js
+│   ├── socialAuth.js
+│   └── validations.js
+└── views/
+    ├── Body.jsx
+    ├── ButtonList.jsx
+    ├── CommentsList.jsx
+    ├── DownloadsPage.jsx
+    ├── Header.jsx
+    ├── HistoryPage.jsx
+    ├── LikedVideosPage.jsx
+    ├── MainContainer.jsx
+    ├── ReportPage.jsx
+    ├── SearchResultsPage.jsx
+    ├── Sidebar.jsx
+    ├── SubscriptionsPage.jsx
+    ├── SuggestionPage.jsx
+    ├── VideoContainer.jsx
+    ├── WatchLaterPage.jsx
+    └── WatchPage.jsx
 ```
 
 ---
 
-# ⚙️ Installation & Setup
-
-## 1️⃣ Clone the Repo
+# 🚀 Installation
 
 ```bash
 git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
-```
-
-## 2️⃣ Install Dependencies
-
-```bash
+cd "Youtube-Clone"
 npm install
 ```
 
-## 3️⃣ Create Environment File
+Create `.env`:
 
-Create a `.env` file:
-
-```
-REACT_APP_YT_API_KEY=YOUR_API_KEY
+```bash
+VITE_YOUTUBE_API_KEY=YOUR_YOUTUBE_API_KEY
 ```
 
-## 4️⃣ Start the App
+Run locally:
 
 ```bash
 npm run dev
 ```
 
----
+Build:
 
+```bash
+npm run build
+```
+
+Preview production build:
+
+```bash
+npm run preview
+```
+
+---
 
 # 🛠 Future Enhancements
 
-* Dark / Light theme
-* User login & authentication
-* Real subscriptions (backend)
-* Video upload system
-* Comment system
+* Dark mode / theme switch
+* Full authentication and user profiles
+* Backend-powered subscriptions and comments
+* Video upload support
+* Offline download improvements
 * Multi-language support
-* Download video option (custom backend)
 
 ---
 
 # 🤝 Contributing
 
-Contributions, issues, and suggestions are welcome!
-Feel free to fork this repo and open a PR.
+Contributions are welcome. Open an issue or submit a pull request.
 
 ---
 
 # 📜 License
 
-This project is licensed under the **MIT License**.
-
----
+MIT License
