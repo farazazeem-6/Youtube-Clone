@@ -27,7 +27,6 @@ const isValidQuery = (query) => {
  * @param {string} query - Query that failed
  */
 const handleSuggestionError = (error, query) => {
-  console.error(`${HOOK_NAME} Failed to fetch suggestions for "${query}":`, error);
 };
 
 /**

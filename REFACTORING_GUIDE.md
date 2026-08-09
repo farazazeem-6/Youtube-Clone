@@ -7,6 +7,7 @@ This guide provides patterns and best practices for refactoring your React proje
 ### 1. **Consistent Naming Conventions**
 
 #### Props
+
 ```javascript
 // ❌ Bad - Inconsistent naming
 <Modal open={true} handleClose={close} handleConfirm={confirm} />
@@ -15,12 +16,14 @@ This guide provides patterns and best practices for refactoring your React proje
 <Modal isOpen={true} onClose={close} onConfirm={confirm} />
 ```
 
-**Pattern:** 
+**Pattern:**
+
 - Boolean props: `is*`, `has*`, `should*`
 - Event handlers: `on*` (e.g., `onClose`, `onSubmit`, `onChange`)
 - Other callbacks: Descriptive action names
 
 #### Variables
+
 ```javascript
 // ❌ Bad
 const data = useSelector(...);
@@ -37,9 +40,11 @@ let completedTaskCount = 0;
 
 ```javascript
 // ❌ Before - Inline styles scattered
-<button className={`px-4 py-2 ${isActive ? "bg-black text-white" : "bg-gray-50 hover:bg-gray-200"}`}>
+<button
+  className={`px-4 py-2 ${isActive ? "bg-black text-white" : "bg-gray-50 hover:bg-gray-200"}`}
+>
   Click
-</button>
+</button>;
 
 // ✅ After - Constants at top
 const BUTTON_CLASSES = {
@@ -52,7 +57,7 @@ function getButtonClass(isActive) {
   return `${BUTTON_CLASSES.base} ${isActive ? BUTTON_CLASSES.active : BUTTON_CLASSES.inactive}`;
 }
 
-<button className={getButtonClass(isActive)}>Click</button>
+<button className={getButtonClass(isActive)}>Click</button>;
 ```
 
 ### 3. **Extract Helper Functions**
@@ -90,29 +95,37 @@ import SomeModal from "./SomeModal";
 
 // Constants at top
 const DEFAULT_TIMEOUT = 3000;
-const BUTTON_CLASSES = { /* ... */ };
+const BUTTON_CLASSES = {
+  /* ... */
+};
 
 // Helper functions
-function validateData(data) { /* ... */ }
-function processData(data) { /* ... */ }
+function validateData(data) {
+  /* ... */
+}
+function processData(data) {
+  /* ... */
+}
 
 // Sub-components (if needed)
-function ModalHeader({ title }) { /* ... */ }
-function ModalFooter({ onCancel, onConfirm }) { /* ... */ }
+function ModalHeader({ title }) {
+  /* ... */
+}
+function ModalFooter({ onCancel, onConfirm }) {
+  /* ... */
+}
 
 // Main component
 function MyComponent({ prop1, prop2 }) {
   const [state, setState] = useState(false);
   const dispatch = useDispatch();
-  
+
   // Handlers
-  const handleAction = () => { /* ... */ };
-  
-  return (
-    <div>
-      {/* JSX */}
-    </div>
-  );
+  const handleAction = () => {
+    /* ... */
+  };
+
+  return <div>{/* JSX */}</div>;
 }
 
 export default MyComponent;
@@ -135,7 +148,7 @@ export const { addToWatchLater, setCategory, removeFromLiked } = slice.actions;
 const isLiked = useSelector((state) => !!state.liked.likedVideos[videoId]);
 
 // ✅ After - Create reusable selector
-const selectIsVideoLiked = (state, videoId) => 
+const selectIsVideoLiked = (state, videoId) =>
   !!state.liked.likedVideos[videoId];
 
 // Or better - create custom hook
@@ -159,7 +172,6 @@ const handleSubmit = () => {
 // ✅ After - Clear error messages with context
 const handleSubmit = () => {
   if (!videoId) {
-    console.error("[SubmitButton] Missing required videoId");
     showErrorNotification("Video information unavailable");
     return;
   }
@@ -191,7 +203,7 @@ function useFetchVideoData(videoId) {
     const fetchData = async () => {
       setIsLoading(true);
       setError(null);
-      
+
       try {
         const response = await fetch(`/api/videos/${videoId}`);
         if (!response.ok) throw new Error("Failed to fetch");
@@ -265,7 +277,7 @@ import { useState } from "react";
 function MyPage() {
   const dispatch = useDispatch();
   const [localState, setLocalState] = useState(false);
-  
+
   // Selectors
   const items = useSelector((state) => state.feature.items);
   const isLoading = useSelector((state) => state.feature.isLoading);
@@ -279,7 +291,7 @@ function MyPage() {
   // Render
   if (isLoading) return <LoadingState />;
   if (items.length === 0) return <EmptyState />;
-  
+
   return (
     <div>
       {items.map((item) => (
@@ -295,6 +307,7 @@ export default MyPage;
 ## File-by-File Refactoring Checklist
 
 ### Components (/src/components/)
+
 - [ ] Extract CSS classes to constants
 - [ ] Use semantic prop names (`isOpen`, `onClose`, `onConfirm`)
 - [ ] Extract complex logic to functions
@@ -303,6 +316,7 @@ export default MyPage;
 - [ ] Use composition for complex components
 
 ### Hooks (/src/hooks/)
+
 - [ ] Use consistent naming: `use*` prefix
 - [ ] Add JSDoc with @param and @returns
 - [ ] Extract complex logic from components
@@ -310,18 +324,21 @@ export default MyPage;
 - [ ] Validate inputs upfront
 
 ### Redux Slices (/src/store/slices/)
+
 - [ ] Use clear action names
 - [ ] Consistent state structure
 - [ ] Add selector functions
 - [ ] Document state shape
 
 ### Views (/src/views/)
+
 - [ ] Extract sub-components
 - [ ] Use composition pattern
 - [ ] Keep business logic in hooks
 - [ ] Clear data flow
 
 ### Utils (/src/utils/)
+
 - [ ] Group related functions
 - [ ] Add JSDoc comments
 - [ ] Consistent function naming
@@ -329,21 +346,21 @@ export default MyPage;
 
 ## Quick Reference: Renaming Map
 
-| Old | New | Reason |
-|-----|-----|--------|
-| `open` | `isOpen` | Clearer boolean intent |
-| `handleClose` | `onClose` | Standard React pattern |
-| `handleConfirm` | `onConfirm` | Standard React pattern |
-| `text` | `message` | More descriptive |
-| `bgColor` | `backgroundColor` | Clearer name |
-| `name` | `label` or `title` | Context-specific clarity |
-| `img` | `iconUrl` or `imageSource` | More descriptive |
-| `isUser` | `isUserLoggedIn` | Explicit meaning |
-| `isLiked` | `isVideoLiked` | Context clarity |
-| `handleClick` | `handleActionName` | Specific action |
-| `data` | `specificDataName` | Descriptive |
-| `error` | `errorMessage` | More specific |
-| `loading` | `isLoading` | Boolean prefix |
+| Old             | New                        | Reason                   |
+| --------------- | -------------------------- | ------------------------ |
+| `open`          | `isOpen`                   | Clearer boolean intent   |
+| `handleClose`   | `onClose`                  | Standard React pattern   |
+| `handleConfirm` | `onConfirm`                | Standard React pattern   |
+| `text`          | `message`                  | More descriptive         |
+| `bgColor`       | `backgroundColor`          | Clearer name             |
+| `name`          | `label` or `title`         | Context-specific clarity |
+| `img`           | `iconUrl` or `imageSource` | More descriptive         |
+| `isUser`        | `isUserLoggedIn`           | Explicit meaning         |
+| `isLiked`       | `isVideoLiked`             | Context clarity          |
+| `handleClick`   | `handleActionName`         | Specific action          |
+| `data`          | `specificDataName`         | Descriptive              |
+| `error`         | `errorMessage`             | More specific            |
+| `loading`       | `isLoading`                | Boolean prefix           |
 
 ## Implementation Strategy
 
@@ -370,19 +387,20 @@ export default MyPage;
 ### Before & After: Component
 
 **Before:**
+
 ```jsx
 const LikeBtn = ({ vidId, vData, count }) => {
   const [open, setOpen] = useState(false);
   const isLike = useSelector(s => !!s.liked.videos[vidId]);
   const user = useSelector(s => s.user);
-  
+
   const handleLike = () => {
     if (user) {
       if (isLike) dispatch(unlike(vidId));
       else dispatch(like({vidId, vData: {...}}));
     } else setOpen(true);
   };
-  
+
   return <>
     <button onClick={handleLike} className={`...${isLike ? 'bg-blue' : 'bg-gray'}...`}>...
     <AuthModal open={open} handleClose={() => setOpen(false)} />
@@ -391,6 +409,7 @@ const LikeBtn = ({ vidId, vData, count }) => {
 ```
 
 **After:**
+
 ```jsx
 /**
  * LikeButton - Toggle like status for videos
@@ -410,16 +429,16 @@ function createLikePayload(videoId, videoData, likeCount) {
 function LikeButton({ videoId, videoData, likeCount }) {
   const dispatch = useDispatch();
   const [showAuthModal, setShowAuthModal] = useState(false);
-  
-  const isVideoLiked = useSelector(s => !!s.liked.videos[videoId]);
-  const isUserLoggedIn = useSelector(s => s.user);
+
+  const isVideoLiked = useSelector((s) => !!s.liked.videos[videoId]);
+  const isUserLoggedIn = useSelector((s) => s.user);
 
   const handleLikeClick = () => {
     if (!isUserLoggedIn) {
       setShowAuthModal(true);
       return;
     }
-    
+
     if (isVideoLiked) dispatch(unlikeVideo(videoId));
     else dispatch(likeVideo(createLikePayload(videoId, videoData, likeCount)));
   };
@@ -429,10 +448,13 @@ function LikeButton({ videoId, videoData, likeCount }) {
   return (
     <>
       <button onClick={handleLikeClick} className={buttonClasses}>
-        <i className={`ri-thumb-up-${isVideoLiked ? 'fill' : 'line'}`} />
+        <i className={`ri-thumb-up-${isVideoLiked ? "fill" : "line"}`} />
         <span>{likeCount ? formatViews(likeCount) : "Like"}</span>
       </button>
-      <AuthenticationModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
+      <AuthenticationModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+      />
     </>
   );
 }
@@ -441,7 +463,7 @@ function LikeButton({ videoId, videoData, likeCount }) {
 ## Common Pitfalls to Avoid
 
 1. **Over-extracting** - Don't create tiny functions for simple logic
-2. **Naming confusion** - Be consistent with prefixes (is*, handle*, on*)
+2. **Naming confusion** - Be consistent with prefixes (is*, handle*, on\*)
 3. **Deep nesting** - Extract complex ternaries to functions
 4. **Magic strings** - Use constants for repeated strings
 5. **Prop drilling** - Use Redux for deeply-nested state

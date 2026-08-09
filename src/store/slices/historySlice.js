@@ -22,7 +22,6 @@ const loadHistoryFromStorage = () => {
     const saved = localStorage.getItem(STORAGE_KEY);
     return saved ? JSON.parse(saved) : {};
   } catch (error) {
-    console.error(`${SLICE_ERROR_PREFIX} Error loading history:`, error);
     return {};
   }
 };
@@ -35,7 +34,6 @@ const saveHistoryToStorage = (watchedVideos) => {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(watchedVideos));
   } catch (error) {
-    console.error(`${SLICE_ERROR_PREFIX} Error saving history:`, error);
   }
 };
 

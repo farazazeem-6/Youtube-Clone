@@ -50,7 +50,6 @@ const extractChannelData = (item) => {
  * @param {string} channelId - Channel ID being fetched
  */
 const handleChannelFetchError = (error, channelId) => {
-  console.error(`${HOOK_NAME} Failed to fetch channel ${channelId}:`, error);
 };
 
 // ============================================================================
@@ -91,7 +90,6 @@ export function useChannel(channelId) {
         const channelItem = json.items?.[0];
 
         if (!channelItem) {
-          console.warn(`${HOOK_NAME} No channel data found for ID: ${channelId}`);
           return;
         }
 

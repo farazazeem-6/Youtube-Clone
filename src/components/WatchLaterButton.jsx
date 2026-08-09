@@ -19,7 +19,6 @@ const getButtonClassName = (isInWatchLater) => {
 
 const createWatchLaterPayload = (videoId, videoData) => {
   if (!videoData) {
-    console.error("[WatchLaterButton] Missing video data");
     return null;
   }
 
@@ -92,7 +91,6 @@ const WatchLaterButton = ({ videoId, videoData }) => {
 
     // Validate video ID
     if (!videoId) {
-      console.error("[WatchLaterButton] Missing videoId");
       return;
     }
 

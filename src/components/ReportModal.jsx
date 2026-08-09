@@ -158,7 +158,6 @@ function ReportModal({ isOpen, onClose, onSubmit }) {
     const { isValid, error } = validateReportSubmission(description);
     
     if (!isValid) {
-      console.error("[ReportModal]", error);
       return;
     }
 

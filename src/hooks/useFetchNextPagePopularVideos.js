@@ -49,7 +49,6 @@ const buildPaginationUrl = (nextPageToken) => {
  * @param {Function} dispatch - Redux dispatch
  */
 const handlePaginationError = (error, dispatch) => {
-  console.error(`${HOOK_NAME} Pagination fetch failed:`, error);
   dispatch(setLoading(false));
 };
 
@@ -74,7 +73,6 @@ const useFetchNextPagePopularVideos = () => {
    */
   const fetchMorePopularVideos = async (nextPageToken) => {
     if (!isValidPageToken(nextPageToken)) {
-      console.warn(`${HOOK_NAME} Invalid page token received`);
       return;
     }
 

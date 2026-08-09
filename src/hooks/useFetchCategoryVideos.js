@@ -54,7 +54,6 @@ const buildCategorySearchUrl = (category) => {
  * @param {Function} dispatch - Redux dispatch
  */
 const handleFetchError = (error, category, dispatch) => {
-  console.error(`${HOOK_NAME} Failed to fetch category "${category}":`, error);
   dispatch(setCategoryMovies({ items: [], nextPageToken: null }));
 };
 
