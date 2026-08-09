@@ -45,7 +45,6 @@ const parseStreamChunk = (chunk) => {
   try {
     return JSON.parse(chunk);
   } catch (err) {
-    console.warn(`${HOOK_NAME} Failed to parse stream chunk:`, chunk);
     return null;
   }
 };
@@ -92,7 +91,6 @@ const saveDownloadToStore = (videoId, videoData, filename, dispatch) => {
  */
 const handleDownloadError = (error, videoId, setError) => {
   const errorMessage = error.message || "Download failed";
-  console.error(`${HOOK_NAME} Download failed for video ${videoId}:`, error);
   setError(errorMessage);
 };
 
@@ -127,7 +125,7 @@ export const useVideoDownload = (videoData) => {
     );
 
     if (!isValid) {
-      console.error(`${HOOK_NAME}`, validationError);
+      
       setError(validationError);
       return;
     }

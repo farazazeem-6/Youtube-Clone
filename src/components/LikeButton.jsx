@@ -34,11 +34,9 @@ function createVideoLikePayload(videoId, videoData, likeCount) {
  */
 function validateLikeData(videoId, videoData) {
   if (!videoId) {
-    console.error("[LikeButton] Missing videoId");
     return false;
   }
   if (!videoData) {
-    console.error("[LikeButton] Missing video data");
     return false;
   }
   return true;

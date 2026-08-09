@@ -60,7 +60,7 @@ function AuthenticationModal({ isOpen, onClose }) {
       : validateSignUp(
           email.current.value,
           password.current.value,
-          name.current.value
+          name.current.value,
         );
     setIsError(validationResult);
     if (validationResult) return;
@@ -69,19 +69,17 @@ function AuthenticationModal({ isOpen, onClose }) {
       signInWithEmailAndPassword(
         auth,
         email.current.value,
-        password.current.value
+        password.current.value,
       )
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
           onClose();
-          // console.log(user);
         })
         .catch((error) => {
           // const errorCode = error.code;
           const errorMessage = error.message;
           setIsResponseError(errorMessage);
-          // console.log("errorCode:", errorCode, "errorMessage:", errorMessage);
         })
         .finally(() => {
           setIsApiLoading(false);
@@ -90,7 +88,7 @@ function AuthenticationModal({ isOpen, onClose }) {
       createUserWithEmailAndPassword(
         auth,
         email.current.value,
-        password.current.value
+        password.current.value,
       )
         .then((userCredential) => {
           // Signed up
@@ -101,14 +99,13 @@ function AuthenticationModal({ isOpen, onClose }) {
             .then(() => {
               const { uid, displayName, email } = auth.currentUser;
               dispatch(
-                addUser({ uid: uid, firstName: displayName, email: email })
+                addUser({ uid: uid, firstName: displayName, email: email }),
               );
               onClose();
             })
             .catch((error) => {
               setIsResponseError(error.message);
             });
-
         })
         .catch((error) => {
           // const errorCode = error.code;
@@ -153,11 +150,10 @@ function AuthenticationModal({ isOpen, onClose }) {
       sendPasswordResetEmail(auth, email.current.value)
         .then(() => {
           setIsResponseError(
-            "Reset Password link have been sent to your email."
+            "Reset Password link have been sent to your email.",
           );
         })
         .catch((error) => {
-          // console.error("Error:", error);
           setIsResponseError(error);
         });
     }
@@ -245,8 +241,8 @@ function AuthenticationModal({ isOpen, onClose }) {
                     ? "Signing In..."
                     : "Sign In"
                   : isApiLoading
-                  ? "Signing Up..."
-                  : "Sign Up"}
+                    ? "Signing Up..."
+                    : "Sign Up"}
               </button>
               {isResponseError && (
                 <p className="text-red-500 text-[12px] flex items-center">

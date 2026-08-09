@@ -28,7 +28,6 @@ const getButtonClassName = (isSubscribed, isDisabled) => {
  */
 const createSubscriptionPayload = (channelId, channelInfo) => {
   if (!channelInfo?.snippet) {
-    console.error("[SubscribeButton] Channel info missing snippet data");
     return null;
   }
 
@@ -118,7 +117,6 @@ const SubscribeButton = ({ channelId, channelInfo }) => {
 
     // Validate channel ID exists
     if (!channelId) {
-      console.error("[SubscribeButton] Missing channelId");
       return;
     }
 
@@ -135,7 +133,6 @@ const SubscribeButton = ({ channelId, channelInfo }) => {
       const { isValid, error } = validateSubscriptionData(channelId, channelInfo);
       
       if (!isValid) {
-        console.error(error);
         return;
       }
 

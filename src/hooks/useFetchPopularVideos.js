@@ -33,7 +33,6 @@ const shouldFetchPopularVideos = (category) => {
  * @param {Function} dispatch - Redux dispatch function
  */
 const handleFetchError = (error, dispatch) => {
-  console.error(`${HOOK_NAME} Fetch Error:`, error);
   dispatch(addPopularMovies({ items: [], nextPageToken: null }));
 };
 

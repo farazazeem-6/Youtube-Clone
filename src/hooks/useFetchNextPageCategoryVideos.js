@@ -57,7 +57,6 @@ const buildCategoryPaginationUrl = (category, nextPageToken) => {
  * @param {Function} dispatch - Redux dispatch
  */
 const handlePaginationError = (error, category, dispatch) => {
-  console.error(`${HOOK_NAME} Pagination failed for category "${category}":`, error);
   dispatch(setLoading(false));
 };
 
@@ -85,7 +84,6 @@ const useFetchNextPageCategoryVideos = () => {
     const { isValid, error } = validatePaginationParams(nextPageToken, category);
 
     if (!isValid) {
-      console.warn(`${HOOK_NAME} ${error}`);
       return;
     }
 

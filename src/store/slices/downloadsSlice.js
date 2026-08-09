@@ -22,10 +22,7 @@ const loadDownloadsFromStorage = () => {
     const downloads = localStorage.getItem(STORAGE_KEY);
     return downloads ? JSON.parse(downloads) : {};
   } catch (error) {
-    console.error(
-      `${SLICE_ERROR_PREFIX} Error loading downloads from storage:`,
-      error
-    );
+
     return {};
   }
 };
@@ -38,10 +35,6 @@ const saveDownloadsToStorage = (downloadedVideos) => {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(downloadedVideos));
   } catch (error) {
-    console.error(
-      `${SLICE_ERROR_PREFIX} Error saving downloads to storage:`,
-      error
-    );
   }
 };
 
@@ -86,9 +79,6 @@ const downloadsSlice = createSlice({
       const { videoId, videoData, downloadedAt, fileSize } = action.payload;
 
       if (!isValidDownloadData({ videoId, ...videoData })) {
-        console.warn(
-          `${SLICE_ERROR_PREFIX} Invalid download data for video: ${videoId}`
-        );
         return;
       }
 

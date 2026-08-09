@@ -68,9 +68,6 @@ const channelSlice = createSlice({
       const { id, snippet, statistics } = action.payload;
 
       if (!isValidChannelData(action.payload)) {
-        console.warn(
-          `${SLICE_ERROR_PREFIX} Invalid channel data received for ID: ${id}`
-        );
         return;
       }
 

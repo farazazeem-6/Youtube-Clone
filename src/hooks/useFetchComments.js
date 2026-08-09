@@ -50,7 +50,6 @@ const buildCommentsApiUrl = (videoId) => {
  * @param {Function} dispatch - Redux dispatch
  */
 const handleCommentsFetchError = (error, videoId, dispatch) => {
-  console.error(`${HOOK_NAME} Failed to fetch comments for video ${videoId}:`, error);
   dispatch(setLoading(false));
 };
 
@@ -88,7 +87,6 @@ export function useComments(videoId) {
         const json = await response.json();
 
         if (!json.items) {
-          console.warn(`${HOOK_NAME} No comments found for video: ${videoId}`);
           dispatch(setLoading(false));
           return;
         }

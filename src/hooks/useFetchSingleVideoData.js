@@ -31,7 +31,6 @@ const extractVideoData = (item) => {
  * @param {string} videoId - Video ID being fetched
  */
 const handleVideoFetchError = (error, videoId) => {
-  console.error(`${HOOK_NAME} Failed to fetch video ${videoId}:`, error);
 };
 
 /**

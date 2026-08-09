@@ -47,7 +47,6 @@ const buildSearchUrl = (searchQuery) => {
  * @param {Function} dispatch - Redux dispatch
  */
 const handleSearchError = (error, searchQuery, dispatch) => {
-  console.error(`${HOOK_NAME} Search failed for query "${searchQuery}":`, error);
   dispatch(setSearchResults([]));
 };
 
