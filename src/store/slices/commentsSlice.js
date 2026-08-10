@@ -5,7 +5,6 @@ import { createSlice } from "@reduxjs/toolkit";
 // ============================================================================
 
 const SLICE_NAME = "comments";
-const SLICE_ERROR_PREFIX = "[commentsSlice]";
 
 // ============================================================================
 // HELPER FUNCTIONS
@@ -53,9 +52,6 @@ const commentsSlice = createSlice({
       const { videoId, data } = action.payload;
 
       if (!isValidCommentsData(data)) {
-        console.warn(
-          `${SLICE_ERROR_PREFIX} Invalid comments data for video: ${videoId}`
-        );
         return;
       }
 

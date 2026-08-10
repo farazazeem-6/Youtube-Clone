@@ -6,7 +6,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const SLICE_NAME = "subscription";
 const STORAGE_KEY = "subscriptions";
-const SLICE_ERROR_PREFIX = "[subscriptionSlice]";
 const TIMESTAMP_KEY = "subscribedAt";
 
 // ============================================================================
@@ -21,8 +20,7 @@ const loadSubscriptionsFromStorage = () => {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     return saved ? JSON.parse(saved) : {};
-  } catch (error) {
-    console.error(`${SLICE_ERROR_PREFIX} Error loading subscriptions:`, error);
+  } catch {
     return {};
   }
 };
@@ -34,8 +32,8 @@ const loadSubscriptionsFromStorage = () => {
 const saveSubscriptionsToStorage = (subscriptions) => {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(subscriptions));
-  } catch (error) {
-    console.error(`${SLICE_ERROR_PREFIX} Error saving subscriptions:`, error);
+  } catch {
+    // Ignore storage write errors
   }
 };
 

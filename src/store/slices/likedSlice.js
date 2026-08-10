@@ -6,7 +6,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const SLICE_NAME = "liked";
 const STORAGE_KEY = "likedVideos";
-const SLICE_ERROR_PREFIX = "[likedSlice]";
 const TIMESTAMP_KEY = "likedAt";
 
 // ============================================================================
@@ -21,8 +20,7 @@ const loadLikedVideosFromStorage = () => {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     return saved ? JSON.parse(saved) : {};
-  } catch (error) {
-    console.error(`${SLICE_ERROR_PREFIX} Error loading liked videos:`, error);
+  } catch {
     return {};
   }
 };
@@ -34,8 +32,8 @@ const loadLikedVideosFromStorage = () => {
 const saveLikedVideosToStorage = (likedVideos) => {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(likedVideos));
-  } catch (error) {
-    console.error(`${SLICE_ERROR_PREFIX} Error saving liked videos:`, error);
+  } catch {
+    // Ignore storage write errors
   }
 };
 

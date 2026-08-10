@@ -5,7 +5,6 @@ import { createSlice } from "@reduxjs/toolkit";
 // ============================================================================
 
 const SLICE_NAME = "movies";
-const SLICE_ERROR_PREFIX = "[moviesSlice]";
 
 // ============================================================================
 // HELPER FUNCTIONS
@@ -74,7 +73,6 @@ const movieSlice = createSlice({
       const { items = [], nextPageToken } = action.payload;
 
       if (!isValidPaginationData({ items })) {
-        console.warn(`${SLICE_ERROR_PREFIX} Invalid popular movies data`);
         return;
       }
 
@@ -97,7 +95,6 @@ const movieSlice = createSlice({
       const { items = [], nextPageToken } = action.payload;
 
       if (!isValidPaginationData({ items })) {
-        console.warn(`${SLICE_ERROR_PREFIX} Invalid category movies data`);
         return;
       }
 
@@ -117,9 +114,6 @@ const movieSlice = createSlice({
       const { items = [], nextPageToken } = action.payload;
 
       if (!isValidPaginationData({ items })) {
-        console.warn(
-          `${SLICE_ERROR_PREFIX} Invalid category pagination data`
-        );
         return;
       }
 

@@ -34,7 +34,6 @@ const WatchPage = () => {
   const isReported = useSelector(
     (state) => !!state.report.reportedVideos[movieId]
   );
-  console.log(isReported);
 
   // Find the movie matching the ID
   let currentVideo = popularMovies.find((movie) => movie.id === movieId);
@@ -97,8 +96,6 @@ const WatchPage = () => {
         reportedAt: new Date().toISOString(),
       })
     );
-
-    console.log("Video reported successfully!");
   };
 
   useEffect(() => {
@@ -126,17 +123,6 @@ const WatchPage = () => {
       );
     }
   }, [movieId, currentVideo, dispatch]);
-
-  // Add debugging
-  useEffect(() => {
-    if (!channelId) {
-      console.log("No channelId found for video:", movieId);
-      console.log("currentVideo:", currentVideo);
-    }
-    if (channelInfo) {
-      console.log("Channel info loaded:", channelInfo);
-    }
-  }, [channelId, movieId, currentVideo, channelInfo]);
 
   return (
     <>
@@ -219,7 +205,7 @@ const WatchPage = () => {
                   description: currentVideo?.snippet?.description,
                 }}
               />
-             
+              
               <DownloadButton
                 videoId={movieId}
                 videoData={{
@@ -258,21 +244,15 @@ const WatchPage = () => {
 
           {/* Comments section */}
           <div className="mt-3">
-            <CommentsList videoId={movieId} />
+            <CommentsList movieId={movieId} />
           </div>
         </div>
-
-        {/* STICKY SUGGESTIONS SIDEBAR */}
-        <div className="w-[290px] shrink-0">
-          <div className="sticky top-14 max-h-[calc(100vh-2rem)] overflow-y-auto hide-scrollbar">
-            <SuggestionPage />
-          </div>
+        <div className="w-[350px]">
+          <SuggestionPage />
         </div>
       </div>
-
-      {/* Report Modal */}
       <ReportModal
-        isOpen={openReportModal}
+        open={openReportModal}
         onClose={() => setOpenReportModal(false)}
         onSubmit={handleReportSubmit}
       />

@@ -6,7 +6,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const SLICE_NAME = "watchLater";
 const STORAGE_KEY = "watchLater";
-const SLICE_ERROR_PREFIX = "[watchLaterSlice]";
 const TIMESTAMP_KEY = "addedAt";
 
 // ============================================================================
@@ -21,8 +20,7 @@ const loadWatchLaterFromStorage = () => {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     return saved ? JSON.parse(saved) : {};
-  } catch (error) {
-    console.error(`${SLICE_ERROR_PREFIX} Error loading watch later:`, error);
+  } catch {
     return {};
   }
 };
@@ -34,8 +32,8 @@ const loadWatchLaterFromStorage = () => {
 const saveWatchLaterToStorage = (watchLaterVideos) => {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(watchLaterVideos));
-  } catch (error) {
-    console.error(`${SLICE_ERROR_PREFIX} Error saving watch later:`, error);
+  } catch {
+    // Ignore storage write errors
   }
 };
 
