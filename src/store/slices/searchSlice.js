@@ -5,7 +5,6 @@ import { createSlice } from "@reduxjs/toolkit";
 // ============================================================================
 
 const SLICE_NAME = "search";
-const SLICE_ERROR_PREFIX = "[searchSlice]";
 
 // ============================================================================
 // HELPER FUNCTIONS
@@ -61,9 +60,6 @@ const searchSlice = createSlice({
      */
     setSearchResults: (state, action) => {
       if (!isValidSearchResults(action.payload)) {
-        console.warn(
-          `${SLICE_ERROR_PREFIX} Invalid search results received`
-        );
         return;
       }
 
@@ -79,9 +75,6 @@ const searchSlice = createSlice({
      */
     setSearchQuery: (state, action) => {
       if (!isValidSearchQuery(action.payload)) {
-        console.warn(
-          `${SLICE_ERROR_PREFIX} Invalid search query received`
-        );
         return;
       }
 

@@ -9,7 +9,7 @@ import AuthenticationModal from "../components/AuthenticationModal";
 import ProfileDropdown from "../components/ProfileDropDown";
 import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import ConfirmationModal from "../components/ConfirmationModal";
+import { clearUser } from "../store/slices/userSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -40,14 +40,14 @@ const Header = () => {
     setShowSuggestion(false);
   };
 
-  const handleLogout = () => {
-    signOut(auth)
-      .then(() => {
-        console.log("Logout successful");
-      })
-      .catch((error) => {
-        console.error("Logout error:", error);
-      });
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      dispatch(clearUser());
+      navigate("/suggestions");
+    } catch {
+      // Ignore logout errors silently
+    }
   };
 
   return (
@@ -72,7 +72,7 @@ const Header = () => {
             {/* Search input */}
             <div className="col-span-10 md:col-span-8 flex justify-start sm:justify-center">
               <div className="flex flex-col">
-                <div className="border border-gray-200 w-[200px] sm:w-[400px] md:w-[450px] lg:w-   [550px] flex rounded-2xl">
+                <div className="border border-gray-200 w-[200px] sm:w-[400px] md:w-[450px] lg:w-[550px] flex rounded-2xl">
                   <input
                     ref={searchRef}
                     type="text"

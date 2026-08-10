@@ -6,7 +6,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const SLICE_NAME = "filter";
 const DEFAULT_CATEGORY = "All";
-const SLICE_ERROR_PREFIX = "[filterSlice]";
 
 // ============================================================================
 // HELPER FUNCTIONS
@@ -51,9 +50,6 @@ const filterSlice = createSlice({
      */
     setCategory: (state, action) => {
       if (!isValidCategory(action.payload)) {
-        console.warn(
-          `${SLICE_ERROR_PREFIX} Invalid category received: ${action.payload}`
-        );
         return;
       }
 

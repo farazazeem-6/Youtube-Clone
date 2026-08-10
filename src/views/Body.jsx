@@ -22,7 +22,6 @@ const Body = () => {
       if (user) {
         const { uid, displayName, email } = user;
         dispatch(addUser({ uid: uid, firstName: displayName, email: email }));
-        console.log("login success");
 
         // Show login toast (only if not initial load)
         if (!authLoading) {
@@ -33,7 +32,6 @@ const Body = () => {
         }
       } else {
         dispatch(removeUser());
-        console.log("login failed");
 
         // Show logout toast
         if (!authLoading) {

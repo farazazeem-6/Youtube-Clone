@@ -5,7 +5,6 @@ import { createSlice } from "@reduxjs/toolkit";
 // ============================================================================
 
 const SLICE_NAME = "report";
-const SLICE_ERROR_PREFIX = "[reportSlice]";
 const TIMESTAMP_KEY = "reportedAt";
 
 // ============================================================================
@@ -70,9 +69,6 @@ const reportSlice = createSlice({
      */
     reportVideo: (state, action) => {
       if (!isValidReportData(action.payload)) {
-        console.warn(
-          `${SLICE_ERROR_PREFIX} Invalid report data for video: ${action.payload.videoId}`
-        );
         return;
       }
 
